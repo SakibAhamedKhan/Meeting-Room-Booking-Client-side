@@ -31,7 +31,7 @@ export function HomeCarousel() {
                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold mb-4 text-white">
                       Find your next Meeting
                     </h1>
-                    <p className="text-gray-200 text-xl mt-5">
+                    <p className="text-gray-200 text-md md:text-xl mt-5">
                       Search deals on Meeting Rooms and much more...
                     </p>
                     <Button

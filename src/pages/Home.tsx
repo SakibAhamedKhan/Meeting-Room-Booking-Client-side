@@ -1,37 +1,21 @@
-import { HomeCarousel } from '@/components/carousels/HomeCarousel'
-import React from 'react'
-import { MdOutlineEventAvailable,MdAssuredWorkload  } from "react-icons/md";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { BiSupport } from "react-icons/bi";
-
+import { HomeCarousel } from "@/components/carousels/HomeCarousel";
+import OurServices from "@/components/home/OurServices";
+import RoomCollection from "@/components/home/RoomCollection";
+import ServiceAdvertise from "@/components/home/ServiceAdvertise";
 
 const Home = () => {
   return (
     <div>
-      <div className=''>
-        <HomeCarousel/>
-        <div className='bg-[#002F76] p-4 md:p-14 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white'>
-          <div className='flex flex-col justify-center items-center'>
-            <MdOutlineEventAvailable className='text-3xl md:text-6xl'/>
-            <h1 className='text-sm md:text-2xl font-semibold mt-5 text-center'>Real-Time Availability</h1>            
-          </div>
-          <div className='flex flex-col justify-center items-center'>
-            <MdAssuredWorkload className='text-3xl md:text-6xl'/>
-            <h1 className='text-sm md:text-2xl font-semibold mt-5 text-center'>Instant Booking Confirmation</h1>            
-          </div>
-          <div className='flex flex-col justify-center items-center'>
-            <RiCalendarScheduleLine className='text-3xl md:text-6xl'/>
-            <h1 className='text-sm md:text-2xl font-semibold mt-5 text-center'>Flexible Scheduling</h1>            
-          </div>
-          <div className='flex flex-col justify-center items-center'>
-            <BiSupport className='text-3xl md:text-6xl'/>
-            <h1 className='text-sm md:text-2xl font-semibold mt-5 text-center'> 24/7 Support</h1>            
-          </div>
-        </div>
+      <HomeCarousel />
+      <ServiceAdvertise />
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-24">
+        <RoomCollection />
       </div>
-
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-24">
+        <OurServices />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
