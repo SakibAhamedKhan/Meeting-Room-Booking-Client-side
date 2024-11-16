@@ -1,7 +1,10 @@
 import { HomeCarousel } from "@/components/carousels/HomeCarousel";
+import GetInTouch from "@/components/home/GetInTouch.home";
 import OurServices from "@/components/home/OurServices";
 import RoomCollection from "@/components/home/RoomCollection";
 import ServiceAdvertise from "@/components/home/ServiceAdvertise";
+import TrustedCompany from "@/components/home/TrustedCompany.home";
+import Footer from "@/components/shared/Footer";
 
 const Home = () => {
   return (
@@ -13,6 +16,15 @@ const Home = () => {
       </div>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-24">
         <OurServices />
+      </div>
+      <div className="bg-[#e4e9f2]">
+        <TrustedCompany />
+      </div>
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-4 mt-[-50px] md:mt-[-97px]">
+        <GetInTouch />
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );

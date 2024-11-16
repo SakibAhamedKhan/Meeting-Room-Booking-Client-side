@@ -14,6 +14,10 @@ export const router = createBrowserRouter([
         element: <CommonLayout><Home/></CommonLayout>
     },
     {
+        path: "/meeting-rooms",
+        element: <CommonLayout><Home/></CommonLayout>
+    },
+    {
         path: "/services",
         element: <CommonLayout><Services/></CommonLayout>
     },
