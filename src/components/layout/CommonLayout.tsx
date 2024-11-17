@@ -6,7 +6,7 @@ import Footer from '../shared/Footer';
 const CommonLayout = ({children}:{children:ReactNode}) => {
   return (
     <div>
-        <Navbar/>
+        <div className='pb-[64px]'><Navbar/></div>
         {children}
         <Footer/>
     </div>
