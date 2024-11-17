@@ -1,9 +1,20 @@
-import React from 'react'
+import ParticleWIthContact from "@/components/contact/ParticleWIthContact.contact";
+import OurServices from "@/components/home/OurServices";
+import React from "react";
 
 const Services = () => {
   return (
-    <div>Services</div>
-  )
-}
+    <div>
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-24">
+        <OurServices />
+      </div>
+      <div className="bg-[#002F76] h-64 md:h-80 lg:h-96 my-8 md:my-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-24 h-full">
+          <ParticleWIthContact />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Services
+export default Services;

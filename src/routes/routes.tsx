@@ -1,3 +1,4 @@
+import TestParticles from "@/components/contact/TestParticles";
 import CommonLayout from "@/components/layout/CommonLayout";
 import AboutUs from "@/pages/AboutUs";
 import ContactUs from "@/pages/ContactUs";
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/contact-us",
-        element: <CommonLayout><ContactUs/></CommonLayout>
+        element:<CommonLayout><ContactUs/></CommonLayout>
     },
     {
         path: "/register",

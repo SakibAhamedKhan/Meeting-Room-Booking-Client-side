@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className="">
       {/* First Part */}
-      <div className="bg-[#002F76] p-6 md:p-8 lg:p-10">
+      <div className="bg-[#002F76] py-4 md:p-8 lg:p-10">
         <div className="grid grid-cols-1 md:grid-cols-3 mx-auto max-w-7xl px-4 md:px-6 lg:px-8 gap-10">
           <div className="lg:px-6">
             {/* <h1 className="text-white font-bold text-2xl mb-6">Meeting.com</h1> */}
