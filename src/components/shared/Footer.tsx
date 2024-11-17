@@ -7,6 +7,7 @@ import { CiLinkedin } from "react-icons/ci";
 const Footer = () => {
   return (
     <div className="">
+      {/* First Part */}
       <div className="bg-[#002F76] p-6 md:p-8 lg:p-10">
         <div className="grid grid-cols-1 md:grid-cols-3 mx-auto max-w-7xl px-4 md:px-6 lg:px-8 gap-10">
           <div className="lg:px-6">
@@ -81,20 +82,24 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      {/* Second Part */}
       <div>
         <div className="p-6 md:p-8 lg:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 mx-auto max-w-7xl px-2 md:px-4 lg:px-8  gap-0 md:gap-2 lg:gap-10 items-center justify-center">
-                <h1 className="text-lg md:text-xl font-semibold text-[#002F76] lg:pl-2 pb-2 md:pb-0 text-center md:text-start">© 2024 All rights reserved. 
-                Developed By Sakib Ahamed Khan.</h1>
-                <div className="flex items-center justify-center md:justify-end">
-                    <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-[#002F76] mr-2">FOLLOW US:</h1>
-                    <div className="flex gap-2 justify-center items-center">
-                        <CiFacebook className="text-3xl md:text-4xl lg:text-5xl text-[#002F76]"/>
-                        <FaXTwitter className="text-2xl md:text-3xl lg:text-4xl text-[#002F76]"/>
-                        <CiLinkedin className="text-3xl md:text-4xl lg:text-5xl text-[#002F76]"/>
-                    </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 mx-auto max-w-7xl px-2 md:px-4 lg:px-8  gap-0 md:gap-2 lg:gap-10 items-center justify-center">
+            <h1 className="text-lg md:text-xl font-semibold text-[#002F76] lg:pl-2 pb-2 md:pb-0 text-center md:text-start">
+              © 2024 All rights reserved. Developed By Sakib Ahamed Khan.
+            </h1>
+            <div className="flex items-center justify-center md:justify-end">
+              <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-[#002F76] mr-2">
+                FOLLOW US:
+              </h1>
+              <div className="flex gap-2 justify-center items-center">
+                <CiFacebook className="text-3xl md:text-4xl lg:text-5xl text-[#002F76]" />
+                <FaXTwitter className="text-2xl md:text-3xl lg:text-4xl text-[#002F76]" />
+                <CiLinkedin className="text-3xl md:text-4xl lg:text-5xl text-[#002F76]" />
+              </div>
             </div>
+          </div>
         </div>
       </div>
     </div>

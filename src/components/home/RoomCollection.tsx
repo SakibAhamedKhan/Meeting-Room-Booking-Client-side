@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -13,7 +12,7 @@ const RoomCollection = () => {
   return (
     <div>
       <div className="flex justify-between items-center px-2">
-        <h1 className="font-bold text-2xl md:text-4xl">
+        <h1 className="font-bold text-[22px] md:text-4xl">
           Meeting Rom Collection
         </h1>
         <p className="text-[#002F76] text-sm md:text-lg cursor-pointer">More</p>
