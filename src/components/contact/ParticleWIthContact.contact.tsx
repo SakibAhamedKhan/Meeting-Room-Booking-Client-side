@@ -1,12 +1,14 @@
 import { Button } from "antd";
-import React from "react";
 import { useNavigate } from "react-router-dom";
+
+
 
 const ParticleWIthContact = () => {
   const navigate = useNavigate();
   
+  
   return (
-    <div className="text-white flex h-full justify-between items-center gap-8">
+    <div className="text-white flex h-full justify-between items-center gap-8" >
       <div>
         <p className="mb-4 text-sm md:text-xl font-thin tracking-widest">
           QUALITY, SPEED AND RESULT
@@ -28,4 +30,6 @@ const ParticleWIthContact = () => {
   );
 };
 
+
 export default ParticleWIthContact;
+
