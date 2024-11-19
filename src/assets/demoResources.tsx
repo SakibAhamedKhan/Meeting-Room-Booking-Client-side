@@ -424,3 +424,32 @@ export const feedbackData = [
     "feedback": "Julia is a dedicated and empathetic customer support professional who goes above and beyond to ensure customer satisfaction. She is patient, listens attentively, and provides clear, concise solutions to complex issues. Julia’s ability to handle high-pressure situations with professionalism and positivity ensures that customers feel valued and heard. She is skilled at managing customer inquiries through various channels, including email, phone, and live chat. Julia’s deep product knowledge and attention to detail help resolve issues quickly and accurately. Her commitment to continuous improvement and passion for delivering exceptional service make her an essential part of the customer support team."
   }
 ]
+
+
+export const directorsData = [
+  {
+    "name": "John Doe",
+    "image": "https://randomuser.me/api/portraits/men/49.jpg",
+    "role": "Software Engineer"
+  },
+  {
+    "name": "Jane Smith",
+    "image": "https://randomuser.me/api/portraits/men/47.jpg",
+    "role": "Product Manager"
+  },
+  {
+    "name": "Alice Johnson",
+    "image": "https://randomuser.me/api/portraits/men/85.jpg",
+    "role": "UX/UI Designer"
+  },
+  {
+    "name": "Bob Lee",
+    "image": "https://randomuser.me/api/portraits/men/78.jpg",
+    "role": "QA Engineer"
+  },
+  {
+    "name": "Charlie Brown",
+    "image": "https://randomuser.me/api/portraits/men/77.jpg",
+    "role": "Data Scientist"
+  }
+]

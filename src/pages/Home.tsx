@@ -25,7 +25,7 @@ const Home = () => {
       </div>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-4 mt-[-50px] md:mt-[-80px]">
         <GetInTouch />
-      </div>
+      </div>  
     </div>
   );
 };
