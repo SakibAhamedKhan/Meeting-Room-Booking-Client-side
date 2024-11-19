@@ -12,8 +12,9 @@ export type TCFormProps = {
 } & TFormConfig;
 
 export type TCInputProps = {
-  type: string;
+  type?: string;
   name: string;
   label?: string; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
   placeholder: string;
 };
+
