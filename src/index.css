@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 /* ... */
-
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  position:fixed !important;
+}
+.ant-modal-content{
+  box-shadow: none !important;
+}
+/* .ant-modal-content {
+  box-shadow: none;
+} */
 @layer base {
   :root {
 
@@ -57,6 +66,7 @@
 
     --radius: 0.5rem
   }
+
   .dark {
 
     --background: 240 10% 3.9%;
@@ -113,9 +123,8 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
-
-

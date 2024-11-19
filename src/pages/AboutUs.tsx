@@ -61,7 +61,7 @@ const AboutUs = () => {
           {
             directorsData?.map((item,index) => (
               <div className="justify-items-center p-[10px] md:p-4 w-fit">
-                <img src={`${item.image}`} className="rounded-full w-16 h-16 md:w-32 md:h-32 lg:w-40 lg:h-40 mb-2" alt="" />
+                <img src={`${item.image}`} className="rounded-full w-[80px] h-[80px] md:w-32 md:h-32 lg:w-40 lg:h-40  mb-2 md:mb-4" alt="" />
                 <h3 className="text-lg md:text-xl font-bold md:mb-2">{item.name}</h3>
                 <p className="text-sm md:text-md font-light">{item.role}</p>
               </div>
