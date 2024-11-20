@@ -1,13 +1,14 @@
 import { ReactNode } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Control } from "react-hook-form";
 
 export type TFormConfig = {
-  defaultValues?: Record<string, any>; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
+  defaultValues?: FieldValues; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
   resolver?: any;
 };
 
 export type TCFormProps = {
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit: SubmitHandler<any>;
   children: ReactNode;
 } & TFormConfig;
 
@@ -15,6 +16,14 @@ export type TCInputProps = {
   type?: string;
   name: string;
   label?: string; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
+  control: Control<any>;
   placeholder: string;
 };
 
+export interface TCSelectAmenitiesProps {
+  name: string;
+  label: string;
+  placeholder?: string;
+  control: Control<any>; // Control from react-hook-form, used to manage form state
+  error?: string; // Optional error message to show under the field (e.g., for validation errors)
+}
