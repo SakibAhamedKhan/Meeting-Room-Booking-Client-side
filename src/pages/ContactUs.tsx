@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import CForm from "@/components/form/CForm";
-import { FieldValues } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import CInput from "@/components/form/CInput";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
@@ -14,9 +14,32 @@ const containerStyle = {
   height: "350px",
 };
 
-const center = { lat: -28.643387, lng: 153.612224 };
+// const center = { lat: -28.643387, lng: 153.612224 };
 
 const ContactUs = () => {
+  const { control, handleSubmit } = useForm();
+
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+
+  const googleMapsUrl =
+    "https://www.google.com/maps/place/Mia+Khan+Rd,+Chittagong/@22.3502484,91.8535353,17z/data=!3m1!4b1!4m6!3m5!1s0x30ad271678f04d59:0xb0526c5bc6f1bcc4!8m2!3d22.3502484!4d91.8561102!16s%2Fg%2F1tfwsl5c?entry=ttu&g_ep=EgoyMDI0MTExOS4wIKXMDSoASAFQAw%3D%3D";
+
+  const extractCoordinates = (url: string) => {
+    const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
+    const match = url.match(regex);
+    if (match) {
+      const lat =Number(match[1]);
+      const lng =Number(match[2]);
+      setCoordinates({ lat, lng });
+    } else {
+      alert("No coordinates found in the URL");
+    }
+  };
+
+  React.useEffect(() => {
+    extractCoordinates(googleMapsUrl);
+  }, []);
+
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
   };
@@ -35,27 +58,48 @@ const ContactUs = () => {
         </div>
         <div className="grid md:grid-cols-1 lg:grid-cols-2 mt-10 lg:mt-16 gap-4 lg:gap-10 items-center">
           <div>
-            <h2 className="text-2xl md:text-4xl font-semibold mb-2 text-[#002F76]">Send us a message</h2>
+            <h2 className="text-2xl md:text-4xl font-semibold mb-2 text-[#002F76]">
+              Send us a message
+            </h2>
             <p className="text-md md:text-xl font-light">
               Fill up the form below, and we will get in touch very soon! Your
               attention is very important to us and we are constantly in touch.
             </p>
 
             <div className="mt-6">
-              <CForm onSubmit={onSubmit} resolver={zodResolver(contactFormZodSchema)}>
+              <CForm
+                onSubmit={onSubmit}
+                resolver={zodResolver(contactFormZodSchema)}
+              >
                 <div className="flex">
                   <div className="mb-4 mr-4 w-full">
-                    <CInput type="text" name="name" placeholder="Name" />
+                    <CInput
+                      control={control}
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                    />
                   </div>
                   <div className="mb-4 w-full">
-                    <CInput type="text" name="email" placeholder="Email" />
+                    <CInput
+                      control={control}
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                    />
                   </div>
                 </div>
                 <div className="mb-4">
-                  <CInput type="text" name="subject" placeholder="Subject" />
+                  <CInput
+                    control={control}
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                  />
                 </div>
                 <div className="mb-6">
                   <CTextArea
+                    control={control}
                     name="message"
                     placeholder="Your Message"
                   />
@@ -77,10 +121,10 @@ const ContactUs = () => {
             >
               <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={center}
+                center={coordinates}
                 zoom={10}
               >
-                <Marker position={center} />
+                <Marker position={coordinates} />
               </GoogleMap>
             </LoadScript>
           </div>
