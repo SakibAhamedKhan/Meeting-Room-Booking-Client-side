@@ -16,7 +16,7 @@ export type TCInputProps = {
   type?: string;
   name: string;
   label?: string; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
-  control: Control<any>;
+  control?: Control<any>;
   placeholder: string;
 };
 

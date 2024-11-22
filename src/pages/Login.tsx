@@ -9,16 +9,42 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useLoginMutation } from "@/redux/features/auth/authApi.api";
+import { setUser } from "@/redux/features/auth/authSlice.slice";
+import { useAppDispatch } from "@/redux/hook";
 import { loginZodSchema } from "@/schemas/auth.schemas";
-import { zodResolver } from '@hookform/resolvers/zod'
+import { TUser } from "@/types";
+import { verifyToken } from "@/utils/verifyToken";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "antd";
 import { FieldValues } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
+  const [useLogin] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
+    const toastId = toast.loading("Logging in");
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await useLogin(userInfo).unwrap();
+      console.log(res);
+      const user = verifyToken(res.data.accessToken) as TUser;
+      console.log(user);
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      console.log(user.role);
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.message, { id: toastId, duration: 1000 });
+    }
   };
   return (
     <div>
@@ -55,7 +81,15 @@ const Login = () => {
                   Sign in
                 </Button>
                 <h1 className="text-center mb-2">
-                <CardDescription className="inline">Not have an account? </CardDescription> <Link to={`/register`} className="text-[#002F76] font-semibold">Registration now</Link>
+                  <CardDescription className="inline">
+                    Not have an account?{" "}
+                  </CardDescription>{" "}
+                  <Link
+                    to={`/register`}
+                    className="text-[#002F76] font-semibold"
+                  >
+                    Registration now
+                  </Link>
                 </h1>
               </div>
             </CForm>

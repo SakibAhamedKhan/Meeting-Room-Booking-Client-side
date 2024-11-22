@@ -17,7 +17,7 @@ const containerStyle = {
 // const center = { lat: -28.643387, lng: 153.612224 };
 
 const ContactUs = () => {
-  const { control, handleSubmit } = useForm();
+  const { control } = useForm();
 
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
 

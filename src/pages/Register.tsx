@@ -1,23 +1,44 @@
-import React from "react";
 import CForm from "@/components/form/CForm";
 import CInput from "@/components/form/CInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { loginZodSchema, registerZodSchema } from "@/schemas/auth.schemas";
+import { registerZodSchema } from "@/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "antd";
-import { FieldValues } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useRegisterMutation } from "@/redux/features/auth/authApi.api";
 
 const Register = () => {
+  const { control, handleSubmit } = useForm();
+  const [useRegister] = useRegisterMutation();
+  const navigate = useNavigate();
+
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
+    const toastId = toast.loading("Logging in");
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        phone: data.phone,
+        address: data.address,
+      };
+      console.log(userInfo);
+      const res = await useRegister(userInfo).unwrap();
+      console.log(res);
+      toast.success("Successfully Registered", { id: toastId, duration: 2000 });
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(error, { id: toastId, duration: 1000 });
+    }
   };
   return (
     <div className="m-0 grid grid-cols-5">
@@ -54,32 +75,47 @@ const Register = () => {
             <CardDescription>Create account in 30 seconds.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-            <CForm onSubmit={onSubmit} resolver={zodResolver(registerZodSchema)}>
+            <CForm
+              onSubmit={handleSubmit(onSubmit)}
+              resolver={zodResolver(registerZodSchema)}
+            >
               <div className="flex">
                 <div className="mb-4 mr-4 w-full">
-                  <CInput type="text" name="name" placeholder="Name" />
+                  <CInput
+                    control={control}
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                  />
                 </div>
                 <div className="mb-4 w-full">
-                  <CInput type="text" name="email" placeholder="Email" />
+                  <CInput
+                    control={control}
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                  />
                 </div>
               </div>
               <div className="flex">
                 <div className="mb-4 mr-4 w-full">
                   <CInput
+                    control={control}
                     type="password"
                     name="password"
                     placeholder="Your Password"
                   />
                 </div>
                 <div className="mb-4 w-full">
-                  <CInput type="text" name="phone" placeholder="Phone Number" />
+                  <CInput control={control} type="text" name="phone" placeholder="Phone Number" />
                 </div>
               </div>
               <div className="flex">
                 <div className="mb-4 w-full">
-                  <CInput type="text" name="address" placeholder="Address" />
+                  <CInput control={control} type="text" name="address" placeholder="Address" />
                 </div>
               </div>
+              
 
               <div>
                 <Button
@@ -92,10 +128,7 @@ const Register = () => {
                   <CardDescription className="inline">
                     Already have account?{" "}
                   </CardDescription>{" "}
-                  <Link
-                    to={`/login`}
-                    className="text-[#002F76] font-semibold"
-                  >
+                  <Link to={`/login`} className="text-[#002F76] font-semibold">
                     Sign in
                   </Link>
                 </h1>
