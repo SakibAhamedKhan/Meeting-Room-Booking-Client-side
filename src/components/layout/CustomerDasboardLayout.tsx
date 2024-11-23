@@ -10,39 +10,77 @@ import { MenuProps, Grid } from "antd";
 import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
 import Navbar from "./Navbar";
 import DashboardNavbar from "./DashboardNavbar";
+import { useAppSelector } from "@/redux/hook";
+import { selectCurrentToken } from "@/redux/features/auth/authSlice.slice";
+import { verifyToken } from "@/utils/verifyToken";
+import { CustomerPaths } from "@/routes/customer.routes";
+import { sidebarItemsGenerator } from "@/utils/SidebarsItemsGenerator";
+import { TUser } from "@/types";
+import { Outlet, useLocation } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+const userRole = {
+  ADMIN: "ADMIN",
+  SUBADMIN: "SUBADMIN",
+  CUSTOMER: "CUSTOMER",
+  PARTNER: "PARTNER",
+};
 
 const CustomerDasboardLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const screens = Grid.useBreakpoint();
+  const location = useLocation();
+
+  const tokens = useAppSelector(selectCurrentToken);
+  let user;
+
+  if (tokens) {
+    user = verifyToken(tokens);
+  }
+  let sidebarItems;
+
+  const role = (user as TUser).role;
+
+  switch (role) {
+    case userRole.CUSTOMER:
+      sidebarItems = sidebarItemsGenerator(
+        CustomerPaths,
+        userRole.CUSTOMER.toLowerCase()
+      );
+      break;
+    // case userRole.FACULTY:
+    //   sidebarItems = sidebarItemsGenerator(FacultyPaths, userRole.FACULTY);
+    //   break;
+    // case userRole.STUDENT:
+    //   sidebarItems = sidebarItemsGenerator(StudentPaths, userRole.STUDENT);
+    //   break;
+    default:
+      break;
+  }
+
+  const generateBreadcrumbItems = (pathname: string) => {
+    const pathSegments = pathname.split("/").filter(Boolean); // Split by '/' and remove empty values
+
+    return pathSegments.map((segment, index) => {
+      // Decode URL-encoded segments (e.g., "Customer%20Support" -> "Customer Support")
+      const decodedSegment = decodeURIComponent(segment);
+
+      // Capitalize the first letter of each word in the segment for better readability
+      const title = decodedSegment
+        .split("-") // Split by hyphen (to handle "support-ticket" as "Support Ticket")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" "); // Join words back with a space
+
+      return {
+        title: title, // Return the formatted title
+      };
+    });
+  };
+
+  const breadcrumbItems = generateBreadcrumbItems(location.pathname);
+
+  console.log(sidebarItems, role);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -55,33 +93,56 @@ const CustomerDasboardLayout: React.FC = () => {
       </div>
       <Layout>
         <Sider
-          width={200}
-          collapsedWidth={screens.xs? 50 : 60}
+          className={`${
+            collapsed === false && screens.xs ? "absolute h-screen" : ""
+          }`}
+          width={210}
+          collapsedWidth={screens.xs ? 50 : 60}
           trigger={null}
           collapsible
           collapsed={collapsed}
-          
         >
           <Menu
-          className="overflow-auto h-screen sticky"
+            className="overflow-auto h-screen sticky"
             mode="inline"
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            style={{ height: "100%", borderRight: 0, background:"#002F76", color:"white" }}
-            items={items2}
+            style={{
+              height: "100%",
+              borderRight: 0,
+              background: "#002F76",
+              color: "white",
+            }}
             onClick={() => {
               console.log(screens);
               if (screens.xs) {
                 setCollapsed(true);
               }
             }}
+            items={sidebarItems}
           />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }} className="overflow-auto h-screens">
+        <Layout
+          style={{ padding: "0 24px 24px" }}
+          className="overflow-auto h-screens"
+        >
           <div className="flex items-center gap-5">
             <Button
+              className={`${
+                collapsed === false && screens.xs
+                  ? "relative h-screen left-[190px] top-[4px] !bg-[#002F76]"
+                  : ""
+              }`}
               type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              icon={
+                collapsed ? (
+                  <MenuUnfoldOutlined />
+                ) : (
+                  <MenuFoldOutlined
+                    className={screens.xs ? "text-white" : ""}
+                  />
+                )
+              }
               onClick={() => setCollapsed(!collapsed)}
               style={{
                 fontSize: "16px",
@@ -89,13 +150,9 @@ const CustomerDasboardLayout: React.FC = () => {
                 height: 64,
               }}
             />
-            <Breadcrumb
-              items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
-              style={{ margin: "16px 0" }}
-            />
+            <Breadcrumb items={breadcrumbItems} style={{ margin: "16px 0" }} />
           </div>
           <Content
-            
             style={{
               padding: 24,
               margin: 0,
@@ -104,7 +161,7 @@ const CustomerDasboardLayout: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Content
+            <Outlet />
           </Content>
         </Layout>
       </Layout>

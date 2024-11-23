@@ -11,7 +11,9 @@ import Login from "@/pages/Login";
 import MeetingRoomsList from "@/pages/MeetingRoomsList";
 import Register from "@/pages/Register";
 import Services from "@/pages/Services";
+import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
+import { CustomerPaths } from "./customer.routes";
 
 export const router = createBrowserRouter([
   {
@@ -67,9 +69,31 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/customer-dashboard",
+    path: "/customer",
     element: (
       <ProtectedRoute role="CUSTOMER">
+        <CustomerDasboardLayout />
+      </ProtectedRoute>
+    ),
+    children: routeGenerator(CustomerPaths) ,
+  },
+  {
+    path: "/admin-dashboard",
+    element: (
+      <ProtectedRoute role="ADMIN">
+        <CustomerDasboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "",
+      },
+    ],
+  },
+  {
+    path: "/partner-dashboard",
+    element: (
+      <ProtectedRoute role="PARTNER">
         <CustomerDasboardLayout />
       </ProtectedRoute>
     ),
