@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
     children: routeGenerator(CustomerPaths) ,
   },
   {
-    path: "/admin-dashboard",
+    path: "/admin",
     element: (
       <ProtectedRoute role="ADMIN">
         <CustomerDasboardLayout />
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/partner-dashboard",
+    path: "/partner",
     element: (
       <ProtectedRoute role="PARTNER">
         <CustomerDasboardLayout />
