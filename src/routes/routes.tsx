@@ -14,6 +14,7 @@ import Services from "@/pages/Services";
 import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
 import { CustomerPaths } from "./customer.routes";
+import RoomDetails from "@/pages/RoomDetails";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ export const router = createBrowserRouter([
     element: (
       <CommonLayout>
         <AdminRoomsAdd />
+      </CommonLayout>
+    ),
+  },
+  {
+    path: "/room/:id",
+    element: (
+      <CommonLayout>
+        <RoomDetails />
       </CommonLayout>
     ),
   },

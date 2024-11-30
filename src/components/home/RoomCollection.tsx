@@ -6,9 +6,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { roomsData } from "@/assets/demoResources";
+import { useGetAllRoomsQuery } from "@/redux/features/customer/roomApi.api";
+import { useNavigate } from "react-router-dom";
 
 const RoomCollection = () => {
+  const {data: roomData, isFetching} = useGetAllRoomsQuery(undefined);
+  const navigate = useNavigate();
+  
   return (
     <div>
       <div className="flex justify-between items-center px-2">
@@ -25,7 +29,7 @@ const RoomCollection = () => {
           className=""
         >
           <CarouselContent>
-            {roomsData.map((item, index) => (
+            {roomData?.data.map((item:any, index:number) => (
               <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
                 <div className="p-1">
                   <Card className="rounded-lg">
@@ -33,12 +37,12 @@ const RoomCollection = () => {
                       <div className="">
                         <img
                           className="w-full h-44 rounded-t-lg"
-                          src={`${item.thumbnail}`}
+                          src={`${item.thumbnail[0]?.url}`}
                           alt=""
                         />
                       </div>
                       <div className="px-4 py-2">
-                        <h2 className="text-[#002F76] text-md md:text-xl font-bold cursor-pointer">
+                        <h2 onClick={() => navigate(`/room/${item._id}`)} className="text-[#002F76] text-lg md:text-2xl font-semibold cursor-pointer mb-2">
                           {item.name}
                         </h2>
                         <p className="text-sm md:text-lg">Room No: {item.roomNo}</p>

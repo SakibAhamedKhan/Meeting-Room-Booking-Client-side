@@ -44,7 +44,7 @@ const Navbar = () => {
       key: "2",
       label: (
         <Link
-          to={`/${user?.role.toLowerCase()}`}
+          to={`/${user?.role.toLowerCase()}/dashboard`}
           className="block px-4 py-2  text-gray-700 text-sm lg:text-lg font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
         >
           Dashboard
