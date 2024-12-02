@@ -62,7 +62,7 @@ const Navbar = () => {
   return (
     <Disclosure
       as="nav"
-      className="bg-[#002F76] fixed top-0 left-0 right-0 z-20 "
+      className="bg-[#002F76] fixed top-0 left-0 right-0 z-20 border-b-[3px] border-white"
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">

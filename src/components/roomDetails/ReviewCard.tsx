@@ -1,9 +1,9 @@
-import React from "react";
 import { FiFlag } from "react-icons/fi";
+import { Card } from "../ui/card";
 
 const ReviewCard = ({id}:any) => {
   return (
-    <div className="border rounded-lg my-6">
+    <Card className="border rounded-lg my-6">
       <div className="flex justify-end p-4 border-b">
         <div className="flex items-center gap-3">
           <div className="flex flex-col">
@@ -37,7 +37,7 @@ const ReviewCard = ({id}:any) => {
         </div>
         <div className="text-blue-700 text-end cursor-pointer">See All..</div>
       </div>
-    </div>
+    </Card>
   );
 };
 

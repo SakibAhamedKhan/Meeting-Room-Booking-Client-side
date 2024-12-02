@@ -25,6 +25,7 @@ import {
   FaBath,
 } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
+import { Card } from "../ui/card";
 const amenitiesList = [
   { value: "wifi", label: "Wi-Fi", icon: <FaWifi className="text-md md:text-3xl text-gray-600" /> },
   {
@@ -131,10 +132,10 @@ const AmenitiesCard = ({amenities}:any) => {
   console.log(amenities);
   const findData = amenitiesList.find(item=> item.value===amenities);
   console.log(findData);
-  return <div className="flex justify-center items-center border w-full p-4 rounded-lg gap-4 hover:bg-gray-200 cursor-default">
+  return <Card className="flex justify-center items-center border w-full p-4 rounded-lg gap-4 hover:bg-gray-200 cursor-default">
     <div>{findData?.icon}</div>
     <div className="text-[10px] md:text-md lg:text-lg">{findData?.label}</div>
-  </div>;
+  </Card>;
 };
 
 export default AmenitiesCard;

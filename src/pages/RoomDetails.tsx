@@ -1,9 +1,7 @@
 import { useGetSingleRoomQuery } from "@/redux/features/customer/roomApi.api";
-import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
-import { FiFlag } from "react-icons/fi";
 import AmenitiesCard from "@/components/roomDetails/AmenitiesCard";
 import TitleImage from "@/components/roomDetails/TitleImage";
 import DescriptionReverse from "@/components/roomDetails/DescriptionReverse";
@@ -22,7 +20,7 @@ const RoomDetails = () => {
   return (
     <div>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-12">
-        <div className="grid  lg:grid-cols-10 gap-4">
+        <div className="grid  lg:grid-cols-10 gap-6">
           {/* Title and image */}
           <div className="lg:col-span-7">
             <TitleImage roomData={roomData} />
@@ -55,7 +53,7 @@ const RoomDetails = () => {
         </div>
 
         {/* amenities */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 my-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 my-8">
           {roomData?.amenities.map((item: any, index: number) => (
             <AmenitiesCard amenities={item} key={index} />
           ))}

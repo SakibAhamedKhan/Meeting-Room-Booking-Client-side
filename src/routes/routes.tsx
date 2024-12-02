@@ -15,6 +15,8 @@ import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
 import { CustomerPaths } from "./customer.routes";
 import RoomDetails from "@/pages/RoomDetails";
+import { AdminPaths } from "./admin.routes";
+import AdminDasboardLayout from "@/components/layout/AdminDasboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -90,14 +92,10 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute role="ADMIN">
-        <CustomerDasboardLayout />
+        <AdminDasboardLayout />
       </ProtectedRoute>
     ),
-    children: [
-      {
-        path: "",
-      },
-    ],
+    children: routeGenerator(AdminPaths),
   },
   {
     path: "/partner",
