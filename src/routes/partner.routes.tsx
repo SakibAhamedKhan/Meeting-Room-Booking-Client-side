@@ -6,19 +6,19 @@ import PartnerTransactionReport from "@/pages/partner/PartnerTransactionReport";
 import PartnerWithdraw from "@/pages/partner/PartnerWithdraw";
 import { MdDashboard } from "react-icons/md";
 import { AiFillDollarCircle } from "react-icons/ai";
-import { RiHomeOfficeLine } from "react-icons/ri";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaHouseChimneyCrack } from "react-icons/fa6";
 
 export const PartnerPaths = [
   {
-    name: "Dashboard",
+    name: "Partner Dashboard",
     path: "dashboard",
     element: <PartnerDashboard />,
     icons: <MdDashboard />,
   },
   {
     name: "Room Management",
-    icons: <RiHomeOfficeLine />,
+    icons: <FaHouseChimneyCrack />,
     children: [
       {
         name: "Create Room",

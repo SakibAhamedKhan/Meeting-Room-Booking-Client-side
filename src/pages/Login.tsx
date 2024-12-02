@@ -19,12 +19,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "antd";
 import { FieldValues } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Login = () => {
   const [useLogin] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
@@ -41,6 +42,7 @@ const Login = () => {
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       console.log(user.role);
       toast.success("Logged in", { id: toastId, duration: 2000 });
+      navigate('/');
     } catch (error: any) {
       console.log(error);
       toast.error(error?.data?.message, { id: toastId, duration: 1000 });

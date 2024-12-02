@@ -15,7 +15,7 @@ import { MdSupportAgent } from "react-icons/md";
 
 export const AdminPaths = [
     {
-        name: "Dashboard",
+        name: "Admin Dashboard",
         path: "dashboard",
         element: <AdminDashboard/>,
         icons: <MdDashboard/>,
