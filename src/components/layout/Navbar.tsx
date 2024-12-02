@@ -34,7 +34,7 @@ const Navbar = () => {
       label: (
         <Link
           to={`/`}
-          className="block px-4 py-2  text-gray-700 text-sm lg:text-lg font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="block px-4 py-2  text-gray-700 text-sm lg:text-md font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
         >
           Home
         </Link>
@@ -45,7 +45,7 @@ const Navbar = () => {
       label: (
         <Link
           to={`/${user?.role.toLowerCase()}/dashboard`}
-          className="block px-4 py-2  text-gray-700 text-sm lg:text-lg font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="block px-4 py-2  text-gray-700 text-sm lg:text-md font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
         >
           Dashboard
         </Link>

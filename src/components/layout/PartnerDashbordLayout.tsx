@@ -18,6 +18,7 @@ import { sidebarItemsGenerator } from "@/utils/SidebarsItemsGenerator";
 import { TUser } from "@/types";
 import { Outlet, useLocation } from "react-router-dom";
 import { AdminPaths } from "@/routes/admin.routes";
+import { PartnerPaths } from "@/routes/partner.routes";
 
 const { Header, Content, Sider } = Layout;
 
@@ -28,7 +29,7 @@ const userRole = {
   PARTNER: "PARTNER",
 };
 
-const AdminDasboardLayout: React.FC = () => {
+const PartnerDashbordLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const screens = Grid.useBreakpoint();
   const location = useLocation();
@@ -44,10 +45,10 @@ const AdminDasboardLayout: React.FC = () => {
   const role = (user as TUser).role;
 
   switch (role) {
-    case userRole.ADMIN:
+    case userRole.PARTNER:
       sidebarItems = sidebarItemsGenerator(
-        AdminPaths,
-        userRole.ADMIN.toLowerCase()
+        PartnerPaths,
+        userRole.PARTNER.toLowerCase()
       );
       break;
     default:
@@ -165,4 +166,4 @@ const AdminDasboardLayout: React.FC = () => {
   );
 };
 
-export default AdminDasboardLayout;
+export default PartnerDashbordLayout;

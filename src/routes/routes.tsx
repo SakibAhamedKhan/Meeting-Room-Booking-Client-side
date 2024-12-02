@@ -16,7 +16,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { CustomerPaths } from "./customer.routes";
 import RoomDetails from "@/pages/RoomDetails";
 import { AdminPaths } from "./admin.routes";
-import AdminDasboardLayout from "@/components/layout/AdminDasboardLayout";
+import AdminDasboardLayout from "@/components/layout/AdminDashboardLayout";
+import { PartnerPaths } from "./partner.routes";
+import PartnerDashbordLayout from "@/components/layout/PartnerDashbordLayout";
 
 export const router = createBrowserRouter([
   {
@@ -101,13 +103,9 @@ export const router = createBrowserRouter([
     path: "/partner",
     element: (
       <ProtectedRoute role="PARTNER">
-        <CustomerDasboardLayout />
+        <PartnerDashbordLayout />
       </ProtectedRoute>
     ),
-    children: [
-      {
-        path: "",
-      },
-    ],
+    children: routeGenerator(PartnerPaths),
   },
 ]);

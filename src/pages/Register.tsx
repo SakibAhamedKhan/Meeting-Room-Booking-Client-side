@@ -76,7 +76,7 @@ const Register = () => {
           </CardHeader>
           <CardContent className="p-0">
             <CForm
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={onSubmit}
               resolver={zodResolver(registerZodSchema)}
             >
               <div className="flex">
