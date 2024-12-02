@@ -6,13 +6,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { FaLocationDot } from "react-icons/fa6";
 import { useGetAllRoomsQuery } from "@/redux/features/customer/roomApi.api";
 import { useNavigate } from "react-router-dom";
+import { Tooltip } from "antd";
 
 const RoomCollection = () => {
-  const {data: roomData, isFetching} = useGetAllRoomsQuery(undefined);
+  const { data: roomData, isFetching } = useGetAllRoomsQuery(undefined);
   const navigate = useNavigate();
-  
+
   return (
     <div>
       <div className="flex justify-between items-center px-2">
@@ -29,30 +31,49 @@ const RoomCollection = () => {
           className=""
         >
           <CarouselContent>
-            {roomData?.data.map((item:any, index:number) => (
+            {roomData?.data.map((item: any, index: number) => (
               <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
                 <div className="p-1">
                   <Card className="rounded-lg">
                     <CardContent className="p-0">
-                      <div className="">
+                      <div className="overflow-hidden w-full h-44 rounded-t-lg">
                         <img
-                          className="w-full h-44 rounded-t-lg"
+                          className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
                           src={`${item.thumbnail[0]?.url}`}
                           alt=""
                         />
                       </div>
                       <div className="px-4 py-2">
-                        <h2 onClick={() => navigate(`/room/${item._id}`)} className="text-[#002F76] text-lg md:text-2xl font-semibold cursor-pointer mb-2">
+                        <h2
+                          onClick={() => navigate(`/room/${item._id}`)}
+                          className="text-[#002F76] text-lg md:text-2xl font-semibold cursor-pointer mb-1"
+                        >
                           {item.name}
                         </h2>
-                        <p className="text-sm md:text-lg">Room No: {item.roomNo}</p>
-                        <p className="text-sm md:text-lg">Capactiy: {item.capacity}</p>
-                        <p className="text-sm md:text-lg">Floor No: {item.floorNo}</p>
+                        <div className="flex items-center mb-2">
+                          <FaLocationDot className="text-blue-700 text-md flex-shrink-0" />
+                          <Tooltip placement="bottom" title={`${item.address}`}>
+                            <p className="text-sm text-gray-600 ml-2 overflow-hidden whitespace-nowrap text-ellipsis cursor-default">
+                              {item.address}
+                            </p>
+                          </Tooltip>
+                        </div>
+                        <p className="text-sm md:text-lg">
+                          Room No: {item.roomNo}
+                        </p>
+                        <p className="text-sm md:text-lg">
+                          Capactiy: {item.capacity}
+                        </p>
+                        <p className="text-sm md:text-lg">
+                          Floor No: {item.floorNo}
+                        </p>
                       </div>
                       <div className="px-4 pb-4 flex justify-end">
                         <div className="flex justify-center items-center inline-flex gap-4">
-                            <p className="text-sm md:text-lg">Per Slot</p>
-                            <h2 className="text-xl md:text-2xl font-bold text-[#002F76]">${item.pricePerSlot}</h2>
+                          <p className="text-sm md:text-lg">Per Slot</p>
+                          <h2 className="text-xl md:text-2xl font-bold text-[#002F76]">
+                            ${item.pricePerSlot}
+                          </h2>
                         </div>
                       </div>
                     </CardContent>

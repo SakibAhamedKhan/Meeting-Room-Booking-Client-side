@@ -53,7 +53,7 @@ export function HomeCarousel() {
       <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white text-black p-5 rounded-full">
         →
       </CarouselNext>
-      <div className="h-[10px] w-full bg-[#44FD60]"></div>
+      <div className="h-[3px] w-full bg-[#44FD60]"></div>
     </Carousel>
   );
 }
