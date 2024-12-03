@@ -14,19 +14,31 @@
   box-shadow: none;
 } */
 
-.ant-menu-submenu-title, .ant-menu-item  {
+.ant-menu-submenu-title,
+.ant-menu-item {
   color: white !important;
 }
-.ant-menu-item-selected{
+.ant-menu-item-selected {
   color: #ffffff !important;
   background-color: rgba(255, 255, 255, 0.153) !important;
 }
-.ant-menu{
-  background-color: #002F76 !important;
+.ant-menu {
+  background-color: #002f76 !important;
 }
-.ant-menu-item:hover, .ant-menu-submenu-title:hover{
+.ant-menu-item:hover,
+.ant-menu-submenu-title:hover {
   background-color: rgba(255, 255, 255, 0.153) !important;
 }
+
+/* upload imagefield preview size controling */
+/* @media (max-width: 400px) {
+  .ant-upload-list {
+    max-width: 100px; 
+    max-height: 100px; 
+    object-fit: cover; 
+  }
+} */
+
 @layer base {
   :root {
     --background: 0 0% 100%;

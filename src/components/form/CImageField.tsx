@@ -37,7 +37,7 @@ const CImageField = ({
               <Button
                 size="large"
                 icon={<UploadOutlined />}
-                className="border-none"
+                className="border-none !text-sm !md:text-lg"
               >
                 {`${placeholder} max Image - (${maxImage})`}
               </Button>

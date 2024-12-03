@@ -66,14 +66,14 @@ const PartnerCreateRoom = () => {
   };
 
   return (
-    <Card className="bg-white p-6">
+    <Card className="bg-white p-4 md:p-6">
       <div>
         <CForm
           onSubmit={onSubmit}
           resolver={zodResolver(requestToCreateRoomPartner)}
         >
           <div className="flex">
-            <div className="mb-4 mr-4 w-full">
+            <div className="mb-2 md:mb-4 mr-2 md:mr-4 w-full">
               <CInput
                 control={control}
                 type="text"
@@ -81,7 +81,7 @@ const PartnerCreateRoom = () => {
                 placeholder="Meeting Room Name"
               />
             </div>
-            <div className="mb-4 w-full">
+            <div className="mb-2 md:mb-4 w-full">
               <CInput
                 control={control}
                 type="number"
@@ -91,7 +91,7 @@ const PartnerCreateRoom = () => {
             </div>
           </div>
           <div className="flex">
-            <div className="mb-4 mr-4 w-full">
+            <div className="mb-2 md:mb-4 mr-2 md:mr-4 w-full">
               <CInput
                 control={control}
                 type="number"
@@ -99,7 +99,7 @@ const PartnerCreateRoom = () => {
                 placeholder="Floor No."
               />
             </div>
-            <div className="mb-4 w-full">
+            <div className="mb-2 md:mb-4 w-full">
               <CInput
                 control={control}
                 type="number"
@@ -110,7 +110,7 @@ const PartnerCreateRoom = () => {
           </div>
 
           <div className="flex">
-            <div className="mb-4 mr-4 w-full">
+            <div className="mb-2 md:mb-4 mr-2 md:mr-4 w-full">
               <CInput
                 control={control}
                 type="number"
@@ -118,7 +118,7 @@ const PartnerCreateRoom = () => {
                 placeholder="Price Per Slot"
               />
             </div>
-            <div className="mb-4 w-full">
+            <div className="mb-2 md:mb-4 w-full">
               <CInput
                 control={control}
                 type="text"
@@ -127,15 +127,15 @@ const PartnerCreateRoom = () => {
               />
             </div>
           </div>
-          <div className="flex">
-            <div className="mb-4 mr-4 w-full">
+          <div className="flex flex-col md:flex-row lg:flex-row">
+            <div className="mb-2 md:mb-4 mr-2 md:mr-4 w-full">
               <CSelectAmenities
                 name="amenities"
                 placeholder="Choose amenities"
                 control={control} // Pass control here
               />
             </div>
-            <div className="mb-4 w-full">
+            <div className="mb-2 md:mb-4 w-full">
               <CInput
                 control={control}
                 type="text"
@@ -144,8 +144,8 @@ const PartnerCreateRoom = () => {
               />
             </div>
           </div>
-          <div className="flex">
-            <div className="mb-4 mr-4 w-1/2">
+          <div className="flex flex-col md:flex-row lg:flex-row items-center">
+            <div className="mb-2 md:mb-4 mr-2 md:mr-4 w-full md:w-1/2">
               <CImageField
                 name="thumbnail"
                 placeholder="Thumbnail"
@@ -153,7 +153,7 @@ const PartnerCreateRoom = () => {
                 maxImage={1}
               />
             </div>
-            <div className="mb-4 w-1/2">
+            <div className="mb-2 md:mb-4  w-full md:w-1/2">
               <CImageField
                 name="extraImages"
                 placeholder="Extra Images"
@@ -163,7 +163,7 @@ const PartnerCreateRoom = () => {
             </div>
           </div>
           <div className="flex">
-            <div className="mb-6 w-full">
+            <div className="mb-7 w-full">
               <CTextArea
                 control={control}
                 type="text"
@@ -172,12 +172,12 @@ const PartnerCreateRoom = () => {
               />
             </div>
           </div>
-          <div>
+          <div className="flex justify-center md:justify-normal">
             <Button
               htmlType="submit"
-              className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold mb-2"
+              className="bg-[#002F76] text-white h-[40px] text-sm md:text-lg font-semibold mb-2"
             >
-              Request to add your meeting room
+              Add your meeting room
             </Button>
           </div>
         </CForm>

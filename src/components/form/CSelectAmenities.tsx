@@ -152,6 +152,7 @@ const CSelectAmenities = ({
               style={{ width: "100%" }}
               placeholder={placeholder}
               value={field.value || []} 
+              className="!text-xs md:!text-lg"
               onChange={(selectedValues) => field.onChange(selectedValues)} 
             >
               {amenitiesList.map((amenity) => (
@@ -159,15 +160,16 @@ const CSelectAmenities = ({
                   key={amenity.value}
                   value={amenity.value}
                   label={amenity.label}
+                  
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className="text-xs md:text-lg" style={{ display: "flex", alignItems: "center" }}>
                     {amenity.icon}
                     <span style={{ marginLeft: 8 }}>{amenity.label}</span>
                   </div>
                 </Option>
               ))}
             </Select>
-            {error && <small style={{ color: "red" }}>{error.message}</small>}
+            {error && <small style={{ color: "red" }} className="!text-[10px] !md:text-md ">{error.message}</small>}
           </Form.Item>
         )}
       />
