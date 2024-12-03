@@ -12,6 +12,7 @@ const GoogleMapCard = ({ data }: any) => {
   const extractCoordinates = (url: string) => {
     const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
     const match = url.match(regex);
+    console.log(match)
     if (match) {
       const lat = Number(match[1]);
       const lng = Number(match[2]);

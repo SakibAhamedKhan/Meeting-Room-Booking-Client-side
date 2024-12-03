@@ -142,7 +142,7 @@ const CSelectAmenities = ({
     <div>
       <Controller
         name={name}
-        control={control}
+        // control={control}
         render={({ field, fieldState: { error } }) => (
           <Form.Item className="m-0">
             <Select
@@ -151,6 +151,8 @@ const CSelectAmenities = ({
               size="large"
               style={{ width: "100%" }}
               placeholder={placeholder}
+              value={field.value || []} 
+              onChange={(selectedValues) => field.onChange(selectedValues)} 
             >
               {amenitiesList.map((amenity) => (
                 <Option

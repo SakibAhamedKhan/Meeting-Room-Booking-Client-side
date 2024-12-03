@@ -4,25 +4,74 @@ import CInput from "@/components/form/CInput";
 import CSelectAmenities from "@/components/form/CSelectAmenities";
 import CTextArea from "@/components/form/CTextArea";
 import { Card } from "@/components/ui/card";
+import { useRequestedToCreateRoomMutation } from "@/redux/features/partner/partnerRoomApi.api";
 import { registerZodSchema } from "@/schemas/auth.schemas";
+import { requestToCreateRoomPartner } from "@/schemas/partner.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "antd";
+import { Button, Form, Input } from "antd";
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const PartnerCreateRoom = () => {
-  const { control, handleSubmit } = useForm();
+  const { control } = useForm();
+  const [requestedToCreateRoom, {}] = useRequestedToCreateRoomMutation();
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    const toastId = toast.loading("Logging in");
+    const toastId = toast.loading("Requesting...");
+    if (data.extraImages === undefined || data.thumbnail === undefined) {
+      toast.error("You must choose the thumbnail and extra images!!!", {
+        id: toastId,
+        duration: 5000,
+      });
+    } else {
+      try {
+        data.roomNo = Number(data.roomNo);
+        data.floorNo = Number(data.floorNo);
+        data.capacity = Number(data.capacity);
+        data.pricePerSlot = Number(data.pricePerSlot);
+
+        const roomData = {
+          name: data.name,
+          roomNo: data.roomNo,
+          floorNo: data.floorNo,
+          capacity: data.capacity,
+          pricePerSlot: data.pricePerSlot,
+          address: data.address,
+          googleMapURL: data.googleMapURL,
+          amenities: data.amenities,
+          description: data.description,
+        };
+
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(roomData));
+        data?.extraImages?.forEach((imageFile: any) => {
+          formData.append(`extraImages`, imageFile.originFileObj); // imageFile is the File object
+        });
+
+        formData.append("thumbnail", data.thumbnail[0].originFileObj);
+
+        const res = await requestedToCreateRoom(formData);
+        console.log(res);
+        toast.success("Successfully submitted the room create request.", {
+          id: toastId,
+          duration: 2000,
+        });
+      } catch (error: any) {
+        console.log(error);
+        toast.error(error?.data?.message, { id: toastId, duration: 2000 });
+      }
+    }
   };
 
   return (
     <Card className="bg-white p-6">
       <div>
-        <CForm onSubmit={onSubmit} resolver={zodResolver(registerZodSchema)}>
+        <CForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(requestToCreateRoomPartner)}
+        >
           <div className="flex">
             <div className="mb-4 mr-4 w-full">
               <CInput
@@ -35,7 +84,7 @@ const PartnerCreateRoom = () => {
             <div className="mb-4 w-full">
               <CInput
                 control={control}
-                type="text"
+                type="number"
                 name="roomNo"
                 placeholder="Room No."
               />
@@ -45,7 +94,7 @@ const PartnerCreateRoom = () => {
             <div className="mb-4 mr-4 w-full">
               <CInput
                 control={control}
-                type="text"
+                type="number"
                 name="floorNo"
                 placeholder="Floor No."
               />
@@ -53,7 +102,7 @@ const PartnerCreateRoom = () => {
             <div className="mb-4 w-full">
               <CInput
                 control={control}
-                type="text"
+                type="number"
                 name="capacity"
                 placeholder="Capacity"
               />
@@ -64,7 +113,7 @@ const PartnerCreateRoom = () => {
             <div className="mb-4 mr-4 w-full">
               <CInput
                 control={control}
-                type="text"
+                type="number"
                 name="pricePerSlot"
                 placeholder="Price Per Slot"
               />
@@ -123,7 +172,6 @@ const PartnerCreateRoom = () => {
               />
             </div>
           </div>
-
           <div>
             <Button
               htmlType="submit"

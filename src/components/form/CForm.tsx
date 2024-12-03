@@ -25,7 +25,10 @@ const CForm = ({
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);
-    methods.reset();
+    methods.reset({
+      ...defaultValues, 
+      amenities: [], 
+    });
   };
   return (
     <FormProvider {...methods}>

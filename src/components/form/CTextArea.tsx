@@ -8,7 +8,6 @@ const CTextArea = ({ name, label, placeholder, control }: TCInputProps) => {
     <div className="">
       <Controller
         name={name}
-        control={control}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label} className="m-0">
             <TextArea showCount maxLength={2000} {...field}  id={name} size="large" placeholder={placeholder}/>
