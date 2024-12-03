@@ -169,7 +169,7 @@ const CSelectAmenities = ({
                 </Option>
               ))}
             </Select>
-            {error && <small style={{ color: "red" }} className="!text-[10px] !md:text-md ">{error.message}</small>}
+            {error && <small style={{ color: "red" }} className="text-[10px] md:text-sm">{error.message}</small>}
           </Form.Item>
         )}
       />

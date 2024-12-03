@@ -66,7 +66,7 @@ const PartnerCreateRoom = () => {
   };
 
   return (
-    <Card className="bg-white p-4 md:p-6">
+    <Card className="bg-white p-4 md:p-10">
       <div>
         <CForm
           onSubmit={onSubmit}

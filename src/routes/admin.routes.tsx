@@ -11,6 +11,9 @@ import { MdManageAccounts } from "react-icons/md";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaRegHandshake } from "react-icons/fa";
 import { MdSupportAgent } from "react-icons/md";
+import { FaHouseChimneyCrack } from "react-icons/fa6";
+import AdminNewRequestedRoom from "@/pages/admin/AdminNewRequestedRoom";
+import AdminAllAcceptedRoom from "@/pages/admin/AdminAllAcceptedRoom";
 
 
 export const AdminPaths = [
@@ -65,6 +68,22 @@ export const AdminPaths = [
                 name: "All Accepted Partner",
                 path: "all-accepted-partner",
                 element: <AdminAllAcceptedPartners/>,
+            },
+        ]
+    },
+    {
+        name: "Room Management",
+        icons: <FaHouseChimneyCrack />,
+        children: [
+            {
+                name: "New Requested Room",
+                path: "new-requested-room",
+                element: <AdminNewRequestedRoom/>,
+            },
+            {
+                name: "All Accepted Room",
+                path: "all-accepted-room",
+                element: <AdminAllAcceptedRoom/>,
             },
         ]
     },

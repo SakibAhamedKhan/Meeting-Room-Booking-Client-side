@@ -1,4 +1,4 @@
-import { useGetSingleRoomQuery } from "@/redux/features/customer/roomApi.api";
+import { useGetSingleRoomQuery } from "@/redux/features/customer/customerRoomApi.api";
 import { useParams } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";

@@ -7,7 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { FaLocationDot } from "react-icons/fa6";
-import { useGetAllRoomsQuery } from "@/redux/features/customer/roomApi.api";
+import { useGetAllRoomsQuery } from "@/redux/features/customer/customerRoomApi.api";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "antd";
 
