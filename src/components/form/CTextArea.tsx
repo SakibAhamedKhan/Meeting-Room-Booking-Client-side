@@ -11,7 +11,7 @@ const CTextArea = ({ name, label, placeholder, control }: TCInputProps) => {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label} className="m-0">
-            <TextArea showCount maxLength={500} {...field}  id={name} size="large" placeholder={placeholder}/>
+            <TextArea showCount maxLength={2000} {...field}  id={name} size="large" placeholder={placeholder}/>
             {error && <small style={{ color: "red" }}>{error.message}</small>}
           </Form.Item>
         )}

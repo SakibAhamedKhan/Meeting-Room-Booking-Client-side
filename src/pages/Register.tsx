@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { useRegisterMutation } from "@/redux/features/auth/authApi.api";
 
 const Register = () => {
-  const { control, handleSubmit } = useForm();
+  const { control } = useForm();
   const [useRegister] = useRegisterMutation();
   const navigate = useNavigate();
 

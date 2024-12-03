@@ -90,7 +90,7 @@ const PartnerDashbordLayout: React.FC = () => {
       <Layout>
         <Sider
           className={`${
-            collapsed === false && screens.xs ? "absolute h-screen" : ""
+            collapsed === false && screens.xs ? "absolute h-screen z-50" : ""
           }`}
           width={250}
           collapsedWidth={screens.xs ? 50 : 60}
@@ -149,17 +149,15 @@ const PartnerDashbordLayout: React.FC = () => {
             />
             <Breadcrumb items={breadcrumbItems} style={{ margin: "16px 0" }} />
           </div>
-          <Content
+          <div
             style={{
-              padding: 24,
               margin: 0,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              // background: colorBgContainer,
+              // borderRadius: borderRadiusLG,
             }}
           >
             <Outlet />
-          </Content>
+          </div>
         </Layout>
       </Layout>
     </Layout>

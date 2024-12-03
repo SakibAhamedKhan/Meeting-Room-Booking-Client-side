@@ -135,7 +135,6 @@ const amenitiesList = [
 
 const CSelectAmenities = ({
   name,
-  label,
   placeholder,
   control,
 }: TCSelectAmenitiesProps) => {
@@ -145,13 +144,13 @@ const CSelectAmenities = ({
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Form.Item label={label} className="m-0">
+          <Form.Item className="m-0">
             <Select
               {...field}
               mode="multiple"
+              size="large"
               style={{ width: "100%" }}
               placeholder={placeholder}
-              optionLabelProp="label"
             >
               {amenitiesList.map((amenity) => (
                 <Option
