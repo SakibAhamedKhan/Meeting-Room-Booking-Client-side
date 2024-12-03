@@ -18,24 +18,6 @@ export const requestToCreateRoomPartner = z.object({
     required_error: "Please enter your meeting room description",
   }),
   amenities: z.array(z.string(), { required_error: "Please select amenities" }),
-  extraImages: z
-    .array(
-      z.object({
-        uid: z.string(),
-        name: z.string(),
-        size: z.number(),
-        type: z.string(),
-      })
-    )
-    .optional(),
-  thumbnail: z
-    .array(
-      z.object({
-        uid: z.string(),
-        name: z.string(),
-        size: z.number(),
-        type: z.string(),
-      })
-    )
-    .optional(),
+  extraImages: z.any().optional(), // Accepts any type of data for extraImages
+  thumbnail: z.any().optional(), // Accepts any type of data for thumbnail
 });

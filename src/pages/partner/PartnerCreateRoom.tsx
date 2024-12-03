@@ -46,7 +46,7 @@ const PartnerCreateRoom = () => {
 
         const formData = new FormData();
         formData.append("data", JSON.stringify(roomData));
-        data?.extraImages?.forEach((imageFile: any) => {
+        data?.extraImages.forEach((imageFile: any) => {
           formData.append(`extraImages`, imageFile.originFileObj); // imageFile is the File object
         });
 
