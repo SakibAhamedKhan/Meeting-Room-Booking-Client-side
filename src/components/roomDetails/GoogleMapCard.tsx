@@ -24,9 +24,9 @@ const GoogleMapCard = ({ data }: any) => {
   };
 
   useEffect(() => {
-    extractCoordinates(data?.data?.googleMapURL);
+    extractCoordinates(data?.googleMapURL);
 
-  }, [data?.data?._id]);
+  }, [data?._id]);
   return (
     <div>
       <GoogleMap

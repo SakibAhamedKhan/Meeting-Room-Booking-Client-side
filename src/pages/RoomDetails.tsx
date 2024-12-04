@@ -44,10 +44,10 @@ const RoomDetails = () => {
               <LoadScript
                 googleMapsApiKey={`${import.meta.env.VITE_GOOGLE_API_KEY}`}
               >
-                <GoogleMapCard data={data} />
+                <GoogleMapCard data={roomData} />
               </LoadScript>
             ) : (
-              <GoogleMapCard data={data} />
+              <GoogleMapCard data={roomData} />
             )}
           </div>
         </div>
