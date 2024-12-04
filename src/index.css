@@ -30,6 +30,11 @@
   background-color: rgba(255, 255, 255, 0.153) !important;
 }
 
+/* admin dashboard ant design table style */
+.table-custom-row {
+  background-color: white!important;
+}
+
 /* upload imagefield preview size controling */
 /* @media (max-width: 400px) {
   .ant-upload-list {

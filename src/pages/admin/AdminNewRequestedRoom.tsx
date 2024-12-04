@@ -1,106 +1,114 @@
+import { Card } from "@/components/ui/card";
 import { useAdminGetAllRoomQuery } from "@/redux/features/admin/adminRoomApi.api";
-import { Space, Table, TableProps, Tag } from "antd";
-import React, { useState, useEffect } from "react";
+import { TRoomData } from "@/types/rooms.type";
+import { Button, Image, Space, Table, TableColumnsType } from "antd";
+import { useState, useEffect } from "react";
+import { FaRegEye } from "react-icons/fa";
+import { MdDone } from "react-icons/md";
 
-interface DataType {
+type TDataType = Pick<
+  TRoomData,
+  "name" | "capacity" | "pricePerSlot"
+> & {
   key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
-}
+  thumbnail:string;
+  _id?:string;
+};
 
-const columns: TableProps<DataType>["columns"] = [
+const columns: TableColumnsType<TDataType> = [
+  {
+    title: "Thumbnail",
+    key: "thumbnail",
+    dataIndex: "thumbnail",
+    render: (text, record) => {
+      return (
+        <Space>
+          <Image width={90} src={record?.thumbnail} />
+        </Space>
+      );
+    },
+  },
+  {
+    title: "Room Id",
+    dataIndex: "roomId",
+    key: "roomId",
+  },
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: "Capacity",
+    dataIndex: "capacity",
+    key: "capacity",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: "Price Per Slot",
+    dataIndex: "pricePerSlot",
+    key: "pricePerSlot",
   },
   {
     title: "Action",
     key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
+    render: (_, record) => {
+      console.log(record);
+      return (
+        <Space size="middle">
+          <Button>
+            <MdDone />
+            Approve
+          </Button>
+          <Button>
+            <FaRegEye />
+          </Button>
+        </Space>
+      )
+    },
   },
 ];
 
 const AdminNewRequestedRoom = () => {
   const { data: adminGetAllRoomData, isFetching } =
     useAdminGetAllRoomQuery(undefined);
-  const [allRoomData, setAllRoomData] = useState([]);
+
+  const [allRoomData, setAllRoomData] = useState<TRoomData[]>([]);
+
+  const tableData = allRoomData.map(
+    ({ thumbnail, _id, name, capacity, pricePerSlot }) => ({
+      key: _id, 
+      roomId: _id, 
+      thumbnail: thumbnail[0]?.url, 
+      name,
+      capacity,
+      pricePerSlot,
+    })
+  );
 
   useEffect(() => {
     if (!isFetching && adminGetAllRoomData) {
-      const result = adminGetAllRoomData.data.filter((item: any) => {
+      const result = adminGetAllRoomData.data.filter((item: TRoomData) => {
         return item.isApproved === false;
       });
       setAllRoomData(result);
     }
-  }, [isFetching, adminGetAllRoomData]); // Dependencies: Only runs when these values change
+  }, [isFetching, adminGetAllRoomData]);
+
+
+  const rowClassName = (record: TDataType, index: number) => {
+    return 'table-custom-row'; 
+  };
+
 
   return (
-    <div>
-      <Table<DataType> className="!z-0 w-full" columns={columns} dataSource={data} />;
-    </div>
+    <Card className="overflow-x-scroll lg:overflow-hidden">
+      <Table<TDataType>
+        className="!z-0"
+        columns={columns}
+        dataSource={tableData}
+        rowClassName={rowClassName} 
+      />
+    </Card>
   );
 };
 
