@@ -1,20 +1,34 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TQueryParam } from "@/types";
 
 const adminRoomApi = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        adminGetAllRoom: builder.query({
-            query: () => ({
-                url: '/rooms/checking/operations',
-                method: 'GET', 
-            })
-        }),
-        // getSingleRoom: builder.query({
-        //     query: (id) => ({
-        //         url: `/rooms/${id}`,
-        //         method: 'GET', 
-        //     })
-        // }),
-    })
-})
+  endpoints: (builder) => ({
+    adminGetAllRoom: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
 
-export const {useAdminGetAllRoomQuery} = adminRoomApi;
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/rooms/checking/operations",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["adminGetAllRoom"],
+    }),
+    activateRoom: builder.mutation({
+      query: (id: string) => ({
+        url: `/rooms/activate/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["adminGetAllRoom"],
+    }),
+  }),
+});
+
+export const { useAdminGetAllRoomQuery, useActivateRoomMutation } =
+  adminRoomApi;

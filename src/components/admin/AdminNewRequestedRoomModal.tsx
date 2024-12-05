@@ -55,19 +55,19 @@ const AdminNewRequestedRoomModal = ({
                     </div>
                     <div className="font-semibold mb-4 flex items-center gap-2 text-lg">
                       <BsBuildings className="text-2xl" />
-                      <p>Floor No: {modalData?.floorNo}</p>
+                      <p>Floor No: <span className="font-light text-xl">{modalData?.floorNo}</span></p>
                     </div>
                     <div className="font-semibold mb-4 flex items-center gap-2 text-lg">
                       <MdOutlineBedroomParent className="text-2xl" />
-                      <p>Room No: {modalData?.roomNo}</p>
+                      <p>Room No: <span className="font-light text-xl">{modalData?.roomNo}</span></p>
                     </div>
                     <div className="font-semibold mb-4 flex items-center gap-2 text-lg">
                       <IoIosPeople className="text-2xl" />
-                      <p>Capacity: {modalData?.capacity}</p>
+                      <p>Capacity: <span className="font-light text-xl">{modalData?.capacity}</span></p>
                     </div>
                     <div className="font-semibold flex items-center gap-2 text-lg">
                       <MdOutlinePriceChange className="text-2xl" />
-                      <p>Price Per Slot: {modalData?.pricePerSlot}</p>
+                      <p>Price Per Slot: <span className="font-light text-xl">${modalData?.pricePerSlot}</span></p>
                     </div>
                   </div>
                 </Card>
@@ -81,9 +81,7 @@ const AdminNewRequestedRoomModal = ({
               </div>
             </div>
 
-            {/* amenities */}
-
-            {/* description and Reserve */}
+            {/* description*/}
             <div className="">
               <p className="leading-8 text-justify text-sm md:text-lg">
                 {modalData?.description}
