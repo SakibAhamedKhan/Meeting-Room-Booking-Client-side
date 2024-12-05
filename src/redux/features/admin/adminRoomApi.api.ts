@@ -25,10 +25,46 @@ const adminRoomApi = baseApi.injectEndpoints({
         url: `/rooms/activate/${id}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["adminGetAllRoom"],
+      invalidatesTags: [
+        "adminGetAllRoom",
+        "adminGetAllApprovedRoom",
+        "getAllRooms",
+      ],
+    }),
+    adminGetAllApprovedRoom: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/rooms/checking/activated",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["adminGetAllApprovedRoom"],
+    }),
+    deActivateRoom: builder.mutation({
+      query: (id: string) => ({
+        url: `/rooms/deactivate/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [
+        "adminGetAllApprovedRoom",
+        "adminGetAllRoom",
+        "getAllRooms",
+      ],
     }),
   }),
 });
 
-export const { useAdminGetAllRoomQuery, useActivateRoomMutation } =
-  adminRoomApi;
+export const {
+  useAdminGetAllRoomQuery,
+  useActivateRoomMutation,
+  useAdminGetAllApprovedRoomQuery,
+  useDeActivateRoomMutation,
+} = adminRoomApi;

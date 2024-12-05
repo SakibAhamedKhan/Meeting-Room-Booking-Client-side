@@ -1,6 +1,9 @@
 import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
-import { useActivateRoomMutation, useAdminGetAllRoomQuery } from "@/redux/features/admin/adminRoomApi.api";
+import {
+  useActivateRoomMutation,
+  useAdminGetAllRoomQuery,
+} from "@/redux/features/admin/adminRoomApi.api";
 import { TQueryParam } from "@/types";
 import { TRoomData } from "@/types/rooms.type";
 import {
@@ -16,26 +19,61 @@ import {
 import { useState, useEffect } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
   thumbnail: string;
   _id?: string;
 };
+const { confirm } = Modal;
 
 const AdminNewRequestedRoom = () => {
   const [page, setPage] = useState(1);
   const [params, setParams] = useState<TQueryParam[]>([]);
-  const { data: adminGetAllRoomData, isFetching:adminGetAllRoomDataFetching } = useAdminGetAllRoomQuery([
-    { name: "limit", value: 10 },
-    { name: "page", value: page },
-    ...params,
-  ]);
-  const [activateRoom, {isLoading:activateRoomLoading}] = useActivateRoomMutation();
+  const { data: adminGetAllRoomData, isFetching: adminGetAllRoomDataFetching } =
+    useAdminGetAllRoomQuery([
+      { name: "limit", value: 10 },
+      { name: "page", value: page },
+      ...params,
+    ]);
+  const [activateRoom, { isLoading: activateRoomLoading }] =
+    useActivateRoomMutation();
   // State to track modal visibility and selected feedback item
   const [modalData, setModalData] = useState<any>(null);
+  // Track loading state for each room
+  const [loadingRoomId, setLoadingRoomId] = useState<string | null>(null);
 
   // const [allRoomData, setAllRoomData] = useState<TRoomData[]>([]);
+  const showConfirm = (record: any) => {
+    confirm({
+      title: "Do you want to approve these meeting room?",
+      icon: <ExclamationCircleFilled />,
+      content: (
+        <div>
+          <p>
+            Room Id: <span>{record.key}</span>
+          </p>
+          <p>
+            Room Name: <span>{record.name}</span>
+          </p>
+          <p>
+            Capacity: <span>{record.capacity}</span>
+          </p>
+          <p>
+            Price Per Slot: <span>{record.pricePerSlot}</span>
+          </p>
+        </div>
+      ),
+      onOk() {
+        handleApprove(record);
+        console.log("OK ==== ", record);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
 
   const columns: TableColumnsType<TDataType> = [
     {
@@ -76,8 +114,15 @@ const AdminNewRequestedRoom = () => {
       render: (_, record) => {
         return (
           <Space size="middle">
-            <Button onClick={() => handleApprove(record)}>
-              <MdDone />
+            <Button
+              loading={loadingRoomId === record.key && activateRoomLoading}
+              onClick={() => showConfirm(record)}
+            >
+              {loadingRoomId === record.key && activateRoomLoading ? (
+                ""
+              ) : (
+                <MdDone />
+              )}
               Approve
             </Button>
             <Button onClick={() => showModal(record)}>
@@ -128,11 +173,17 @@ const AdminNewRequestedRoom = () => {
     setModalData(null); // Close the modal
   };
 
-  const handleApprove = async (record:any) => {
-    console.log(record);
-    const res = await activateRoom(record.key);
-    console.log(res);
-  }
+  const handleApprove = async (record: any) => {
+    setLoadingRoomId(record.key);
+    try {
+      const res = await activateRoom(record.key);
+      console.log(res);
+    } catch (error) {
+      console.error("Error approving room:", error);
+    } finally {
+      setLoadingRoomId(null);
+    }
+  };
 
   // const onChange: TableProps<TDataType>["onChange"] = (
   //   pagination,
