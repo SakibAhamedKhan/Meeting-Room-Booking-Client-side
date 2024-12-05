@@ -1,14 +1,10 @@
-import TestParticles from "@/components/contact/TestParticles";
 import CommonLayout from "@/components/layout/CommonLayout";
 import CustomerDasboardLayout from "@/components/layout/CustomerDasboardLayout";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
 import AboutUs from "@/pages/AboutUs";
 import AdminRoomsAdd from "@/pages/admin/AdminRoomsAdd";
-import ContactUs from "@/pages/ContactUs";
-import CustomerDashboard from "@/pages/customer/CustomerDashboard";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
-import MeetingRoomsList from "@/pages/MeetingRoomsList";
 import Register from "@/pages/Register";
 import Services from "@/pages/Services";
 import { routeGenerator } from "@/utils/routesGenerator";
