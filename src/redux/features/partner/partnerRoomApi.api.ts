@@ -1,16 +1,52 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TQueryParam } from "@/types";
 
 const partnerRoomApi = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        requestedToCreateRoom: builder.mutation({
-            query: (roomData) => ({
-                url: '/rooms',
-                method: 'POST',
-                body: roomData,
-            })
-        }),
-       
-    })
-})
+  endpoints: (builder) => ({
+    requestedToCreateRoom: builder.mutation({
+      query: (roomData) => ({
+        url: "/rooms",
+        method: "POST",
+        body: roomData,
+      }),
+    }),
+    parnterGetAllRoom: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
 
-export const {useRequestedToCreateRoomMutation} = partnerRoomApi;
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/rooms/checking/operations",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["partnerGetAllRoom"],
+    }),
+    publishRoom: builder.mutation({
+      query: (id: string) => ({
+        url: `/rooms/publish/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["partnerGetAllRoom"],
+    }),
+    unPublishRoom: builder.mutation({
+      query: (id: string) => ({
+        url: `/rooms/unpublish/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["partnerGetAllRoom"],
+    }),
+  }),
+});
+
+export const {
+  useRequestedToCreateRoomMutation,
+  useParnterGetAllRoomQuery,
+  usePublishRoomMutation,
+  useUnPublishRoomMutation,
+} = partnerRoomApi;

@@ -43,7 +43,7 @@ const AdminAllAcceptedRoom = () => {
     ...params,
   ]);
   const [deActivateRoom, { isLoading: deActivateRoomLoading }] =
-  useDeActivateRoomMutation();
+    useDeActivateRoomMutation();
   // State to track modal visibility and selected feedback item
   const [modalData, setModalData] = useState<any>(null);
   // Track loading state for each room
@@ -120,6 +120,8 @@ const AdminAllAcceptedRoom = () => {
         return (
           <Space size="middle">
             <Button
+              style={{ borderColor: "#FFD700", color: "#FF4500" }}
+              className="font-semibold"
               loading={loadingRoomId === record.key && deActivateRoomLoading}
               onClick={() => showConfirm(record)}
             >
@@ -130,8 +132,15 @@ const AdminAllAcceptedRoom = () => {
               )}
               Unapprove
             </Button>
-            <Button onClick={() => showModal(record)}>
-              <FaRegEye />
+            <Button
+              style={{
+                borderColor: "#002f76",
+                backgroundColor: "#002f76",
+                color: "white",
+              }}
+              onClick={() => showModal(record)}
+            >
+              <FaRegEye className="text-[16px]"/>
             </Button>
           </Space>
         );

@@ -59,6 +59,17 @@ const adminRoomApi = baseApi.injectEndpoints({
         "getAllRooms",
       ],
     }),
+    declinedRoom: builder.mutation({
+      query: (id: string) => ({
+        url: `/rooms/declined/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [
+        "adminGetAllApprovedRoom",
+        "adminGetAllRoom",
+        "getAllRooms",
+      ],
+    }),
   }),
 });
 
@@ -67,4 +78,5 @@ export const {
   useActivateRoomMutation,
   useAdminGetAllApprovedRoomQuery,
   useDeActivateRoomMutation,
+  useDeclinedRoomMutation,
 } = adminRoomApi;

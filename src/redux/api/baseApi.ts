@@ -57,6 +57,13 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes:["adminGetAllRoom", "adminGetAllApprovedRoom", "getAllRooms",],
+  tagTypes: [
+    "adminGetAllRoom",
+    "adminGetAllApprovedRoom",
+    "getAllRooms",
+
+    
+    "partnerGetAllRoom",
+  ],
   endpoints: () => ({}),
 });

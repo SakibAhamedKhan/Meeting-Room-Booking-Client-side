@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import {
   useActivateRoomMutation,
   useAdminGetAllRoomQuery,
+  useDeclinedRoomMutation,
 } from "@/redux/features/admin/adminRoomApi.api";
 import { TQueryParam } from "@/types";
 import { TRoomData } from "@/types/rooms.type";
@@ -20,6 +21,7 @@ import { useState, useEffect } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { MdOutlineCancel } from "react-icons/md";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -33,12 +35,15 @@ const AdminNewRequestedRoom = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const { data: adminGetAllRoomData, isFetching: adminGetAllRoomDataFetching } =
     useAdminGetAllRoomQuery([
-      { name: "limit", value: 10 },
+      { name: "limit", value: 5 },
       { name: "page", value: page },
       ...params,
     ]);
   const [activateRoom, { isLoading: activateRoomLoading }] =
     useActivateRoomMutation();
+  const [declinedRoom, { isLoading: declinedRoomLoading }] =
+    useDeclinedRoomMutation();
+
   // State to track modal visibility and selected feedback item
   const [modalData, setModalData] = useState<any>(null);
   // Track loading state for each room
@@ -68,6 +73,35 @@ const AdminNewRequestedRoom = () => {
       onOk() {
         handleApprove(record);
         console.log("OK ==== ", record);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+  const showConfirm2 = (record: any) => {
+    confirm({
+      title: "Do you want to decline these meeting room?",
+      icon: <ExclamationCircleFilled />,
+      content: (
+        <div>
+          <p>
+            Room Id: <span>{record.key}</span>
+          </p>
+          <p>
+            Room Name: <span>{record.name}</span>
+          </p>
+          <p>
+            Capacity: <span>{record.capacity}</span>
+          </p>
+          <p>
+            Price Per Slot: <span>{record.pricePerSlot}</span>
+          </p>
+        </div>
+      ),
+      onOk() {
+        handleDecline(record);
+        console.log("OK Declined ==== ", record);
       },
       onCancel() {
         console.log("Cancel");
@@ -115,6 +149,9 @@ const AdminNewRequestedRoom = () => {
         return (
           <Space size="middle">
             <Button
+              style={{ borderColor: "#40FF40", color: "#008000" }}
+              className="font-semibold"
+              variant="outlined"
               loading={loadingRoomId === record.key && activateRoomLoading}
               onClick={() => showConfirm(record)}
             >
@@ -125,8 +162,28 @@ const AdminNewRequestedRoom = () => {
               )}
               Approve
             </Button>
-            <Button onClick={() => showModal(record)}>
-              <FaRegEye />
+            <Button
+              style={{ borderColor: "#FA8072", color: "#FF0000" }}
+              className="font-semibold"
+              loading={loadingRoomId === record.key && declinedRoomLoading}
+              onClick={() => showConfirm2(record)}
+            >
+              {loadingRoomId === record.key && declinedRoomLoading ? (
+                ""
+              ) : (
+                <MdOutlineCancel />
+              )}
+              Declined
+            </Button>
+            <Button
+              style={{
+                borderColor: "#002f76",
+                backgroundColor: "#002f76",
+                color: "white",
+              }}
+              onClick={() => showModal(record)}
+            >
+              <FaRegEye className="text-[16px]" />
             </Button>
           </Space>
         );
@@ -185,6 +242,18 @@ const AdminNewRequestedRoom = () => {
     }
   };
 
+  const handleDecline = async (record: any) => {
+    setLoadingRoomId(record.key);
+    try {
+      const res = await declinedRoom(record.key);
+      console.log(res);
+    } catch (error) {
+      console.error("Error decling room:", error);
+    } finally {
+      setLoadingRoomId(null);
+    }
+  };
+
   // const onChange: TableProps<TDataType>["onChange"] = (
   //   pagination,
   //   filters,
@@ -205,7 +274,7 @@ const AdminNewRequestedRoom = () => {
     <div>
       <Card className="overflow-x-scroll lg:overflow-hidden">
         <Table<TDataType>
-          className="!z-0"
+          className="!z-0 "
           columns={columns}
           loading={adminGetAllRoomDataFetching}
           dataSource={tableData}
