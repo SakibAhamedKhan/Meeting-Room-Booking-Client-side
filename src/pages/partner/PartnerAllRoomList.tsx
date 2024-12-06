@@ -23,7 +23,12 @@ import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdOutlineCancel } from "react-icons/md";
-import { useParnterGetAllRoomQuery, usePublishRoomMutation, useUnPublishRoomMutation } from "@/redux/features/partner/partnerRoomApi.api";
+import {
+  useParnterGetAllRoomQuery,
+  usePublishRoomMutation,
+  useUnPublishRoomMutation,
+} from "@/redux/features/partner/partnerRoomApi.api";
+import { LuRefreshCw } from "react-icons/lu";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -41,15 +46,16 @@ const PartnerAllRoomList = () => {
   const {
     data: partnerGetAllRoomData,
     isFetching: partnerGetAllRoomDataFetching,
+    refetch: partnerGetAllRoomDataRefetch,
   } = useParnterGetAllRoomQuery([
     { name: "limit", value: 10 },
     { name: "page", value: page },
     ...params,
   ]);
   const [publishRoom, { isLoading: publishRoomLoading }] =
-  usePublishRoomMutation();
+    usePublishRoomMutation();
   const [unPublishRoom, { isLoading: unPublishRoomLoading }] =
-  useUnPublishRoomMutation();
+    useUnPublishRoomMutation();
   // State to track modal visibility and selected feedback item
   const [modalData, setModalData] = useState<any>(null);
   // Track loading state for each room
@@ -204,7 +210,7 @@ const PartnerAllRoomList = () => {
       key: "action",
       render: (_, record) => {
         return (
-          <Space size="middle">
+          <div>
             {record?.isApproved ? (
               <>
                 {record?.partnerPublish ? (
@@ -227,9 +233,7 @@ const PartnerAllRoomList = () => {
                   <Button
                     style={{ borderColor: "#40FF40", color: "#008000" }}
                     className="font-semibold"
-                    loading={
-                      loadingRoomId === record.key && publishRoomLoading
-                    }
+                    loading={loadingRoomId === record.key && publishRoomLoading}
                     onClick={() => showConfirmPublish(record)}
                   >
                     {loadingRoomId === record.key && publishRoomLoading ? (
@@ -242,19 +246,33 @@ const PartnerAllRoomList = () => {
                 )}
               </>
             ) : (
-              <></>
+              <div className="">
+                <Button className="font-semibold" disabled>
+                  <MdDone />
+                  Publish
+                </Button>
+              </div>
             )}
-            <Button
-              style={{
-                borderColor: "#002f76",
-                backgroundColor: "#002f76",
-                color: "white",
-              }}
-              onClick={() => showModal(record)}
-            >
-              <FaRegEye className="text-[16px]" />
-            </Button>
-          </Space>
+          </div>
+        );
+      },
+    },
+    {
+      title: "View",
+      dataIndex: "pricePerSlot",
+      key: "pricePerSlot",
+      render: (_, record) => {
+        return (
+          <Button
+            style={{
+              borderColor: "#002f76",
+              backgroundColor: "#002f76",
+              color: "white",
+            }}
+            onClick={() => showModal(record)}
+          >
+            <FaRegEye className="text-[16px]" />
+          </Button>
         );
       },
     },
@@ -352,6 +370,12 @@ const PartnerAllRoomList = () => {
 
   return (
     <div>
+      <Button
+        onClick={() => partnerGetAllRoomDataRefetch()}
+        className="absolute z-10 right-6 mt-[-37px] md:mt-[-45px]"
+      >
+        <LuRefreshCw />
+      </Button>
       <Card className="overflow-x-scroll lg:overflow-hidden">
         <Table<TDataType>
           className="!z-0"

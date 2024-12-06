@@ -23,6 +23,7 @@ import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdOutlineCancel } from "react-icons/md";
+import { LuRefreshCw } from "react-icons/lu";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -37,6 +38,7 @@ const AdminAllAcceptedRoom = () => {
   const {
     data: adminGetAllApprovedRoomData,
     isFetching: adminGetAllApprovedRoomDataFetching,
+    refetch: adminGetAllApprovedRoomDataRefetch
   } = useAdminGetAllApprovedRoomQuery([
     { name: "limit", value: 10 },
     { name: "page", value: page },
@@ -140,7 +142,7 @@ const AdminAllAcceptedRoom = () => {
               }}
               onClick={() => showModal(record)}
             >
-              <FaRegEye className="text-[16px]"/>
+              <FaRegEye className="text-[16px]" />
             </Button>
           </Space>
         );
@@ -217,6 +219,12 @@ const AdminAllAcceptedRoom = () => {
 
   return (
     <div>
+      <Button
+        onClick={() => adminGetAllApprovedRoomDataRefetch()}
+        className="absolute z-10 right-6 mt-[-37px] md:mt-[-45px]"
+      >
+        <LuRefreshCw />
+      </Button>
       <Card className="overflow-x-scroll lg:overflow-hidden">
         <Table<TDataType>
           className="!z-0"

@@ -1,5 +1,5 @@
 import { useGetSingleRoomQuery } from "@/redux/features/customer/customerRoomApi.api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import AmenitiesCard from "@/components/roomDetails/AmenitiesCard";
@@ -9,14 +9,44 @@ import { Button } from "antd";
 import GoogleMapCard from "@/components/roomDetails/GoogleMapCard";
 import { LoadScript } from "@react-google-maps/api";
 import ReviewCard from "@/components/roomDetails/ReviewCard";
+import { getAuthUser } from "@/utils/getAuthUser";
+import { toast } from "sonner";
+import { IoWarningOutline } from "react-icons/io5";
 
 const RoomDetails = () => {
+  const navigate = useNavigate();
+  const user = getAuthUser();
   const { id } = useParams();
   const { data, isFetching } = useGetSingleRoomQuery(id);
 
   const roomData = data?.data;
 
-  if(isFetching) return <h1>Loading..</h1>;
+  const handleFavourite = () => {
+    console.log(user);
+    if (user === null) {
+      toast.warning("At first you have to login!", {
+        duration: 2000,
+        position: "top-center",
+      });
+      // toast.custom(
+      //   (t) => (
+      //     <div className="bg-white p-4 rounded-md shadow-lg border-2 flex justify-center items-center gap-2 !w-full">
+      //       <IoWarningOutline className="text-orange-500" />
+      //       At first you have to login!{" "}
+      //       <button onClick={() => toast.dismiss(t)}>close</button>
+      //     </div>
+      //   ),
+      //   {
+      //     duration: 2000,
+      //   }
+      // );
+      return navigate("/login");
+    }
+  };
+
+  const handleReserve = () => {};
+
+  if (isFetching) return <h1>Loading..</h1>;
   return (
     <div>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-12">
@@ -30,15 +60,21 @@ const RoomDetails = () => {
           <div className="lg:col-span-3">
             <div className="flex justify-end">
               <div className="flex justify-between items-center w-52">
-                <FaRegHeart className="text-2xl text-blue-700" />
+                <FaRegHeart
+                  onClick={() => handleFavourite()}
+                  className="text-2xl text-blue-700 cursor-pointer"
+                />
                 <IoShareSocialOutline className="text-3xl text-blue-700" />
-                <Button className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2">
+                <Button
+                  onClick={() => handleReserve()}
+                  className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
+                >
                   Reserve
                 </Button>
               </div>
             </div>
 
-            <ReviewCard id={roomData?._id}/>
+            <ReviewCard id={roomData?._id} />
 
             {window.google === undefined ? (
               <LoadScript

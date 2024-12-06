@@ -22,6 +22,7 @@ import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdOutlineCancel } from "react-icons/md";
+import { LuRefreshCw } from "react-icons/lu";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -33,7 +34,7 @@ const { confirm } = Modal;
 const AdminNewRequestedRoom = () => {
   const [page, setPage] = useState(1);
   const [params, setParams] = useState<TQueryParam[]>([]);
-  const { data: adminGetAllRoomData, isFetching: adminGetAllRoomDataFetching } =
+  const { data: adminGetAllRoomData, isFetching: adminGetAllRoomDataFetching, refetch: adminGetAllRoomDataRefetch } =
     useAdminGetAllRoomQuery([
       { name: "limit", value: 5 },
       { name: "page", value: page },
@@ -272,6 +273,12 @@ const AdminNewRequestedRoom = () => {
 
   return (
     <div>
+      <Button
+        onClick={() => adminGetAllRoomDataRefetch()}
+        className="absolute z-10 right-6 mt-[-37px] md:mt-[-45px]"
+      >
+        <LuRefreshCw />
+      </Button>
       <Card className="overflow-x-scroll lg:overflow-hidden">
         <Table<TDataType>
           className="!z-0 "

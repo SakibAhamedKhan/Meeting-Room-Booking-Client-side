@@ -127,7 +127,7 @@ const PartnerDashbordLayout: React.FC = () => {
             <Button
               className={`${
                 collapsed === false && screens.xs
-                  ? "relative h-screen left-[230px] top-[4px] !bg-[#002F76]"
+                  ? "relative h-screen left-[230px] top-[4px] !bg-[#002F76] z-20"
                   : ""
               }`}
               type="text"
