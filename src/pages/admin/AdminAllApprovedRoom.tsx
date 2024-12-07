@@ -32,7 +32,7 @@ type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
 };
 const { confirm } = Modal;
 
-const AdminAllAcceptedRoom = () => {
+const AdminAllApprovedRoom = () => {
   const [page, setPage] = useState(1);
   const [params, setParams] = useState<TQueryParam[]>([]);
   const {
@@ -251,4 +251,4 @@ const AdminAllAcceptedRoom = () => {
   );
 };
 
-export default AdminAllAcceptedRoom;
+export default AdminAllApprovedRoom;

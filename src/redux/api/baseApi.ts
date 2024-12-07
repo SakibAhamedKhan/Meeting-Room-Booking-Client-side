@@ -61,7 +61,7 @@ export const baseApi = createApi({
     "adminGetAllRoom",
     "adminGetAllApprovedRoom",
     "getAllRooms",
-
+    "getAllPartners",
     
     "partnerGetAllRoom",
   ],

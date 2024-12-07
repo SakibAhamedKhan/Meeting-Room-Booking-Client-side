@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AdminAllAcceptedPartners = () => {
+const AdminAllApprovedPartners = () => {
   return (
     <div>
       Admin All Accepted Partners
@@ -8,4 +8,4 @@ const AdminAllAcceptedPartners = () => {
   )
 }
 
-export default AdminAllAcceptedPartners
+export default AdminAllApprovedPartners

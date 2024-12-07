@@ -70,6 +70,7 @@ const adminRoomApi = baseApi.injectEndpoints({
         "getAllRooms",
       ],
     }),
+
   }),
 });
 

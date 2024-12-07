@@ -18,7 +18,8 @@ export type TCInputProps = {
   maxImage?:number;
   label?: string; // এইটা থাকতেও পারে আবার নাও থাকতে পারে
   control?: Control<any>;
-  placeholder: string;
+  placeholder?: string;
+  options?: {value:string, label:string, disable?:boolean}[] | undefined;
 };
 
 export interface TCSelectAmenitiesProps {
