@@ -1,8 +1,5 @@
 import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
-import {
-  useDeActivateRoomMutation,
-} from "@/redux/features/admin/adminRoomApi.api";
 import { TQueryParam } from "@/types";
 import {
   Button,
@@ -19,13 +16,18 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { LuRefreshCw } from "react-icons/lu";
 import { TPartnerRequested } from "@/types/admin.partnerRequest.type";
 import getTimeAgo from "@/utils/getTimeAgo";
-import { useGetAllPartnersQuery } from "@/redux/features/admin/adminPartnerApi.api";
+import {
+  useDecisionMakePartnerMutation,
+  useGetAllPartnersQuery,
+} from "@/redux/features/admin/adminPartnerApi.api";
+import { toast } from "sonner";
+import { FaRegEye } from "react-icons/fa6";
+import AdminPartnerRequestDetailsModal from "@/components/admin/AdminPartnerRequestDetailsModal";
 
 type TDataType = TPartnerRequested;
 const { confirm } = Modal;
 
 const actionOpitions = [
-  { value: "Pending", label: "Pending" },
   { value: "Approved", label: "Approved" },
   { value: "Rejected", label: "Rejected" },
 ];
@@ -43,47 +45,28 @@ const AdminRequestedPartner = () => {
     { name: "isApproved", value: "Pending" },
     ...params,
   ]);
-  const [deActivateRoom, { isLoading: deActivateRoomLoading }] =
-    useDeActivateRoomMutation();
-  // State to track modal visibility and selected feedback item
+  const [decisionMakePartner, { isLoading: decisionMakePartnerLoading }] =
+    useDecisionMakePartnerMutation();
   const [modalData, setModalData] = useState<any>(null);
-  // Track loading state for each room
-  const [loadingRoomId, setLoadingRoomId] = useState<string | null>(null);
 
-  console.log(adminGetAllPartnersData);
-  const showConfirm = (record: any) => {
-    confirm({
-      title: "Do you want to unapprove these meeting room?",
-      icon: <ExclamationCircleFilled />,
-      content: (
-        <div>
-          <p>
-            Room Id: <span>{record.key}</span>
-          </p>
-          <p>
-            Room Name: <span>{record.name}</span>
-          </p>
-          <p>
-            Capacity: <span>{record.capacity}</span>
-          </p>
-          <p>
-            Price Per Slot: <span>{record.pricePerSlot}</span>
-          </p>
-        </div>
-      ),
-      onOk() {
-        handleApprove(record);
-        console.log("OK ==== ", record);
+  const handleActionChange = async (selectData: string, record: TDataType) => {
+    const userData = {
+      args: [{ name: "operation", value: selectData }],
+      partnerData: {
+        user: record?.user?._id,
+        requestedId: record?._id,
       },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
+    };
+    try {
+      const res = (await decisionMakePartner(userData)) as any;
+      console.log(res);
+
+      toast.success(res?.data?.message, { duration: 2000 });
+    } catch (error: any) {
+      toast.error(error?.message, { duration: 2000 });
+    }
   };
 
-  const handleActionChange = (data:string) => {
-
-  }
   const columns: TableColumnsType<TDataType> = [
     {
       title: "Id",
@@ -151,7 +134,7 @@ const AdminRequestedPartner = () => {
             {record?.isApproved === "Pending" && (
               <Button
                 style={{ borderColor: "#FFD700", color: "#FF4500" }}
-                className="font-semibold"
+                className="font-semibold bg-orange-50"
               >
                 {record.isApproved}
               </Button>
@@ -167,77 +150,51 @@ const AdminRequestedPartner = () => {
         return (
           <Space>
             {record?.isApproved === "Pending" && (
-                <Select
-                  options={actionOpitions}
-                  placeholder="Select Action"
-                  onChange={(value) => {
-                    handleActionChange(value);
-                  }}
-                />
+              <Select
+                options={actionOpitions}
+                placeholder="Select Action"
+                onChange={(value) => {
+                  handleActionChange(value, record);
+                }}
+              />
             )}
           </Space>
         );
       },
     },
-
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (_, record) => {
-    //     return (
-    //       <Space size="middle">
-    //         <Button
-    //           style={{ borderColor: "#FFD700", color: "#FF4500" }}
-    //           className="font-semibold"
-    //           loading={loadingRoomId === record.key && deActivateRoomLoading}
-    //           onClick={() => showConfirm(record)}
-    //         >
-    //           {loadingRoomId === record.key && deActivateRoomLoading ? (
-    //             ""
-    //           ) : (
-    //             <MdOutlineCancel />
-    //           )}
-    //           Unapprove
-    //         </Button>
-    //         <Button
-    //           style={{
-    //             borderColor: "#002f76",
-    //             backgroundColor: "#002f76",
-    //             color: "white",
-    //           }}
-    //           onClick={() => showModal(record)}
-    //         >
-    //           <FaRegEye className="text-[16px]" />
-    //         </Button>
-    //       </Space>
-    //     );
-    //   },
-    // },
+    {
+      title: "Details",
+      key: "details",
+      render: (text, record) => {
+        return (
+          <Space>
+            <Button
+              style={{
+                borderColor: "#002f76",
+                backgroundColor: "#002f76",
+                color: "white",
+              }}
+              className="px-2"
+              onClick={() => showModal(record)}
+            >
+              <FaRegEye className="text-[16px]" />
+            </Button>
+          </Space>
+        );
+      },
+    },
   ];
   let tableData = [];
   if (!adminGetAllPartnersDataFetching) {
     tableData = [...adminGetAllPartnersData?.data].reverse();
   }
-  console.log(tableData);
-  // useEffect(() => {
-  //   if (!isFetching && adminGetAllRoomData) {
-  //     const result = adminGetAllRoomData.data.filter((item: TRoomData) => {
-  //       return item.isApproved === false;
-  //     });
-  //     setAllRoomData(result);
-  //   }
-  // }, [isFetching, adminGetAllRoomData]);
 
   const rowClassName = (record: TDataType, index: number) => {
     return "table-custom-row";
   };
 
   const showModal = (item: any) => {
-    console.log(item);
-    const findedData = adminGetAllPartnersData?.data.find(
-      (d: any) => d._id === item?.key
-    );
-    setModalData(findedData); // Store the item whose details should be shown in the modal
+    setModalData(item); // Store the item whose details should be shown in the modal
   };
 
   const handleOk = () => {
@@ -247,34 +204,6 @@ const AdminRequestedPartner = () => {
   const handleCancel = () => {
     setModalData(null); // Close the modal
   };
-
-  const handleApprove = async (record: any) => {
-    setLoadingRoomId(record.key);
-    try {
-      const res = await deActivateRoom(record.key);
-      console.log(res);
-    } catch (error) {
-      console.error("Error approving room:", error);
-    } finally {
-      setLoadingRoomId(null);
-    }
-  };
-
-  // const onChange: TableProps<TDataType>["onChange"] = (
-  //   pagination,
-  //   filters,
-  //   sorter,
-  //   extra
-  // ) => {
-  //   console.log("params", { pagination, filters, sorter, extra });
-  //   if (extra.action === "filter") {
-  //     const queryParams: TQueryParam[] = [];
-  //     filters.name?.forEach((item) => {
-  //       queryParams.push({ name: "name", value: item });
-  //     });
-  //     setParams(queryParams);
-  //   }
-  // };
 
   return (
     <div>
@@ -288,7 +217,9 @@ const AdminRequestedPartner = () => {
         <Table<TDataType>
           className="!z-0"
           columns={columns}
-          loading={adminGetAllPartnersDataFetching}
+          loading={
+            adminGetAllPartnersDataFetching || decisionMakePartnerLoading
+          }
           dataSource={tableData}
           rowClassName={rowClassName}
           pagination={false}
@@ -301,7 +232,7 @@ const AdminRequestedPartner = () => {
           />
         </Row>
       </Card>
-      <AdminNewRequestedRoomModal
+      <AdminPartnerRequestDetailsModal
         modalData={modalData}
         handleOk={handleOk}
         handleCancel={handleCancel}

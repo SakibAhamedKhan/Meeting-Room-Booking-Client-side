@@ -151,7 +151,7 @@ const AdminNewRequestedRoom = () => {
           <Space size="middle">
             <Button
               style={{ borderColor: "#40FF40", color: "#008000" }}
-              className="font-semibold"
+              className="font-semibold bg-green-50"
               variant="outlined"
               loading={loadingRoomId === record.key && activateRoomLoading}
               onClick={() => showConfirm(record)}
@@ -165,7 +165,7 @@ const AdminNewRequestedRoom = () => {
             </Button>
             <Button
               style={{ borderColor: "#FA8072", color: "#FF0000" }}
-              className="font-semibold"
+              className="font-semibold bg-red-50"
               loading={loadingRoomId === record.key && declinedRoomLoading}
               onClick={() => showConfirm2(record)}
             >
@@ -182,6 +182,7 @@ const AdminNewRequestedRoom = () => {
                 backgroundColor: "#002f76",
                 color: "white",
               }}
+              className="px-2"
               onClick={() => showModal(record)}
             >
               <FaRegEye className="text-[16px]" />

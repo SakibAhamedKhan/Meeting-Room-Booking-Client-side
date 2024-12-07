@@ -123,7 +123,7 @@ const AdminAllApprovedRoom = () => {
           <Space size="middle">
             <Button
               style={{ borderColor: "#FFD700", color: "#FF4500" }}
-              className="font-semibold"
+              className="font-semibold bg-orange-50"
               loading={loadingRoomId === record.key && deActivateRoomLoading}
               onClick={() => showConfirm(record)}
             >
@@ -140,6 +140,7 @@ const AdminAllApprovedRoom = () => {
                 backgroundColor: "#002f76",
                 color: "white",
               }}
+              className="px-2"
               onClick={() => showModal(record)}
             >
               <FaRegEye className="text-[16px]" />

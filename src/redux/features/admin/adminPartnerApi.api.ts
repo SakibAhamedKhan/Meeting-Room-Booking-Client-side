@@ -20,9 +20,27 @@ const adminPartnerApi = baseApi.injectEndpoints({
       },
       providesTags: ["getAllPartners"],
     }),
+
+    decisionMakePartner: builder.mutation({
+        query: (data) => {
+          const params = new URLSearchParams();
+  
+            data?.args.forEach((item: TQueryParam) => {
+              params.append(item.name, item.value as string);
+            });
+          return {
+            url: "/partners/requested/decisionmake",
+            method: "PATCH",
+            params: params,
+            body: data.partnerData
+          };
+        },
+        invalidatesTags: ["getAllPartners"],
+      }),
   }),
 });
 
 export const {
   useGetAllPartnersQuery,
+  useDecisionMakePartnerMutation
 } = adminPartnerApi;
