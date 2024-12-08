@@ -74,7 +74,7 @@ const AdminAllApprovedPartners = () => {
       render: (text, record) => {
         return (
           <Space>
-            <p className="!text-xs">{record._id}</p>
+            <p className="!text-xs">{record?._id}</p>
           </Space>
         );
       },
@@ -97,7 +97,7 @@ const AdminAllApprovedPartners = () => {
       render: (text, record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.user.name}</p>
+            <p className="!text-xs">{record?.user?.name}</p>
           </Space>
         );
       },
@@ -108,7 +108,7 @@ const AdminAllApprovedPartners = () => {
       render: (text, record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.businessName}</p>
+            <p className="!text-xs">{record?.businessName}</p>
           </Space>
         );
       },
@@ -120,7 +120,7 @@ const AdminAllApprovedPartners = () => {
       render: (text, record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.businessAddress}</p>
+            <p className="!text-xs">{record?.businessAddress}</p>
           </Space>
         );
       },
@@ -136,7 +136,7 @@ const AdminAllApprovedPartners = () => {
                 style={{ borderColor: "#40FF40", color: "#008000" }}
                 className="font-semibold bg-green-50"
               >
-                {record.isApproved}
+                {record?.isApproved}
               </Button>
             )}
           </Space>

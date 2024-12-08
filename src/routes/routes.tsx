@@ -15,8 +15,17 @@ import { AdminPaths } from "./admin.routes";
 import AdminDasboardLayout from "@/components/layout/AdminDashboardLayout";
 import { PartnerPaths } from "./partner.routes";
 import PartnerDashbordLayout from "@/components/layout/PartnerDashbordLayout";
+import Testing from "@/pages/testing/Testing";
 
 export const router = createBrowserRouter([
+  {
+    path: "/testing",
+    element: (
+      <CommonLayout>
+        <Testing />
+      </CommonLayout>
+    ),
+  },
   {
     path: "/",
     element: (

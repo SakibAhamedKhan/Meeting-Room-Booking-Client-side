@@ -11,10 +11,11 @@ const CSelect = ({ name, label, options, placeholder, type }: TCInputProps) => {
           <Form.Item label={label} className="m-0">
             <Select
               {...field}
-              type={type}
               style={{ width: "100%" }}
               options={options}
               placeholder={placeholder}
+              size="large"
+              className="md:!h-[43px]"
              
             />
             {error && (

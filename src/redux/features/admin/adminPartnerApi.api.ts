@@ -29,7 +29,7 @@ const adminPartnerApi = baseApi.injectEndpoints({
               params.append(item.name, item.value as string);
             });
           return {
-            url: "/partners/requested/decisionmake",
+            url: "/partners/decisionmake",
             method: "PATCH",
             params: params,
             body: data.partnerData

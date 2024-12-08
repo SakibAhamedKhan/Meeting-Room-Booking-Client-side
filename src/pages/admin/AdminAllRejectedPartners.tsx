@@ -143,25 +143,25 @@ const AdminAllRejectedPartners = () => {
         );
       },
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => {
-        return (
-          <Space>
-            {record?.isApproved === "Rejected" && (
-              <Select
-                options={actionOpitions}
-                placeholder="Select Action"
-                onChange={(value) => {
-                  handleActionChange(value, record);
-                }}
-              />
-            )}
-          </Space>
-        );
-      },
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (text, record) => {
+    //     return (
+    //       <Space>
+    //         {record?.isApproved === "Rejected" && (
+    //           <Select
+    //             options={actionOpitions}
+    //             placeholder="Select Action"
+    //             onChange={(value) => {
+    //               handleActionChange(value, record);
+    //             }}
+    //           />
+    //         )}
+    //       </Space>
+    //     );
+    //   },
+    // },
     {
       title: "Details",
       key: "details",

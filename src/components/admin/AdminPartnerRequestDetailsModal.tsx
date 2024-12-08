@@ -40,6 +40,9 @@ const AdminPartnerRequestDetailsModal = ({
                   <p>
                     <strong>Address:</strong> {modalData.user.address}
                   </p>
+                  <p>
+                    <strong>User Role:</strong> {modalData.user.role}
+                  </p>
                 </div>
               </div>
 
