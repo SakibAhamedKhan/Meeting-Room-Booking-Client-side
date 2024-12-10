@@ -23,7 +23,7 @@ const RoomDetails = () => {
 
   const handleFavourite = () => {
     console.log(user);
-    if (user === null) {
+    if (user === null) {;
       toast.warning("At first you have to login!", {
         duration: 2000,
         position: "top-center",
@@ -42,9 +42,10 @@ const RoomDetails = () => {
       // );
       return navigate("/login");
     }
+    
   };
 
-  const handleReserve = () => {};
+  const handleReserve = (;) => {};
 
   if (isFetching) return <h1>Loading..</h1>;
   return (
@@ -67,7 +68,7 @@ const RoomDetails = () => {
                 <IoShareSocialOutline className="text-3xl text-blue-700" />
                 <Button
                   onClick={() => handleReserve()}
-                  className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
+                  classNam;e="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
                 >
                   Reserve
                 </Button>
@@ -89,7 +90,7 @@ const RoomDetails = () => {
         </div>
 
         {/* amenities */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 my-8">
+        <div className="gri;d grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 my-8">
           {roomData?.amenities.map((item: any, index: number) => (
             <AmenitiesCard amenities={item} key={index} />
           ))}
