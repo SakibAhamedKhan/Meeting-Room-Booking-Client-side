@@ -28,6 +28,13 @@ const roomApi = baseApi.injectEndpoints({
         body: partnerData,
       }),
     }),
+    makeRoomFavourite: builder.mutation({
+      query: (data: any) => ({
+        url: `/favourite/me`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -36,4 +43,5 @@ export const {
   useGetSingleRoomQuery,
   useSignlePartnerRequestQuery,
   useRequestedPartnerMutation,
+  useMakeRoomFavouriteMutation,
 } = roomApi;

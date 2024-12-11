@@ -1,4 +1,7 @@
-import { useGetSingleRoomQuery } from "@/redux/features/customer/customerRoomApi.api";
+import {
+  useGetSingleRoomQuery,
+  useMakeRoomFavouriteMutation,
+} from "@/redux/features/customer/customerRoomApi.api";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
@@ -14,16 +17,17 @@ import { toast } from "sonner";
 import { IoWarningOutline } from "react-icons/io5";
 
 const RoomDetails = () => {
+  const [makeRoomFavourite, { isLoading: makeRoomFavouriteLoading }] =
+    useMakeRoomFavouriteMutation();
   const navigate = useNavigate();
   const user = getAuthUser();
   const { id } = useParams();
   const { data, isFetching } = useGetSingleRoomQuery(id);
-
   const roomData = data?.data;
 
-  const handleFavourite = () => {
+  const handleFavourite = async () => {
     console.log(user);
-    if (user === null) {;
+    if (user === null) {
       toast.warning("At first you have to login!", {
         duration: 2000,
         position: "top-center",
@@ -42,10 +46,21 @@ const RoomDetails = () => {
       // );
       return navigate("/login");
     }
-    
+
+    try {
+      const sendData = {
+        room: roomData?._id,
+      };
+      const res = await makeRoomFavourite(sendData).unwrap();
+      console.log(res);
+      toast.success("Favourite Added!", { duration: 2000 });
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.message, { duration: 1000 });
+    }
   };
 
-  const handleReserve = (;) => {};
+  const handleReserve = async () => {};
 
   if (isFetching) return <h1>Loading..</h1>;
   return (
@@ -68,7 +83,7 @@ const RoomDetails = () => {
                 <IoShareSocialOutline className="text-3xl text-blue-700" />
                 <Button
                   onClick={() => handleReserve()}
-                  classNam;e="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
+                  className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
                 >
                   Reserve
                 </Button>
