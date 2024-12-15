@@ -1,4 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TQueryParam } from "@/types";
 
 const roomApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -42,6 +43,23 @@ const roomApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getAllFavourite: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/favourite/me",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["getAllFavourite"],
+    }),
   }),
 });
 
@@ -52,4 +70,5 @@ export const {
   useRequestedPartnerMutation,
   useMakeRoomFavouriteMutation,
   useMakeRoomUnFavouriteMutation,
+  useGetAllFavouriteQuery,
 } = roomApi;
