@@ -15,6 +15,7 @@ const roomApi = baseApi.injectEndpoints({
         url: `/rooms/${id}`,
         method: "GET",
       }),
+      providesTags: ["getSingleRoom"],
     }),
     signlePartnerRequest: builder.query({
       query: () => ({
@@ -35,6 +36,7 @@ const roomApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["getAllFavourite", "getSingleRoom"],
     }),
     makeRoomUnFavourite: builder.mutation({
       query: (data: any) => ({
@@ -42,6 +44,7 @@ const roomApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["getAllFavourite", "getSingleRoom"],
     }),
     getAllFavourite: builder.query({
       query: (args) => {

@@ -29,6 +29,9 @@ import {
   useUnPublishRoomMutation,
 } from "@/redux/features/partner/partnerRoomApi.api";
 import { LuRefreshCw } from "react-icons/lu";
+import { FiPlus } from "react-icons/fi";
+import { LiaBullseyeSolid } from "react-icons/lia";
+import PartnerAddSlotModal from "@/components/partner/PartnerAddSlotModal";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -37,6 +40,7 @@ type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   isApproved?: boolean;
   isBanned?: boolean;
   partnerPublish?: boolean;
+  haveSlot: boolean;
 };
 const { confirm } = Modal;
 
@@ -58,6 +62,7 @@ const PartnerAllRoomList = () => {
     useUnPublishRoomMutation();
   // State to track modal visibility and selected feedback item
   const [modalData, setModalData] = useState<any>(null);
+  const [addSlotModalData, setAddSlotModalData] = useState<any>(null);
   // Track loading state for each room
   const [loadingRoomId, setLoadingRoomId] = useState<string | null>(null);
 
@@ -177,12 +182,8 @@ const PartnerAllRoomList = () => {
               <>
                 {record?.isApproved ? (
                   <Button
-                    style={{
-                      borderColor: "#40FF40",
-                      backgroundColor: "#008000",
-                      color: "white",
-                    }}
-                    className="font-semibold"
+                    style={{ borderColor: "#40FF40", color: "#008000" }}
+                    className="font-semibold bg-green-50"
                   >
                     Approved
                   </Button>
@@ -206,6 +207,55 @@ const PartnerAllRoomList = () => {
       },
     },
     {
+      title: "Slot",
+      key: "slot",
+      render: (_, record) => {
+        return (
+          <div>
+            {!record?.isBanned && record?.isApproved ? (
+              <>
+                {record?.haveSlot ? (
+                  <Button
+                    style={{ borderColor: "gray", color: "black" }}
+                    className="font-semibold bg-gray-100"
+                    loading={
+                      loadingRoomId === record.key && unPublishRoomLoading
+                    }
+                    onClick={() => showConfirmUnpublish(record)}
+                  >
+                    {loadingRoomId === record.key && unPublishRoomLoading ? (
+                      ""
+                    ) : (
+                      <LiaBullseyeSolid className="text-lg" />
+                    )}
+                    View Slot
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ borderColor: "gray", color: "black" }}
+                    className="font-semibold bg-gray-100"
+                    loading={
+                      loadingRoomId === record.key && unPublishRoomLoading
+                    }
+                    onClick={() => setAddSlotModalData(getAllData(record))}
+                  >
+                    {loadingRoomId === record.key && unPublishRoomLoading ? (
+                      ""
+                    ) : (
+                      <FiPlus className="text-lg" />
+                    )}
+                    Add Slot
+                  </Button>
+                )}
+              </>
+            ) : (
+              <p className="text-gray-300 cursor-not-allowed">Not Available</p>
+            )}
+          </div>
+        );
+      },
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => {
@@ -216,7 +266,7 @@ const PartnerAllRoomList = () => {
                 {record?.partnerPublish ? (
                   <Button
                     style={{ borderColor: "#FFD700", color: "#FF4500" }}
-                    className="font-semibold"
+                    className="font-semibold bg-orange-50"
                     loading={
                       loadingRoomId === record.key && unPublishRoomLoading
                     }
@@ -232,7 +282,7 @@ const PartnerAllRoomList = () => {
                 ) : (
                   <Button
                     style={{ borderColor: "#40FF40", color: "#008000" }}
-                    className="font-semibold"
+                    className="font-semibold bg-green-50"
                     loading={loadingRoomId === record.key && publishRoomLoading}
                     onClick={() => showConfirmPublish(record)}
                   >
@@ -247,10 +297,9 @@ const PartnerAllRoomList = () => {
               </>
             ) : (
               <div className="">
-                <Button className="font-semibold" disabled>
-                  <MdDone />
-                  Publish
-                </Button>
+                <p className="text-gray-300 cursor-not-allowed">
+                  Not Available
+                </p>
               </div>
             )}
           </div>
@@ -269,7 +318,9 @@ const PartnerAllRoomList = () => {
               backgroundColor: "#002f76",
               color: "white",
             }}
-            onClick={() => showModal(record)}
+            onClick={() => {
+              setModalData(getAllData(record))
+            }}
           >
             <FaRegEye className="text-[16px]" />
           </Button>
@@ -287,6 +338,7 @@ const PartnerAllRoomList = () => {
       isApproved,
       isBanned,
       partnerPublish,
+      haveSlot,
     }: any) => ({
       key: _id,
       roomId: _id,
@@ -297,6 +349,7 @@ const PartnerAllRoomList = () => {
       isApproved,
       isBanned,
       partnerPublish,
+      haveSlot,
     })
   );
 
@@ -313,13 +366,15 @@ const PartnerAllRoomList = () => {
     return "table-custom-row";
   };
 
-  const showModal = (item: any) => {
+  const getAllData = (item: any) => {
     console.log(item);
     const findedData = partnerGetAllRoomData?.data.find(
       (d: any) => d._id === item?.key
     );
-    setModalData(findedData); // Store the item whose details should be shown in the modal
+    
+    return findedData;
   };
+
 
   const handleOk = () => {
     setModalData(null); // Close the modal
@@ -397,6 +452,10 @@ const PartnerAllRoomList = () => {
         modalData={modalData}
         handleOk={handleOk}
         handleCancel={handleCancel}
+      />
+      <PartnerAddSlotModal
+        addSlotModalData={addSlotModalData}
+        setAddSlotModalData={setAddSlotModalData}
       />
     </div>
   );

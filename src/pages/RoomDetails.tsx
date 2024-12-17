@@ -29,7 +29,10 @@ const RoomDetails = () => {
   const { id } = useParams();
   console.log(id);
   const { data, isFetching, refetch } = useGetSingleRoomQuery(id);
- 
+
+  useEffect(() => {
+    refetch();
+  }, [id, refetch]);
 
   if (isFetching) {
     return <p>Loading...</p>;
