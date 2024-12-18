@@ -24,6 +24,7 @@ import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdOutlineCancel } from "react-icons/md";
 import {
+  useGetAllMySLotQuery,
   useParnterGetAllRoomQuery,
   usePublishRoomMutation,
   useUnPublishRoomMutation,
@@ -32,6 +33,7 @@ import { LuRefreshCw } from "react-icons/lu";
 import { FiPlus } from "react-icons/fi";
 import { LiaBullseyeSolid } from "react-icons/lia";
 import PartnerAddSlotModal from "@/components/partner/PartnerAddSlotModal";
+import PartnerViewSlotModal from "@/components/partner/PartnerViewSlotModal";
 
 type TDataType = Pick<TRoomData, "name" | "capacity" | "pricePerSlot"> & {
   key: string;
@@ -60,13 +62,21 @@ const PartnerAllRoomList = () => {
     usePublishRoomMutation();
   const [unPublishRoom, { isLoading: unPublishRoomLoading }] =
     useUnPublishRoomMutation();
-  // State to track modal visibility and selected feedback item
+  const [roomId, setRoomId] = useState<any>(undefined);
+  const { data: getAllMySlot, isFetching: getAllMySlotisFetching } =
+    useGetAllMySLotQuery(roomId, {
+      skip: roomId === null,
+    });
   const [modalData, setModalData] = useState<any>(null);
   const [addSlotModalData, setAddSlotModalData] = useState<any>(null);
-  // Track loading state for each room
+  const [slotModalData, setSlotModalData] = useState<any>(null);
   const [loadingRoomId, setLoadingRoomId] = useState<string | null>(null);
 
-  // const [allRoomData, setAllRoomData] = useState<TRoomData[]>([]);
+  useEffect(() => {
+    if(getAllMySlot!==undefined && getAllMySlot!==null){
+      setSlotModalData(getAllMySlot);
+    }
+  }, [getAllMySlot]);
   const showConfirmPublish = (record: any) => {
     confirm({
       title: "Do you want to publish these meeting room?",
@@ -89,10 +99,8 @@ const PartnerAllRoomList = () => {
       ),
       onOk() {
         handlePublish(record);
-        console.log("OK ==== ", record);
       },
       onCancel() {
-        console.log("Cancel");
       },
     });
   };
@@ -118,14 +126,14 @@ const PartnerAllRoomList = () => {
       ),
       onOk() {
         handleUnPublish(record);
-        console.log("OK ==== ", record);
       },
       onCancel() {
-        console.log("Cancel");
       },
     });
   };
-
+  const handleViewSlot = (record: any) => {
+    setRoomId(record.key);
+  };
   const columns: TableColumnsType<TDataType> = [
     {
       title: "Thumbnail",
@@ -221,7 +229,9 @@ const PartnerAllRoomList = () => {
                     loading={
                       loadingRoomId === record.key && unPublishRoomLoading
                     }
-                    onClick={() => showConfirmUnpublish(record)}
+                    onClick={() => {
+                      handleViewSlot(record);
+                    }}
                   >
                     {loadingRoomId === record.key && unPublishRoomLoading ? (
                       ""
@@ -319,7 +329,7 @@ const PartnerAllRoomList = () => {
               color: "white",
             }}
             onClick={() => {
-              setModalData(getAllData(record))
+              setModalData(getAllData(record));
             }}
           >
             <FaRegEye className="text-[16px]" />
@@ -367,14 +377,12 @@ const PartnerAllRoomList = () => {
   };
 
   const getAllData = (item: any) => {
-    console.log(item);
     const findedData = partnerGetAllRoomData?.data.find(
       (d: any) => d._id === item?.key
     );
-    
+
     return findedData;
   };
-
 
   const handleOk = () => {
     setModalData(null); // Close the modal
@@ -388,7 +396,6 @@ const PartnerAllRoomList = () => {
     setLoadingRoomId(record.key);
     try {
       const res = await publishRoom(record.key);
-      console.log(res);
     } catch (error) {
       console.error("Error publshing room:", error);
     } finally {
@@ -399,7 +406,6 @@ const PartnerAllRoomList = () => {
     setLoadingRoomId(record.key);
     try {
       const res = await unPublishRoom(record.key);
-      console.log(res);
     } catch (error) {
       console.error("Error unPublishing room:", error);
     } finally {
@@ -456,6 +462,11 @@ const PartnerAllRoomList = () => {
       <PartnerAddSlotModal
         addSlotModalData={addSlotModalData}
         setAddSlotModalData={setAddSlotModalData}
+      />
+
+      <PartnerViewSlotModal
+        slotModalData={slotModalData}
+        setSlotModalData={setSlotModalData}
       />
     </div>
   );

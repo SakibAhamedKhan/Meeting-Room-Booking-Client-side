@@ -42,12 +42,20 @@ const partnerRoomApi = baseApi.injectEndpoints({
       invalidatesTags: ["partnerGetAllRoom"],
     }),
     addSlot: builder.mutation({
-      query: (payload:any) => ({
+      query: (payload: any) => ({
         url: `/slots`,
         method: "POST",
-        body:payload,
+        body: payload,
       }),
       invalidatesTags: ["partnerGetAllRoom"],
+    }),
+    getAllMySLot: builder.query({
+      query: (payload: any) => {
+        return {
+          url: `/slots/getAllSlot/${payload}`,
+          method: "GET",
+        };
+      },
     }),
   }),
 });
@@ -58,4 +66,5 @@ export const {
   usePublishRoomMutation,
   useUnPublishRoomMutation,
   useAddSlotMutation,
+  useGetAllMySLotQuery,
 } = partnerRoomApi;
