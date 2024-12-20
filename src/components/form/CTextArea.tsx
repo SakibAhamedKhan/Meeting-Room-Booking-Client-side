@@ -3,7 +3,7 @@ import { Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Controller } from "react-hook-form";
 
-const CTextArea = ({ name, label, placeholder, control }: TCInputProps) => {
+const CTextArea = ({ name, label, placeholder }: TCInputProps) => {
   return (
     <div className="">
       <Controller

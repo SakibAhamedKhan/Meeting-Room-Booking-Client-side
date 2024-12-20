@@ -1,4 +1,4 @@
-type TPartnerRequested = {
+export type TPartnerRequested = {
     bankDetails: {
       accountNumber: string;
       bankName: string;

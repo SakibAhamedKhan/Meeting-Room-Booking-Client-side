@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import {
-  LaptopOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  NotificationOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import { MenuProps, Grid } from "antd";
-import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
-import Navbar from "./Navbar";
+import { Grid } from "antd";
+import { Breadcrumb, Button, Layout, Menu } from "antd";
 import DashboardNavbar from "./DashboardNavbar";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentToken } from "@/redux/features/auth/authSlice.slice";
 import { verifyToken } from "@/utils/verifyToken";
-import { CustomerPaths } from "@/routes/customer.routes";
 import { sidebarItemsGenerator } from "@/utils/SidebarsItemsGenerator";
 import { TUser } from "@/types";
 import { Outlet, useLocation } from "react-router-dom";
 import { AdminPaths } from "@/routes/admin.routes";
 
-const { Header, Content, Sider } = Layout;
+const {  Sider } = Layout;
 
 const userRole = {
   ADMIN: "ADMIN",
@@ -57,7 +52,7 @@ const AdminDashboardLayout: React.FC = () => {
   const generateBreadcrumbItems = (pathname: string) => {
     const pathSegments = pathname.split("/").filter(Boolean); // Split by '/' and remove empty values
 
-    return pathSegments.map((segment, index) => {
+    return pathSegments.map((segment) => {
       // Decode URL-encoded segments (e.g., "Customer%20Support" -> "Customer Support")
       const decodedSegment = decodeURIComponent(segment);
 
@@ -77,9 +72,7 @@ const AdminDashboardLayout: React.FC = () => {
 
   console.log(sidebarItems, role);
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+
 
   return (
     <Layout className="h-screen overflow-hidden">

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "antd";
 
 const RoomCollection = () => {
-  const { data: roomData, isFetching } = useGetAllRoomsQuery(undefined,  {
+  const { data: roomData } = useGetAllRoomsQuery(undefined,  {
     refetchOnFocus:true,
     refetchOnMountOrArgChange:true,
     refetchOnReconnect:true,

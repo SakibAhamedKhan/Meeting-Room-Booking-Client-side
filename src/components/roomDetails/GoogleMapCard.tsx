@@ -1,5 +1,5 @@
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import React, { useEffect, useState } from "react";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
 
 const GoogleMapCard = ({ data }: any) => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });

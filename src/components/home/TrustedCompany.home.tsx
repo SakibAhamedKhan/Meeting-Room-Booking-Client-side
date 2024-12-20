@@ -1,4 +1,3 @@
-import React from 'react'
 import amazon from '../../assets/TrustedIcons/amazon.png';
 import google from '../../assets/TrustedIcons/goolge1.png';
 import facebook from '../../assets/TrustedIcons/facebook.png';

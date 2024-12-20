@@ -2,7 +2,7 @@ import { TCInputProps } from "@/types/cform.types";
 import { Form, Select } from "antd";
 import { Controller } from "react-hook-form";
 
-const CSelect = ({ name, label, options, placeholder, type }: TCInputProps) => {
+const CSelect = ({ name, label, options, placeholder }: TCInputProps) => {
   return (
     <div>
       <Controller

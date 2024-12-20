@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -8,7 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { feedbackData } from "@/assets/demoResources";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 
 const modalStyles = {};
 

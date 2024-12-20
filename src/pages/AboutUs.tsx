@@ -1,5 +1,4 @@
 import ParticleWIthContact from "@/components/contact/ParticleWIthContact.contact";
-import React from "react";
 import { useEffect } from "react";
 import { Particle } from "jparticles";
 import { directorsData } from "@/assets/demoResources";
@@ -59,7 +58,7 @@ const AboutUs = () => {
         </div>
         <div className="flex justify-center items-center flex-wrap gap-x-14">
           {
-            directorsData?.map((item,index) => (
+            directorsData?.map((item) => (
               <div className="justify-items-center p-[10px] md:p-4 w-fit">
                 <img src={`${item.image}`} className="rounded-full w-[80px] h-[80px] md:w-32 md:h-32 lg:w-40 lg:h-40  mb-2 md:mb-4" alt="" />
                 <h3 className="text-lg md:text-xl font-bold md:mb-2">{item.name}</h3>

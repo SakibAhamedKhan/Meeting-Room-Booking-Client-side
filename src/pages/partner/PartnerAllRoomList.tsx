@@ -1,11 +1,7 @@
 import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
-import {
-  useActivateRoomMutation,
-  useAdminGetAllApprovedRoomQuery,
-  useAdminGetAllRoomQuery,
-  useDeActivateRoomMutation,
-} from "@/redux/features/admin/adminRoomApi.api";
+
+
 import { TQueryParam } from "@/types";
 import { TRoomData } from "@/types/rooms.type";
 import {
@@ -48,7 +44,7 @@ const { confirm } = Modal;
 
 const PartnerAllRoomList = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const {
     data: partnerGetAllRoomData,
     isFetching: partnerGetAllRoomDataFetching,
@@ -63,7 +59,7 @@ const PartnerAllRoomList = () => {
   const [unPublishRoom, { isLoading: unPublishRoomLoading }] =
     useUnPublishRoomMutation();
   const [roomId, setRoomId] = useState<any>(undefined);
-  const { data: getAllMySlot, isFetching: getAllMySlotisFetching } =
+  const { data: getAllMySlot } =
     useGetAllMySLotQuery(roomId, {
       skip: roomId === null,
     });
@@ -139,7 +135,7 @@ const PartnerAllRoomList = () => {
       title: "Thumbnail",
       key: "thumbnail",
       dataIndex: "thumbnail",
-      render: (text, record) => {
+      render: ( record) => {
         return (
           <Space>
             <Image width={90} src={record?.thumbnail} />
@@ -372,7 +368,7 @@ const PartnerAllRoomList = () => {
   //   }
   // }, [isFetching, adminGetAllRoomData]);
 
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 
@@ -395,7 +391,7 @@ const PartnerAllRoomList = () => {
   const handlePublish = async (record: any) => {
     setLoadingRoomId(record.key);
     try {
-      const res = await publishRoom(record.key);
+     await publishRoom(record.key);
     } catch (error) {
       console.error("Error publshing room:", error);
     } finally {
@@ -405,7 +401,7 @@ const PartnerAllRoomList = () => {
   const handleUnPublish = async (record: any) => {
     setLoadingRoomId(record.key);
     try {
-      const res = await unPublishRoom(record.key);
+     await unPublishRoom(record.key);
     } catch (error) {
       console.error("Error unPublishing room:", error);
     } finally {

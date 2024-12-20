@@ -1,9 +1,7 @@
-import { Button, Modal, TimePicker } from "antd";
+import { Button, Modal } from "antd";
 import CForm from "../form/CForm";
 import CTimePickerRangePicker from "../form/CTimePickerRangePicker";
 import { FieldValues } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addSlotZodSchema } from "@/schemas/customer.schemas";
 import { useState } from "react";
 import { useAddSlotMutation } from "@/redux/features/partner/partnerRoomApi.api";
 import { toast } from "sonner";
@@ -16,7 +14,7 @@ const PartnerAddSlotModal = ({
     check: false,
     message: "",
   });
-  const [addSlot, { isLoading }] = useAddSlotMutation();
+  const [addSlot] = useAddSlotMutation();
   const handleOk = () => {
     console.log(addSlotModalData);
     setTimeFiedlError({
@@ -75,7 +73,7 @@ const PartnerAddSlotModal = ({
           message: "",
         });
         try {
-          const res = await addSlot(sendData).unwrap();
+          await addSlot(sendData).unwrap();
           toast.success("Added the Slot Successfully", {
             id: toastId,
             duration: 2000,

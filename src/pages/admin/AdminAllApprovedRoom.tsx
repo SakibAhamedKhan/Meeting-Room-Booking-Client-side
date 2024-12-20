@@ -1,9 +1,7 @@
 import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
 import {
-  useActivateRoomMutation,
   useAdminGetAllApprovedRoomQuery,
-  useAdminGetAllRoomQuery,
   useDeActivateRoomMutation,
 } from "@/redux/features/admin/adminRoomApi.api";
 import { TQueryParam } from "@/types";
@@ -18,9 +16,8 @@ import {
   Table,
   TableColumnsType,
 } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
-import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdOutlineCancel } from "react-icons/md";
 import { LuRefreshCw } from "react-icons/lu";
@@ -34,7 +31,7 @@ const { confirm } = Modal;
 
 const AdminAllApprovedRoom = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const {
     data: adminGetAllApprovedRoomData,
     isFetching: adminGetAllApprovedRoomDataFetching,
@@ -87,7 +84,7 @@ const AdminAllApprovedRoom = () => {
       title: "Thumbnail",
       key: "thumbnail",
       dataIndex: "thumbnail",
-      render: (text, record) => {
+      render: ( record) => {
         return (
           <Space>
             <Image width={90} src={record?.thumbnail} />
@@ -170,7 +167,7 @@ const AdminAllApprovedRoom = () => {
   //   }
   // }, [isFetching, adminGetAllRoomData]);
 
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 

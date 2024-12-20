@@ -17,7 +17,7 @@ import {
   Table,
   TableColumnsType,
 } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -33,7 +33,7 @@ const { confirm } = Modal;
 
 const AdminNewRequestedRoom = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const { data: adminGetAllRoomData, isFetching: adminGetAllRoomDataFetching, refetch: adminGetAllRoomDataRefetch } =
     useAdminGetAllRoomQuery([
       { name: "limit", value: 5 },
@@ -115,7 +115,7 @@ const AdminNewRequestedRoom = () => {
       title: "Thumbnail",
       key: "thumbnail",
       dataIndex: "thumbnail",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <Image width={90} src={record?.thumbnail} />
@@ -212,7 +212,7 @@ const AdminNewRequestedRoom = () => {
   //   }
   // }, [isFetching, adminGetAllRoomData]);
 
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 

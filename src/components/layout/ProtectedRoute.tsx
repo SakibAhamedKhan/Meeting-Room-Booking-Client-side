@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ children, role }: TProtectedRoute) => {
   let user;
 
   if (token) {
-    user = verifyToken(token);
+    user = verifyToken(token) as any;
   }
 
   console.log(user);

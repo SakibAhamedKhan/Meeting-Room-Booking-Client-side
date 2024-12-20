@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaWifi,
   FaProjectDiagram,
@@ -25,7 +24,6 @@ import {
   FaBath,
 } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { Card } from "../ui/card";
 const amenitiesList = [
   { value: "wifi", label: "Wi-Fi", icon: <FaWifi className="text-sm md:text-lg text-gray-600" /> },
   {

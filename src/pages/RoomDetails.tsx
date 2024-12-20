@@ -15,14 +15,13 @@ import { LoadScript } from "@react-google-maps/api";
 import ReviewCard from "@/components/roomDetails/ReviewCard";
 import { getAuthUser } from "@/utils/getAuthUser";
 import { toast } from "sonner";
-import { IoWarningOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const RoomDetails = () => {
-  const [makeRoomFavourite, { isLoading: makeRoomFavouriteLoading }] =
+  const [makeRoomFavourite] =
     useMakeRoomFavouriteMutation();
-  const [makeRoomUnFavourite, { isLoading: makeRoomUnFavouriteLoading }] =
+  const [makeRoomUnFavourite] =
     useMakeRoomUnFavouriteMutation();
   const navigate = useNavigate();
   const user = getAuthUser();

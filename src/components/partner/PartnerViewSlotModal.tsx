@@ -1,12 +1,4 @@
-import { Button, Modal, TimePicker } from "antd";
-import CForm from "../form/CForm";
-import CTimePickerRangePicker from "../form/CTimePickerRangePicker";
-import { FieldValues } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addSlotZodSchema } from "@/schemas/customer.schemas";
-import { useState } from "react";
-import { useAddSlotMutation } from "@/redux/features/partner/partnerRoomApi.api";
-import { toast } from "sonner";
+import { Modal } from "antd";
 
 const PartnerViewSlotModal = ({ slotModalData, setSlotModalData }: any) => {
   console.log(slotModalData);

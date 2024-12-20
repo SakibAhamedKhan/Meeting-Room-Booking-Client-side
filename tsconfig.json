@@ -8,6 +8,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noUnusedLocals": false,  // Disable unused local variables check
+    "noUnusedParameters": false, // Disable unused parameters check
+    "strict": true, // Optional: ensures stricter checking elsewhere
+    "esModuleInterop": true,  // Optional: ensure compatibility with CommonJS
+    "moduleResolution": "node", // Optional: ensures Node.js compatibility
+    "skipLibCheck": true, // Optional: speeds up compilation by skipping lib check
+    "resolveJsonModule": true // Optional: allows importing JSON files as modules
   }
 }

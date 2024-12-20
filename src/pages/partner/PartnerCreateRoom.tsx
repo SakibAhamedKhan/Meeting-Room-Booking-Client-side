@@ -5,12 +5,10 @@ import CSelectAmenities from "@/components/form/CSelectAmenities";
 import CTextArea from "@/components/form/CTextArea";
 import { Card } from "@/components/ui/card";
 import { useRequestedToCreateRoomMutation } from "@/redux/features/partner/partnerRoomApi.api";
-import { registerZodSchema } from "@/schemas/auth.schemas";
 import { requestToCreateRoomPartner } from "@/schemas/partner.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Form, Input } from "antd";
-import React from "react";
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import { Button } from "antd";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const PartnerCreateRoom = () => {

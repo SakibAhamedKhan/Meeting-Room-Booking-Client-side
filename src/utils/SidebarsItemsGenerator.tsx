@@ -13,7 +13,7 @@ export const sidebarItemsGenerator = (items: TSidebarUserPath[], role:string) =>
         }
     
         if(item.children){
-            let arr: TSideBarItem[] = [];
+            const arr: TSideBarItem[] = [];
             item.children.forEach(child => {
                 if(child.name){
                     return arr.push({

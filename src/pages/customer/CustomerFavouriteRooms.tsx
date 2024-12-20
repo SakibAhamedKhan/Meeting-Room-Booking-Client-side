@@ -6,7 +6,6 @@ import {
   Modal,
   Pagination,
   Row,
-  Select,
   Space,
   Table,
   TableColumnsType,
@@ -26,7 +25,7 @@ const { confirm } = Modal;
 
 const CustomerFavouriteRooms = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const {
     data: customerGetAllFavouriteQuery,
     isFetching: customerGetAllFavouriteQueryFetching,
@@ -36,10 +35,10 @@ const CustomerFavouriteRooms = () => {
     { name: "page", value: page },
     ...params,
   ]);
-  const [makeRoomUnFavourite, { isLoading: makeRoomUnFavouriteLoading }] =
+  const [makeRoomUnFavourite, ] =
     useMakeRoomUnFavouriteMutation();
   const navigate = useNavigate();
-  const [modalData, setModalData] = useState<any>(null);
+ 
 
   console.log(customerGetAllFavouriteQuery);
 
@@ -91,7 +90,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Time",
       key: "time",
-      render: (text, record) => {
+      render: ( record) => {
         console.log(record);
         return (
           <Space>
@@ -105,7 +104,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Thumbnail",
       key: "thumbnail",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <Image width={90} src={record?.room?.thumbnail[0]?.url} />
@@ -116,7 +115,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Name",
       key: "name",
-      render: (text, record) => {
+      render: ( record) => {
         return (
           <Space>
             <p
@@ -132,7 +131,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Address",
       key: "address",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <p className="!text-xs">{record?.room?.address}</p>
@@ -143,7 +142,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Capacity",
       key: "capacity",
-      render: (text, record) => {
+      render: ( record) => {
         return (
           <Space>
             <p className="!text-xs">{record?.room?.capacity}</p>
@@ -154,7 +153,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Price Per Slot",
       key: "price",
-      render: (text, record) => {
+      render: ( record) => {
         return (
           <Space>
             <p className="!text-xs">{record?.room?.pricePerSlot}</p>
@@ -165,7 +164,7 @@ const CustomerFavouriteRooms = () => {
     {
       title: "Action",
       key: "partnerName",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <Button
@@ -247,7 +246,7 @@ const CustomerFavouriteRooms = () => {
   if (!customerGetAllFavouriteQueryFetching) {
     tableData = [...customerGetAllFavouriteQuery?.data].reverse();
   }
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 

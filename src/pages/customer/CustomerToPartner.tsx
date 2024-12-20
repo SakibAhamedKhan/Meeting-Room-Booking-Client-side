@@ -1,8 +1,6 @@
 import CForm from "@/components/form/CForm";
 import CInput from "@/components/form/CInput";
 import CSelect from "@/components/form/CSelect";
-import CSelectAmenities from "@/components/form/CSelectAmenities";
-import CTextArea from "@/components/form/CTextArea";
 import { Card } from "@/components/ui/card";
 import { logout } from "@/redux/features/auth/authSlice.slice";
 import {
@@ -12,12 +10,11 @@ import {
 import { useAppDispatch } from "@/redux/hook";
 import { partnerRequestSchemas } from "@/schemas/customer.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Layout, Spin } from "antd";
-import React, { useState } from "react";
+import { Button, Spin } from "antd";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-const { Header, Content, Sider } = Layout;
 
 const optionsType = [
   { value: "PASSPORT", label: "PASSPORT" },
@@ -29,13 +26,12 @@ const CustomerToPartner = () => {
   const [termsAgreed, settermsAgreed] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  const [requestedPartner, { isLoading: requestedPartnerLoading }] =
+  const [requestedPartner] =
     useRequestedPartnerMutation();
 
   const {
     data: signlePartnerRequestData,
     isFetching: signlePartnerRequestFetching,
-    refetch: signlePartnerRequestRefetch,
   } = useSignlePartnerRequestQuery(undefined);
 
   console.log(signlePartnerRequestData);

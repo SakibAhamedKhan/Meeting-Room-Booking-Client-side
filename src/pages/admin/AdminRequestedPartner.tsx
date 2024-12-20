@@ -1,9 +1,7 @@
-import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
 import { TQueryParam } from "@/types";
 import {
   Button,
-  Modal,
   Pagination,
   Row,
   Select,
@@ -12,7 +10,6 @@ import {
   TableColumnsType,
 } from "antd";
 import { useState } from "react";
-import { ExclamationCircleFilled } from "@ant-design/icons";
 import { LuRefreshCw } from "react-icons/lu";
 import { TPartnerRequested } from "@/types/admin.partnerRequest.type";
 import getTimeAgo from "@/utils/getTimeAgo";
@@ -25,7 +22,6 @@ import { FaRegEye } from "react-icons/fa6";
 import AdminPartnerRequestDetailsModal from "@/components/admin/AdminPartnerRequestDetailsModal";
 
 type TDataType = TPartnerRequested;
-const { confirm } = Modal;
 
 const actionOpitions = [
   { value: "Approved", label: "Approved" },
@@ -34,7 +30,7 @@ const actionOpitions = [
 
 const AdminRequestedPartner = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const {
     data: adminGetAllPartnersData,
     isFetching: adminGetAllPartnersDataFetching,
@@ -71,10 +67,10 @@ const AdminRequestedPartner = () => {
     {
       title: "Id",
       key: "id",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
-            <p className="!text-xs">{record._id}</p>
+            <p className="!text-xs">{record?._id}</p>
           </Space>
         );
       },
@@ -82,7 +78,7 @@ const AdminRequestedPartner = () => {
     {
       title: "Time",
       key: "time",
-      render: (text, record) => {
+      render: (record) => {
         console.log(record);
         return (
           <Space>
@@ -94,10 +90,10 @@ const AdminRequestedPartner = () => {
     {
       title: "Partner Name",
       key: "partnerName",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.user.name}</p>
+            <p className="!text-xs">{record?.user?.name}</p>
           </Space>
         );
       },
@@ -105,10 +101,10 @@ const AdminRequestedPartner = () => {
     {
       title: "Business Name",
       key: "businessName",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.businessName}</p>
+            <p className="!text-xs">{record?.businessName}</p>
           </Space>
         );
       },
@@ -117,10 +113,10 @@ const AdminRequestedPartner = () => {
     {
       title: "Business Address",
       key: "businessAddress",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
-            <p className="!text-xs">{record.businessAddress}</p>
+            <p className="!text-xs">{record?.businessAddress}</p>
           </Space>
         );
       },
@@ -128,7 +124,7 @@ const AdminRequestedPartner = () => {
     {
       title: "Status",
       key: "status",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             {record?.isApproved === "Pending" && (
@@ -136,7 +132,7 @@ const AdminRequestedPartner = () => {
                 style={{ borderColor: "#FFD700", color: "#FF4500" }}
                 className="font-semibold bg-orange-50"
               >
-                {record.isApproved}
+                {record?.isApproved}
               </Button>
             )}
           </Space>
@@ -146,7 +142,7 @@ const AdminRequestedPartner = () => {
     {
       title: "Action",
       key: "action",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             {record?.isApproved === "Pending" && (
@@ -165,7 +161,7 @@ const AdminRequestedPartner = () => {
     {
       title: "Details",
       key: "details",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <Button
@@ -189,7 +185,7 @@ const AdminRequestedPartner = () => {
     tableData = [...adminGetAllPartnersData?.data].reverse();
   }
 
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 

@@ -1,14 +1,5 @@
-import { Button, Modal } from "antd";
-import React from "react";
+import { Modal } from "antd";
 import TitleImage from "../roomDetails/TitleImage";
-import { FaRegHeart } from "react-icons/fa";
-import { IoShareSocialOutline } from "react-icons/io5";
-import ReviewCard from "../roomDetails/ReviewCard";
-import { LoadScript } from "@react-google-maps/api";
-import GoogleMapCard from "../roomDetails/GoogleMapCard";
-import DescriptionReverse from "../roomDetails/DescriptionReverse";
-import AmenitiesCard from "../roomDetails/AmenitiesCard";
-import { FiFlag } from "react-icons/fi";
 import { Card } from "../ui/card";
 import { BsBuildings } from "react-icons/bs";
 import { MdOutlineBedroomParent } from "react-icons/md";

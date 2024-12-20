@@ -136,7 +136,6 @@ const amenitiesList = [
 const CSelectAmenities = ({
   name,
   placeholder,
-  control,
 }: TCSelectAmenitiesProps) => {
   return (
     <div>

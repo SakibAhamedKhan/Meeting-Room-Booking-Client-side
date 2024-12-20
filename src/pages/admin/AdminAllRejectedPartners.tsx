@@ -1,40 +1,19 @@
-import AdminNewRequestedRoomModal from "@/components/admin/AdminNewRequestedRoomModal";
 import { Card } from "@/components/ui/card";
 import { TQueryParam } from "@/types";
-import {
-  Button,
-  Modal,
-  Pagination,
-  Row,
-  Select,
-  Space,
-  Table,
-  TableColumnsType,
-} from "antd";
+import { Button, Pagination, Row, Space, Table, TableColumnsType } from "antd";
 import { useState } from "react";
-import { ExclamationCircleFilled } from "@ant-design/icons";
 import { LuRefreshCw } from "react-icons/lu";
 import { TPartnerRequested } from "@/types/admin.partnerRequest.type";
 import getTimeAgo from "@/utils/getTimeAgo";
-import {
-  useDecisionMakePartnerMutation,
-  useGetAllPartnersQuery,
-} from "@/redux/features/admin/adminPartnerApi.api";
-import { toast } from "sonner";
+import { useGetAllPartnersQuery } from "@/redux/features/admin/adminPartnerApi.api";
 import { FaRegEye } from "react-icons/fa6";
 import AdminPartnerRequestDetailsModal from "@/components/admin/AdminPartnerRequestDetailsModal";
 
 type TDataType = TPartnerRequested;
-const { confirm } = Modal;
-
-const actionOpitions = [
-  { value: "Approved", label: "Approved" },
-  { value: "Rejected", label: "Rejected" },
-];
 
 const AdminAllRejectedPartners = () => {
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
   const {
     data: adminGetAllPartnersData,
     isFetching: adminGetAllPartnersDataFetching,
@@ -45,33 +24,32 @@ const AdminAllRejectedPartners = () => {
     { name: "isApproved", value: "Rejected" },
     ...params,
   ]);
-  const [decisionMakePartner, { isLoading: decisionMakePartnerLoading }] =
-    useDecisionMakePartnerMutation();
+
   const [modalData, setModalData] = useState<any>(null);
 
-  const handleActionChange = async (selectData: string, record: TDataType) => {
-    const userData = {
-      args: [{ name: "operation", value: selectData }],
-      partnerData: {
-        user: record?.user?._id,
-        requestedId: record?._id,
-      },
-    };
-    try {
-      const res = (await decisionMakePartner(userData)) as any;
-      console.log(res);
+  // const handleActionChange = async (selectData: string, record: TDataType) => {
+  //   const userData = {
+  //     args: [{ name: "operation", value: selectData }],
+  //     partnerData: {
+  //       user: record?.user?._id,
+  //       requestedId: record?._id,
+  //     },
+  //   };
+  //   try {
+  //     const res = (await decisionMakePartner(userData)) as any;
+  //     console.log(res);
 
-      toast.success(res?.data?.message, { duration: 2000 });
-    } catch (error: any) {
-      toast.error(error?.message, { duration: 2000 });
-    }
-  };
+  //     toast.success(res?.data?.message, { duration: 2000 });
+  //   } catch (error: any) {
+  //     toast.error(error?.message, { duration: 2000 });
+  //   }
+  // };
 
   const columns: TableColumnsType<TDataType> = [
     {
       title: "Id",
       key: "id",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <p className="!text-xs">{record._id}</p>
@@ -82,7 +60,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Time",
       key: "time",
-      render: (text, record) => {
+      render: (record) => {
         console.log(record);
         return (
           <Space>
@@ -94,7 +72,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Partner Name",
       key: "partnerName",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <p className="!text-xs">{record.user.name}</p>
@@ -105,7 +83,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Business Name",
       key: "businessName",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <p className="!text-xs">{record.businessName}</p>
@@ -117,7 +95,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Business Address",
       key: "businessAddress",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <p className="!text-xs">{record.businessAddress}</p>
@@ -128,7 +106,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Status",
       key: "status",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             {record?.isApproved === "Rejected" && (
@@ -165,7 +143,7 @@ const AdminAllRejectedPartners = () => {
     {
       title: "Details",
       key: "details",
-      render: (text, record) => {
+      render: (record) => {
         return (
           <Space>
             <Button
@@ -189,7 +167,7 @@ const AdminAllRejectedPartners = () => {
     tableData = [...adminGetAllPartnersData?.data].reverse();
   }
 
-  const rowClassName = (record: TDataType, index: number) => {
+  const rowClassName = () => {
     return "table-custom-row";
   };
 
@@ -217,9 +195,7 @@ const AdminAllRejectedPartners = () => {
         <Table<TDataType>
           className="!z-0"
           columns={columns}
-          loading={
-            adminGetAllPartnersDataFetching || decisionMakePartnerLoading
-          }
+          loading={adminGetAllPartnersDataFetching}
           dataSource={tableData}
           rowClassName={rowClassName}
           pagination={false}

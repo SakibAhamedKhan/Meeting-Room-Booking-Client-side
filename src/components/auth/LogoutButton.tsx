@@ -1,8 +1,5 @@
 import { logout } from "@/redux/features/auth/authSlice.slice";
 import { useAppDispatch } from "@/redux/hook";
-import { Button } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
 
 const LogoutButton = () => {
     const dispatch = useAppDispatch();
