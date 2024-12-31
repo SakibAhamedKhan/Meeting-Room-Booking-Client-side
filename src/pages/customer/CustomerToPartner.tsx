@@ -1,3 +1,4 @@
+import CChecked from "@/components/form/CChecked";
 import CForm from "@/components/form/CForm";
 import CInput from "@/components/form/CInput";
 import CSelect from "@/components/form/CSelect";
@@ -32,7 +33,11 @@ const CustomerToPartner = () => {
   const {
     data: signlePartnerRequestData,
     isFetching: signlePartnerRequestFetching,
-  } = useSignlePartnerRequestQuery(undefined);
+  } = useSignlePartnerRequestQuery(undefined,  {
+    refetchOnFocus:true,
+    refetchOnMountOrArgChange:true,
+    refetchOnReconnect:true,
+  });
 
   console.log(signlePartnerRequestData);
   const onSubmit = async (data: FieldValues) => {
@@ -49,7 +54,7 @@ const CustomerToPartner = () => {
         idType: data.idType,
         idNumber: data.idNumber,
       },
-      termsAgreed: termsAgreed,
+      termsAgreed: data.termsAgreed,
     };
     console.log(partnerRequestData);
     try {
@@ -342,10 +347,10 @@ const CustomerToPartner = () => {
                 </div>
 
                 <div className="mb-2 md:mb-4 w-fit flex items-center gap-2">
-                  <input
+                  <CChecked
                     type="checkbox"
                     name="termsAgreed"
-                    onChange={(e) => settermsAgreed(e.target.checked)}
+                    // onChange={(e) => settermsAgreed(e.target.checked)}
                   />
                   <p className="text-xs md:text-sm cursor-default">
                     I agree to the terms and conditions

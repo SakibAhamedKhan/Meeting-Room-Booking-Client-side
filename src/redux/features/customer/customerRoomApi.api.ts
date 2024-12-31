@@ -63,6 +63,20 @@ const roomApi = baseApi.injectEndpoints({
       },
       providesTags: ["getAllFavourite"],
     }),
+    getAllAvailableSlots: builder.mutation({
+      query:(data:{id:string, date:any}) => ({
+        url: "/slots/availability",
+        method: "POST",
+        body: data,
+      })
+    }),
+    bookingSlots: builder.mutation({
+      query:(data:any) => ({
+        url: "/bookings",
+        method: "POST",
+        body: data,
+      })
+    })
   }),
 });
 
@@ -74,4 +88,6 @@ export const {
   useMakeRoomFavouriteMutation,
   useMakeRoomUnFavouriteMutation,
   useGetAllFavouriteQuery,
+  useGetAllAvailableSlotsMutation,
+  useBookingSlotsMutation,
 } = roomApi;

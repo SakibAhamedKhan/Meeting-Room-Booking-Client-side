@@ -53,7 +53,11 @@ const PartnerAllRoomList = () => {
     { name: "limit", value: 10 },
     { name: "page", value: page },
     ...params,
-  ]);
+  ],{
+    refetchOnFocus:true,
+    refetchOnMountOrArgChange:true,
+    refetchOnReconnect:true,
+  });
   const [publishRoom, { isLoading: publishRoomLoading }] =
     usePublishRoomMutation();
   const [unPublishRoom, { isLoading: unPublishRoomLoading }] =
@@ -61,7 +65,7 @@ const PartnerAllRoomList = () => {
   const [roomId, setRoomId] = useState<any>(undefined);
   const { data: getAllMySlot } =
     useGetAllMySLotQuery(roomId, {
-      skip: roomId === null,
+      skip: roomId === undefined,
     });
   const [modalData, setModalData] = useState<any>(null);
   const [addSlotModalData, setAddSlotModalData] = useState<any>(null);
@@ -138,7 +142,7 @@ const PartnerAllRoomList = () => {
       render: ( record) => {
         return (
           <Space>
-            <Image width={90} src={record?.thumbnail} />
+            <Image width={90} src={record} />
           </Space>
         );
       },

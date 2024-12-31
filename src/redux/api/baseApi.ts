@@ -9,11 +9,15 @@ import {
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice.slice";
 
+
+// https://meeting-room-booking-server-side-node.vercel.app/api/
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://meeting-room-booking-server-side-node.vercel.app/api/",
+  baseUrl: "http://localhost:5000/api/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    console.log("17 Number: ", token);
 
     if (token) {
       headers.set("authorization", `${token}`);

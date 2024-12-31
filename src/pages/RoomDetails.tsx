@@ -17,6 +17,7 @@ import { getAuthUser } from "@/utils/getAuthUser";
 import { toast } from "sonner";
 import { FaHeart } from "react-icons/fa6";
 import { useEffect } from "react";
+import ReserveButton from "@/components/roomDetails/ReserveButton";
 
 const RoomDetails = () => {
   const [makeRoomFavourite] =
@@ -98,7 +99,6 @@ const RoomDetails = () => {
     }
   };
 
-  const handleReserve = async () => {};
   console.log(roomData);
   return (
     <div>
@@ -112,30 +112,25 @@ const RoomDetails = () => {
           {/* Review and map */}
           <div className="lg:col-span-3">
             <div className="flex justify-end">
-              <div className="flex justify-between items-center w-52">
+              <div className="flex justify-between items-center w-52 gap-5">
                 {roomData?.favourited ? (
                   <Tooltip placement="top" title="UnFavourite it">
                     <FaHeart
                       onClick={() => handleUnFavourite()}
-                      className="text-2xl text-blue-700 cursor-pointer"
+                      className="text-5xl text-blue-700 cursor-pointer"
                     />
                   </Tooltip>
                 ) : (
                   <Tooltip placement="top" title="Favourite it">
                     <FaRegHeart
                       onClick={() => handleFavourite()}
-                      className="text-2xl text-blue-700 cursor-pointer"
+                      className="text-5xl text-blue-700 cursor-pointer"
                     />
                   </Tooltip>
                 )}
 
-                <IoShareSocialOutline className="text-3xl text-blue-700" />
-                <Button
-                  onClick={() => handleReserve()}
-                  className="bg-[#002F76] text-white h-[40px] text-md md:text-lg font-semibold lg:mb-2"
-                >
-                  Reserve
-                </Button>
+                <IoShareSocialOutline className="text-5xl text-blue-700" />
+                <ReserveButton roomData={roomData}/>
               </div>
             </div>
 

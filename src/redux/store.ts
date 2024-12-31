@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "./api/baseApi";
-import authReducer from "./features/auth/authSlice.slice"
-
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './features/auth/authSlice.slice';
+import { baseApi } from './api/baseApi';
 import {
-  persistReducer, persistStore,
+  persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -11,23 +11,23 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from "redux-persist/lib/storage";
+import storage from 'redux-persist/lib/storage';
 
-const persisConfig = {
+const persistConfig = {
   key: 'auth',
   storage,
-}
+  debug: true,
+};
 
-const persistedAuthReducer = persistReducer(persisConfig, authReducer)
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
   },
-
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: (getDefaultMiddlewares) =>
+    getDefaultMiddlewares({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
@@ -39,4 +39,7 @@ export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
-export const persistor = persistStore(store); 
+export const persistor = persistStore(store, null, () => {
+  console.log('Rehydration complete');
+});
+

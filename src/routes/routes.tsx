@@ -35,6 +35,14 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/abc",
+    element: (
+      <CommonLayout>
+        <Home />
+      </CommonLayout>
+    ),
+  },
+  {
     path: "/meeting-rooms",
     element: (
       <CommonLayout>

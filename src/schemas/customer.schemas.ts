@@ -41,6 +41,9 @@ export const partnerRequestSchemas = z.object({
     .string({ required_error: "Please enter your ID number" })
     .min(1, { message: "ID Number is required" })
     .max(50, { message: "ID Number cannot exceed 50 characters" }),
+  termsAgreed: z.boolean({
+    required_error: "Please agree to the terms and conditions",
+  }),
 });
 
 export const addSlotZodSchema = z.object({

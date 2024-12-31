@@ -1,7 +1,9 @@
 import { Button } from "antd";
 import { Card } from "../ui/card";
+import ReserveButton from "./ReserveButton";
 
 const DescriptionReverse = ({ roomData }: any) => {
+  console.log(roomData);
   return (
     <div className="grid md:grid-cols-7 gap-6">
       <div className="md:col-span-4 lg:col-span-5">
@@ -18,9 +20,7 @@ const DescriptionReverse = ({ roomData }: any) => {
           <p className="text-sm text-gray-600 mt-3 mb-2">
             * We given money back generate
           </p>
-          <Button className="bg-[#002F76] text-white w-full h-[40px] text-md md:text-lg font-semibold mb-2">
-            Reserve
-          </Button>
+          <ReserveButton roomData={roomData}/>
         </Card>
       </div>
     </div>
