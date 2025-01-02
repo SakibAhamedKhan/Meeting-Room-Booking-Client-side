@@ -64,19 +64,35 @@ const roomApi = baseApi.injectEndpoints({
       providesTags: ["getAllFavourite"],
     }),
     getAllAvailableSlots: builder.mutation({
-      query:(data:{id:string, date:any}) => ({
+      query: (data: { id: string; date: any }) => ({
         url: "/slots/availability",
         method: "POST",
         body: data,
-      })
+      }),
     }),
     bookingSlots: builder.mutation({
-      query:(data:any) => ({
+      query: (data: any) => ({
         url: "/bookings",
         method: "POST",
         body: data,
-      })
-    })
+      }),
+    }),
+    getCustomerAllBooking: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: `/bookings/customer`,
+          method: "GET",
+          params: params,
+        };
+      },
+    }),
   }),
 });
 
@@ -90,4 +106,5 @@ export const {
   useGetAllFavouriteQuery,
   useGetAllAvailableSlotsMutation,
   useBookingSlotsMutation,
+  useGetCustomerAllBookingQuery,
 } = roomApi;
