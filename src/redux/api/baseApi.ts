@@ -69,6 +69,7 @@ export const baseApi = createApi({
 
     "getAllFavourite",
     "getSingleRoom",
+    "getCustomerAllBooking",
     
     
     "partnerGetAllRoom",

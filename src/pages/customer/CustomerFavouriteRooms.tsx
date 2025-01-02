@@ -34,7 +34,11 @@ const CustomerFavouriteRooms = () => {
     { name: "limit", value: 10 },
     { name: "page", value: page },
     ...params,
-  ]);
+  ],  {
+    refetchOnFocus:true,
+    refetchOnMountOrArgChange:true,
+    refetchOnReconnect:true,
+  });
   const [makeRoomUnFavourite, ] =
     useMakeRoomUnFavouriteMutation();
   const navigate = useNavigate();

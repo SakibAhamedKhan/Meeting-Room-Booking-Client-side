@@ -11,11 +11,16 @@ import {
 } from "antd";
 import { useState } from "react";
 import { LuRefreshCw } from "react-icons/lu";
-import { useGetCustomerAllBookingQuery } from "@/redux/features/customer/customerRoomApi.api";
+import {
+  useGetCustomerAllBookingQuery,
+  useGiveCustomerBookingCancelMutation,
+  useGiveCustomerBookingPaidMutation,
+} from "@/redux/features/customer/customerRoomApi.api";
 import { useNavigate } from "react-router-dom";
 import { BsQuestionCircle } from "react-icons/bs";
 import { BsCheckCircle } from "react-icons/bs";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { MdDone } from "react-icons/md";
 
 const { confirm } = Modal;
 
@@ -26,17 +31,27 @@ const CustomerBooking = () => {
     data: customerGetAllBookingData,
     isFetching: customerGetAllBookingDataFetching,
     refetch: customerGetAllBookingDataRefetch,
-  } = useGetCustomerAllBookingQuery([
-    { name: "limit", value: 10 },
-    { name: "page", value: page },
-    { name: "isApproved", value: "Approved" },
-    ...params,
-  ]);
+  } = useGetCustomerAllBookingQuery(
+    [
+      { name: "limit", value: 10 },
+      { name: "page", value: page },
+      { name: "isApproved", value: "Approved" },
+      ...params,
+    ],
+    {
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+      refetchOnReconnect: true,
+    }
+  );
+  const [giveCustomerBookingPaid] = useGiveCustomerBookingPaidMutation();
+  const [giveCustomerBookingCancel] = useGiveCustomerBookingCancelMutation();
+
   const navigate = useNavigate();
 
   console.log(customerGetAllBookingData);
 
-  const showConfirm = (record: any) => {
+  const showConfirm = async (record: any) => {
     confirm({
       title: "Do you want to pay now?",
       icon: <ExclamationCircleFilled />,
@@ -66,11 +81,19 @@ const CustomerBooking = () => {
       onOk() {
         // handleApprove(record);
         console.log("OK ==== ", record);
+        handlePaid(record);
       },
       onCancel() {
         console.log("Cancel");
       },
     });
+  };
+  const handlePaid = async (record: any) => {
+    try {
+      await giveCustomerBookingPaid(record?._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const showConfirm2 = (record: any) => {
     confirm({
@@ -93,17 +116,25 @@ const CustomerBooking = () => {
           <p>
             Total Slot Booked: <span>{record?.slots.length}</span>
           </p>
-          
         </div>
       ),
       onOk() {
         // handleApprove(record);
         console.log("OK ==== ", record);
+        handleCancel(record);
       },
       onCancel() {
         console.log("Cancel");
       },
     });
+  };
+
+  const handleCancel = async (record: any) => {
+    try {
+      await giveCustomerBookingCancel(record?._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const columns: TableColumnsType<any> = [
@@ -132,7 +163,7 @@ const CustomerBooking = () => {
       render: (record) => {
         return (
           <Space className="">
-            <p className="!text-md">
+            <p className="!text-xs">
               {record?.createdAt &&
                 new Date(record?.createdAt).toLocaleString("en-US", {
                   weekday: "short",
@@ -153,7 +184,7 @@ const CustomerBooking = () => {
       render: (record) => {
         return (
           <Space>
-            <p className="!text-md">{record?._id}</p>
+            <p className="!text-xs">{record?._id}</p>
           </Space>
         );
       },
@@ -164,7 +195,7 @@ const CustomerBooking = () => {
       render: (record) => {
         return (
           <Space>
-            <p className="!text-md">
+            <p className="!text-xs">
               {record?.date &&
                 new Date(record?.date).toLocaleDateString("en-GB", {
                   day: "numeric",
@@ -183,7 +214,7 @@ const CustomerBooking = () => {
         return (
           <Space>
             <p
-              className="!text-md text-blue-800 cursor-pointer"
+              className="!text-xs text-blue-800 cursor-pointer"
               onClick={() => navigate(`/room/${record?.room?._id}`)}
             >
               {record?.room?.name}
@@ -197,10 +228,10 @@ const CustomerBooking = () => {
       key: "slots",
       render: (record) => {
         return (
-          <Space className="flex flex-wrap w-[300px]">
+          <Space className="flex flex-wrap w-[250px]">
             {record?.slots?.map((slot: any) => {
               return (
-                <div className="bg-green-50 text-green-700 font-semibold border border-green-400 hover:bg-green-200 cursor-pointer p-2 rounded-md shadow-md">
+                <div className="bg-green-50 text-green-700 font-semibold border border-green-400 hover:bg-green-200 cursor-pointer p-1 rounded-md shadow-md text-[12px]">
                   {slot?.startTime}-{slot?.endTime}
                 </div>
               );
@@ -226,13 +257,25 @@ const CustomerBooking = () => {
       render: (record) => {
         return (
           <Space>
-            <Button
-              className="font-semibold bg-blue-50"
-              variant="outlined"
-              onClick={() => showConfirm(record)}
-            >
-              Pay Now
-            </Button>
+            {record?.isConfirmed === "unconfirmed" && (
+              <Button
+                className="font-semibold bg-blue-50"
+                variant="outlined"
+                onClick={() => showConfirm(record)}
+              >
+                Pay Now
+              </Button>
+            )}
+            {record?.isConfirmed === "confirmed" && (
+              <Button
+                style={{ borderColor: "#40FF40", color: "#008000" }}
+                className="font-semibold bg-green-50"
+                variant="outlined"
+              >
+                <MdDone />
+                Paid
+              </Button>
+            )}
           </Space>
         );
       },
@@ -242,14 +285,20 @@ const CustomerBooking = () => {
       key: "Payment Status",
       render: (record) => {
         return (
-          <Space>
-            <Button
-              style={{ borderColor: "#FA8072", color: "#FF0000" }}
-              className="font-semibold bg-red-50"
-              onClick={() => showConfirm2(record)}
-            >
-              Cancel
-            </Button>
+          <Space className="w-[100px]">
+            {record?.isConfirmed === "confirmed" ? (
+              <div className="text-gray-500 cursor-not-allowed">
+                Not Available
+              </div>
+            ) : (
+              <Button
+                style={{ borderColor: "#FA8072", color: "#FF0000" }}
+                className="font-semibold bg-red-50"
+                onClick={() => showConfirm2(record)}
+              >
+                Cancel
+              </Button>
+            )}
           </Space>
         );
       },

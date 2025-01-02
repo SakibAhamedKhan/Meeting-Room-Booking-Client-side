@@ -92,6 +92,21 @@ const roomApi = baseApi.injectEndpoints({
           params: params,
         };
       },
+      providesTags: ["getCustomerAllBooking"],
+    }),
+    giveCustomerBookingPaid: builder.mutation({
+      query: (bookingId: string) => ({
+        url: `/bookings/customer/paid/${bookingId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["getCustomerAllBooking"],
+    }),
+    giveCustomerBookingCancel: builder.mutation({
+      query: (bookingId: string) => ({
+        url: `/bookings/customer/cancel/${bookingId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["getCustomerAllBooking"],
     }),
   }),
 });
@@ -107,4 +122,6 @@ export const {
   useGetAllAvailableSlotsMutation,
   useBookingSlotsMutation,
   useGetCustomerAllBookingQuery,
+  useGiveCustomerBookingPaidMutation,
+  useGiveCustomerBookingCancelMutation,
 } = roomApi;
