@@ -15,8 +15,6 @@ import { CgProfile } from "react-icons/cg";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegHandshake } from "react-icons/fa6";
 
-
-
 export const CustomerPaths = [
   {
     name: "Dashboard",
@@ -25,19 +23,49 @@ export const CustomerPaths = [
     icons: <MdDashboard />,
   },
   {
+    name: "Favourite Rooms",
+    path: "favourite-rooms",
+    element: <CustomerFavouriteRooms />,
+    icons: <FaRegHeart />,
+  },
+  {
     name: "Booking",
     path: "booking",
     element: <CustomerBooking />,
-    icons: <FaShoppingCart/>
+    icons: <FaShoppingCart />,
   },
+  // {
+  //   name: "Finance",
+  //   icons: <AiFillDollarCircle/>,
+  //   children: [
+  //     {
+  //       name: "Transaction History",
+  //       path: "transaction-history",
+  //       element: <CustomerTransactionHistory />,
+  //     },
+  //   ],
+  // },
+
   {
-    name: "Finance",
-    icons: <AiFillDollarCircle/>,
+    name: "Profile",
+    path: "profile",
+    element: <CustomerProfile />,
+    icons: <CgProfile />,
+  },
+  // {
+  //   name: "Settings",
+  //   path: "settings",
+  //   element: <CustomerSettings />,
+  //   icons: <IoSettingsSharp />,
+  // },
+  {
+    name: "Be a Partner",
+    icons: <FaRegHandshake />,
     children: [
       {
-        name: "Transaction History",
-        path: "transaction-history",
-        element: <CustomerTransactionHistory />,
+        name: "Partner Request",
+        path: "partner-request",
+        element: <CustomerToPartner />,
       },
     ],
   },
@@ -49,35 +77,6 @@ export const CustomerPaths = [
         name: "Support Ticket",
         path: "support-ticket",
         element: <CustomerSupportTicket />,
-      },
-    ],
-  },
-  {
-    name: "Favourite Rooms",
-    path: "favourite-rooms",
-    element: <CustomerFavouriteRooms />,
-    icons: <FaRegHeart/>
-  },
-  {
-    name: "Profile",
-    path: "profile",
-    element: <CustomerProfile />,
-    icons: <CgProfile />
-  },
-  {
-    name: "Settings",
-    path: "settings",
-    element: <CustomerSettings />,
-    icons: <IoSettingsSharp/>
-  },
-  {
-    name: "Be a Partner",
-    icons: <FaRegHandshake/>,
-    children: [
-      {
-        name: "Partner Request",
-        path: "partner-request",
-        element: <CustomerToPartner />,
       },
     ],
   },
