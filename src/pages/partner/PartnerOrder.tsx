@@ -21,7 +21,7 @@ import { BsQuestionCircle } from "react-icons/bs";
 import { BsCheckCircle } from "react-icons/bs";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { MdDone } from "react-icons/md";
-import { useGetAllPartnerBookingQuery } from "@/redux/features/partner/partnerRoomApi.api";
+import { useGetAllPartnerBookingQuery, useGivePartnerBookingEeventCompleteMutation } from "@/redux/features/partner/partnerRoomApi.api";
 
 const { confirm } = Modal;
 
@@ -41,54 +41,55 @@ const PartnerOrder = () => {
     }
   );
 
+  const [givePartnerBookingEeventComplete] = useGivePartnerBookingEeventCompleteMutation();
+
   const navigate = useNavigate();
 
   console.log(partnerGetAllBookingData);
 
-  // const showConfirm = async (record: any) => {
-  //   confirm({
-  //     title: "Do you want to pay now?",
-  //     icon: <ExclamationCircleFilled />,
-  //     content: (
-  //       <div>
-  //         <p>
-  //           Booking Id: <span>{record?._id}</span>
-  //         </p>
-  //         <p>
-  //           Room Name: <span>{record?.room?.name}</span>
-  //         </p>
-  //         <p>
-  //           Capacity: <span>{record?.room?.capacity}</span>
-  //         </p>
-  //         <p>
-  //           Price Per Slot: <span>{record?.room?.pricePerSlot}</span>
-  //         </p>
-  //         <p>
-  //           Total Slot Booked: <span>{record?.slots.length}</span>
-  //         </p>
-  //         <hr className="my-3" />
-  //         <p className="font-semibold text-lg ">
-  //           Total Cost: <span>{record?.totalAmount}</span>
-  //         </p>
-  //       </div>
-  //     ),
-  //     onOk() {
-  //       // handleApprove(record);
-  //       console.log("OK ==== ", record);
-  //       handlePaid(record);
-  //     },
-  //     onCancel() {
-  //       console.log("Cancel");
-  //     },
-  //   });
-  // };
-  // const handlePaid = async (record: any) => {
-  //   try {
-  //     await giveCustomerBookingPaid(record?._id);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const showConfirm = async (record: any) => {
+    confirm({
+      title: "Do you want to complete this event?",
+      icon: <ExclamationCircleFilled />,
+      content: (
+        <div>
+          <p>
+            Booking Id: <span>{record?._id}</span>
+          </p>
+          <p>
+            Room Name: <span>{record?.room?.name}</span>
+          </p>
+          <p>
+            Capacity: <span>{record?.room?.capacity}</span>
+          </p>
+          <p>
+            Price Per Slot: <span>{record?.room?.pricePerSlot}</span>
+          </p>
+          <p>
+            Total Slot Booked: <span>{record?.slots.length}</span>
+          </p>
+          <hr className="my-3" />
+          <p className="font-semibold text-lg ">
+            Total Revenue: <span>${record?.totalAmount}</span>
+          </p>
+        </div>
+      ),
+      onOk() {
+        console.log("OK ==== ", record);
+        handleComplete(record);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+  const handleComplete = async (record: any) => {
+    try {
+      await givePartnerBookingEeventComplete(record?._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // const showConfirm2 = (record: any) => {
   //   confirm({
   //     title: "Do you want to cancel booking?",
@@ -284,7 +285,7 @@ const PartnerOrder = () => {
               <Button
                 style={{ borderColor: "#FA8072"}}
                 className="font-semibold bg-blue-50 text-blue-600"
-                // onClick={() => showConfirm2(record)}
+                onClick={() => showConfirm(record)}
               >
                 Make Complete
               </Button>

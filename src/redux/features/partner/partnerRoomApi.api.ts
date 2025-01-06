@@ -73,6 +73,14 @@ const partnerRoomApi = baseApi.injectEndpoints({
       },
       providesTags: ["getAllPartnerBooking"],
     }),
+
+    givePartnerBookingEeventComplete: builder.mutation({
+      query: (id: string) => ({
+        url: `/bookings/partner/complete/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["getAllPartnerBooking"],
+    }),
   }),
 });
 
@@ -83,5 +91,6 @@ export const {
   useUnPublishRoomMutation,
   useAddSlotMutation,
   useGetAllMySLotQuery,
-  useGetAllPartnerBookingQuery
+  useGetAllPartnerBookingQuery,
+  useGivePartnerBookingEeventCompleteMutation,
 } = partnerRoomApi;
