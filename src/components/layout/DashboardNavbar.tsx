@@ -8,6 +8,8 @@ import {
 import { Button, Dropdown, MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
+import { House, LayoutDashboard, LogOut } from "lucide-react";
+import { useGetUserQuery } from "@/redux/features/auth/authApi.api";
 
 const navigation = [
   { name: "Meeting Rooms", href: "#", current: false },
@@ -22,19 +24,20 @@ const DashboardNavbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
+  const { data: userData } = useGetUserQuery(undefined);
 
   console.log(user);
 
-  
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
         <Link
           to={`/`}
-          className="block px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center"
         >
-          Home
+          <House size={15} />
+          <p>Home</p>
         </Link>
       ),
     },
@@ -43,16 +46,20 @@ const DashboardNavbar = () => {
       label: (
         <Link
           to={`/${user?.role.toLowerCase()}/dashboard`}
-          className="block px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center"
         >
-          Dashboard
+          <LayoutDashboard size={15} />
+          <p>Dashboard</p>
         </Link>
       ),
     },
     {
       key: "3",
       label: (
-        <LogoutButton/>
+        <div className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center">
+          <LogOut size={16} />
+          <LogoutButton />
+        </div>
       ),
     },
   ];
@@ -114,6 +121,9 @@ const DashboardNavbar = () => {
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
             </button> */}
+            <p className="text-lg text-white me-3">
+              Welcome, {userData?.data?.result?.name}
+            </p>
 
             {/* Profile dropdown */}
             <Dropdown

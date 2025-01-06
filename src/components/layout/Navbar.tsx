@@ -9,6 +9,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button, Dropdown, MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
+import { House, LayoutDashboard, LogOut } from "lucide-react";
 
 const navigation = [
   { name: "Meeting Rooms", href: "#", current: false },
@@ -30,9 +31,10 @@ const Navbar = () => {
       label: (
         <Link
           to={`/`}
-          className="block px-4 py-2  text-gray-700 text-sm lg:text-md font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center"
         >
-          Home
+          <House size={15} />
+          <p>Home</p>
         </Link>
       ),
     },
@@ -41,16 +43,20 @@ const Navbar = () => {
       label: (
         <Link
           to={`/${user?.role.toLowerCase()}/dashboard`}
-          className="block px-4 py-2  text-gray-700 text-sm lg:text-md font-medium data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec]"
+          className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center"
         >
-          Dashboard
+          <LayoutDashboard size={15} />
+          <p>Dashboard</p>
         </Link>
       ),
     },
     {
       key: "3",
       label: (
-        <LogoutButton/>
+        <div className="px-4 py-2 text-sm lg:text-md font-medium text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:!text-[#3880ec] flex gap-2 items-center">
+          <LogOut size={16} />
+          <LogoutButton />
+        </div>
       ),
     },
   ];
@@ -186,7 +192,7 @@ const Navbar = () => {
                   className="text-[#002F76] font-semibold"
                   onClick={() => navigate("/register")}
                 >
-                  Register  
+                  Register
                 </Button>
                 <Button
                   className="text-[#002F76] font-semibold ml-3"

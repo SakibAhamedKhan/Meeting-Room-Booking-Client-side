@@ -7,7 +7,7 @@ import type { BadgeProps, CalendarProps } from "antd";
 import { Badge, Calendar } from "antd";
 import type { Dayjs } from "dayjs";
 
-const CustomerProfile = () => {
+const PartnerProfile = () => {
   const { data: getUser, isFetching: getUserFetching } =
     useGetUserQuery(undefined);
 
@@ -183,4 +183,4 @@ const CustomerProfile = () => {
   );
 };
 
-export default CustomerProfile;
+export default PartnerProfile;

@@ -8,6 +8,8 @@ import { MdDashboard } from "react-icons/md";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaHouseChimneyCrack } from "react-icons/fa6";
+import PartnerProfile from "@/pages/partner/PartnerProfile";
+import { CgProfile } from "react-icons/cg";
 
 export const PartnerPaths = [
   {
@@ -58,5 +60,11 @@ export const PartnerPaths = [
         element: <PartnerTransactionReport />,
       },
     ],
+  },
+  {
+    name: "Profile",
+    path: "profile",
+    element: <PartnerProfile />,
+    icons: <CgProfile />,
   },
 ];
