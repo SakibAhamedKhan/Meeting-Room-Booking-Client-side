@@ -57,6 +57,22 @@ const partnerRoomApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllPartnerBooking: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: "/bookings/partner",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["getAllPartnerBooking"],
+    }),
   }),
 });
 
@@ -67,4 +83,5 @@ export const {
   useUnPublishRoomMutation,
   useAddSlotMutation,
   useGetAllMySLotQuery,
+  useGetAllPartnerBookingQuery
 } = partnerRoomApi;
