@@ -69,15 +69,15 @@ export const CustomerPaths = [
       },
     ],
   },
-  {
-    name: "Customer Support",
-    icons: <MdSupportAgent />,
-    children: [
-      {
-        name: "Support Ticket",
-        path: "support-ticket",
-        element: <CustomerSupportTicket />,
-      },
-    ],
-  },
+  // {
+  //   name: "Customer Support",
+  //   icons: <MdSupportAgent />,
+  //   children: [
+  //     {
+  //       name: "Support Ticket",
+  //       path: "support-ticket",
+  //       element: <CustomerSupportTicket />,
+  //     },
+  //   ],
+  // },
 ];

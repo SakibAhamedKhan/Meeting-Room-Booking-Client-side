@@ -19,7 +19,7 @@ const PartnerProfile = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {getUserFetching ? (
         <div className="bg-gray-100 flex items-center ">
-          <Card className="w-full max-w-2xl h-full">
+          <Card className="w-full h-full">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-center">
                 User Profile
@@ -89,7 +89,7 @@ const PartnerProfile = () => {
         </div>
       ) : (
         <div className="bg-gray-100 flex items-center">
-          <Card className="w-full max-w-2xl h-full">
+          <Card className="w-full h-full">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-center">
                 User Profile

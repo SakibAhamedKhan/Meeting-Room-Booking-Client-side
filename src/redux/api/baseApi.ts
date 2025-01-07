@@ -74,6 +74,8 @@ export const baseApi = createApi({
     
     "partnerGetAllRoom",
     "getAllPartnerBooking",
+    "getPartnerBookingLinechartData",
+    
   ],
   endpoints: () => ({}),
 });

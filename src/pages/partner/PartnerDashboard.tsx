@@ -1,8 +1,13 @@
+import { PartnerDashboardChart } from "@/components/partner/PartnerDashboardChart"
+import PartnerDashboardChart2 from "@/components/partner/PartnerDashboardChart2"
+import PartnerDashboardChatAnt from "@/components/partner/PartnerDashboardChatAnt"
 
 const PartnerDashboard = () => {
   return (
     <div>
-      Partner Dashboard
+      {/* <PartnerDashboardChart/> */}
+      {/* <PartnerDashboardChatAnt/> */}
+      <PartnerDashboardChart2/>
     </div>
   )
 }
