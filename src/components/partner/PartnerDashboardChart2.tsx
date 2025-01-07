@@ -1,28 +1,32 @@
 import { useState, useEffect, useRef } from "react";
 import { Line, Column } from "@ant-design/plots";
-import { Card, Select } from "antd";
+import { Card, Select, Spin } from "antd";
 import { useGetPartnerBookingLinechartDataQuery } from "@/redux/features/partner/partnerRoomApi.api";
 
 const CHART_MAP = {} as any;
 
 const PartnerDashboardChart2 = () => {
-  const [numberMonths, setNumberMonths] = useState<string>("12")
+  const [numberMonths, setNumberMonths] = useState<string>("12");
   const {
     data: getPartnerBookingLinechartData,
     isFetching: getPartnerBookingLinechartDataFetching,
-  } = useGetPartnerBookingLinechartDataQuery(
-    [
-        {name:'numberMonth', value:numberMonths}
-    ]
-  ) as any;
+  } = useGetPartnerBookingLinechartDataQuery([
+    { name: "numberMonth", value: numberMonths },
+  ]) as any;
   const [data, setData] = useState([]);
-  const dataRef = useRef() as any;
 
-  if (getPartnerBookingLinechartDataFetching) {
-    return <p>Loading...</p>;
-  }
+  //   if (getPartnerBookingLinechartDataFetching) {
+  //     return <p>Loading...</p>;
+  //   }
+  useEffect(() => {
+    setData(getPartnerBookingLinechartData?.data);
+  }, [
+    getPartnerBookingLinechartData,
+    numberMonths,
+    getPartnerBookingLinechartDataFetching,
+  ]);
   const config = {
-    data: getPartnerBookingLinechartData.data,
+    data,
     xField: "Date",
     yField: "Earning",
     height: 300,
@@ -33,13 +37,13 @@ const PartnerDashboardChart2 = () => {
   const handleChange = (value: string) => {
     setNumberMonths(value);
   };
-  
+
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm min-h-[300px]">
       <div className="flex justify-between">
         <div>
           <p className="font-semibold text-lg">Bar Chart - Income</p>
-          <p>Showing total visitors for the last 3 months</p>
+          <p>Showing total visitors for the last {numberMonths} months</p>
         </div>
         <div>
           <Select
@@ -55,7 +59,13 @@ const PartnerDashboardChart2 = () => {
         </div>
       </div>
       <hr className="my-4" />
-      <Column className={`!w-full`} {...config} />
+      {getPartnerBookingLinechartDataFetching ? (
+        <Spin tip="Loading" size="small" className="my-6 md:my-16">
+            .
+        </Spin>
+      ) : (
+        <Column className={`!w-full`} {...config} />
+      )}
     </Card>
   );
 };
