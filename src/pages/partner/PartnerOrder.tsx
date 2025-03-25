@@ -11,17 +11,13 @@ import {
 } from "antd";
 import { useState } from "react";
 import { LuRefreshCw } from "react-icons/lu";
-import {
-  useGetCustomerAllBookingQuery,
-  useGiveCustomerBookingCancelMutation,
-  useGiveCustomerBookingPaidMutation,
-} from "@/redux/features/customer/customerRoomApi.api";
-import { useNavigate } from "react-router-dom";
-import { BsQuestionCircle } from "react-icons/bs";
-import { BsCheckCircle } from "react-icons/bs";
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { MdDone } from "react-icons/md";
+
+
 import { useGetAllPartnerBookingQuery, useGivePartnerBookingEeventCompleteMutation } from "@/redux/features/partner/partnerRoomApi.api";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { BsCheckCircle, BsQuestionCircle } from "react-icons/bs";
+import { MdDone } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
 
@@ -185,6 +181,30 @@ const PartnerOrder = () => {
       },
     },
     {
+      title: "Booked By",
+      key: "Booked By",
+      render: (record) => {
+        console.log(record);
+        return (
+          <div className="me-[-15px]">
+            {/* {record?.isCompleted ? (
+              <div>
+                <BsCheckCircle className="text-green-500 text-xl" />
+              </div>
+            ) : (
+              <div>
+                <BsQuestionCircle className="text-orange-500 text-xl" />
+              </div>
+            )} */}
+            <p className="text-nowrap">Name: {record?.user?.name}</p>
+            <p className="text-nowrap">Email: {record?.user?.email}</p>
+            <p className="text-nowrap">Phone: {record?.user?.phone}</p>
+            
+          </div>
+        );
+      },
+    },
+    {
       title: "Event Date",
       key: "Event Date",
       render: (record) => {
@@ -301,7 +321,7 @@ const PartnerOrder = () => {
   ];
   let tableData = [];
   if (!partnerGetAllBookingDataFetching) {
-    tableData = [...partnerGetAllBookingData?.data.result].reverse();
+    tableData = [...partnerGetAllBookingData?.data?.result || []].reverse();
   }
   console.log(tableData);
 
