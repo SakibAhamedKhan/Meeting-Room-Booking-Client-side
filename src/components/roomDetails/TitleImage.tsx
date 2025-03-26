@@ -1,11 +1,11 @@
-import { FaLocationDot } from "react-icons/fa6";
-import { Image } from "antd";
 import {
   Carousel,
   CarouselContent,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Image } from "antd";
+import { FaLocationDot } from "react-icons/fa6";
 const TitleImage = ({ roomData }: any) => {
   return (
     <div>
@@ -24,17 +24,23 @@ const TitleImage = ({ roomData }: any) => {
         </p>
       </div>
 
-      <div className="">
+      <div className="w-full">
         <Image
-          className="h-auto max-w-full rounded-lg"
-          src={`${roomData?.thumbnail[0]?.url}`}
+          className="rounded-lg"
+          src={roomData?.thumbnail[0]?.url}
           alt="Room Thumbnail"
+          width="100%"
+          height="auto"
+          style={{
+            objectFit: "cover", 
+          }}
         />
       </div>
+
       <Carousel className="my-2">
         <CarouselContent className="ml-[1px]">
-          {roomData?.extraImages.map((item: any) => (
-            <div className="mr-4" key={item.public_id}>
+          {roomData?.extraImages.map((item: any, index:number) => (
+            <div className={`${index==0? '' : 'ml-4'}`} key={item.public_id}>
               <Image
                 className="h-auto rounded-lg !w-[80px] md:!w-[200px]"
                 src={`${item.url}`}

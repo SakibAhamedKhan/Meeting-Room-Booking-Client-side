@@ -1,23 +1,23 @@
+import AmenitiesCard from "@/components/roomDetails/AmenitiesCard";
+import DescriptionReverse from "@/components/roomDetails/DescriptionReverse";
+import GoogleMapCard from "@/components/roomDetails/GoogleMapCard";
+import ReserveButton from "@/components/roomDetails/ReserveButton";
+import ReviewCard from "@/components/roomDetails/ReviewCard";
+import TitleImage from "@/components/roomDetails/TitleImage";
 import {
   useGetSingleRoomQuery,
   useMakeRoomFavouriteMutation,
   useMakeRoomUnFavouriteMutation,
 } from "@/redux/features/customer/customerRoomApi.api";
-import { useNavigate, useParams } from "react-router-dom";
-import { FaRegHeart } from "react-icons/fa";
-import { IoShareSocialOutline } from "react-icons/io5";
-import AmenitiesCard from "@/components/roomDetails/AmenitiesCard";
-import TitleImage from "@/components/roomDetails/TitleImage";
-import DescriptionReverse from "@/components/roomDetails/DescriptionReverse";
-import { Button, Tooltip } from "antd";
-import GoogleMapCard from "@/components/roomDetails/GoogleMapCard";
-import { LoadScript } from "@react-google-maps/api";
-import ReviewCard from "@/components/roomDetails/ReviewCard";
 import { getAuthUser } from "@/utils/getAuthUser";
-import { toast } from "sonner";
-import { FaHeart } from "react-icons/fa6";
+import { LoadScript } from "@react-google-maps/api";
+import { Tooltip } from "antd";
 import { useEffect } from "react";
-import ReserveButton from "@/components/roomDetails/ReserveButton";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { IoShareSocialOutline } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const RoomDetails = () => {
   const [makeRoomFavourite] =
@@ -102,8 +102,8 @@ const RoomDetails = () => {
   console.log(roomData);
   return (
     <div>
-      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-12">
-        <div className="grid  lg:grid-cols-10 gap-6">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-12 ">
+        <div className="grid lg:grid-cols-10 gap-6 ">
           {/* Title and image */}
           <div className="lg:col-span-7">
             <TitleImage roomData={roomData} />
@@ -149,7 +149,7 @@ const RoomDetails = () => {
         </div>
 
         {/* amenities */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 my-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 my-4 ">
           {roomData?.amenities.map((item: any, index: number) => (
             <AmenitiesCard amenities={item} key={index} />
           ))}

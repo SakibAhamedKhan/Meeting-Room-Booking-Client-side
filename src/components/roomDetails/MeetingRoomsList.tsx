@@ -1,5 +1,5 @@
 import { Select } from 'antd';
-import { FaWifi, FaProjectDiagram, FaPencilAlt, FaPhoneAlt, FaTv, FaTemperatureHigh, FaClipboardList, FaVideo, FaBolt, FaUsers, FaTable, FaVolumeUp, FaPlug, FaCoffee, FaPrint, FaSun, FaAdjust, FaThLarge, FaBuilding, FaCar, FaLock, FaMagic, FaBath } from 'react-icons/fa';
+import { FaAdjust, FaBath, FaBolt, FaBuilding, FaCar, FaClipboardList, FaCoffee, FaLock, FaMagic, FaPencilAlt, FaPhoneAlt, FaPlug, FaPrint, FaProjectDiagram, FaSun, FaTable, FaTemperatureHigh, FaThLarge, FaTv, FaUsers, FaVideo, FaVolumeUp, FaWifi } from 'react-icons/fa';
 import { FaUserGroup } from "react-icons/fa6";
 
 const { Option } = Select;
