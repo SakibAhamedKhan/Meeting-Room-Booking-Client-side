@@ -65,7 +65,8 @@ const RoomList = () => {
           {/* body section  */}
 
           {!grid ? (
-            <div className="grid grid-cols-12 gap-4">
+            // grid
+            <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4">
               {roomData?.data.map((item: any, index: number) => (
                 <div
                   key={index}
@@ -124,7 +125,8 @@ const RoomList = () => {
               ))}
             </div>
           ) : (
-            <div className="">
+            // not grid
+            <div className="flex flex-col gap-4">
               {roomData?.data.map((item: any, index: number) => (
                 <div
                   key={index}

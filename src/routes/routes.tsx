@@ -5,6 +5,7 @@ import PartnerDashbordLayout from "@/components/layout/PartnerDashbordLayout";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
 import AboutUs from "@/pages/AboutUs";
 import AdminRoomsAdd from "@/pages/admin/AdminRoomsAdd";
+import ContactUs from "@/pages/ContactUs";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -87,7 +88,7 @@ export const router = createBrowserRouter([
     path: "/contact-us",
     element: (
       <CommonLayout>
-        <AdminRoomsAdd />
+        <ContactUs />
       </CommonLayout>
     ),
   },
