@@ -7,12 +7,14 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export function HomeCarousel() {
+  const navigate = useNavigate(); 
   return (
     <Carousel className="relative w-full">
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 2 }).map((_, index) => (
           <CarouselItem key={index} className="w-full">
             <Card className="w-full  h-[400px] md:h-[500px] overflow-hidden rounded-none relative border-none">
               <CardContent className="p-0 h-full">
@@ -34,7 +36,7 @@ export function HomeCarousel() {
                     </p>
                     <Button
                       className="text-[#002F76] font-semibold mt-5"
-                    //   onClick={() => navigate("/register")}
+                      onClick={() => navigate("/rooms")}
                     >
                       EXPLORE NOW
                     </Button>

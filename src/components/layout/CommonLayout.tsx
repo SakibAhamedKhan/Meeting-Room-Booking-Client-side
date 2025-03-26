@@ -1,7 +1,7 @@
 
-import {ReactNode} from 'react';
-import Navbar from './Navbar'
+import { ReactNode } from 'react';
 import Footer from '../shared/Footer';
+import Navbar from './Navbar';
 
 const CommonLayout = ({children}:{children:ReactNode}) => {
   return (

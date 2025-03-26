@@ -1,21 +1,22 @@
+import AdminDasboardLayout from "@/components/layout/AdminDashboardLayout";
 import CommonLayout from "@/components/layout/CommonLayout";
 import CustomerDasboardLayout from "@/components/layout/CustomerDasboardLayout";
+import PartnerDashbordLayout from "@/components/layout/PartnerDashbordLayout";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
 import AboutUs from "@/pages/AboutUs";
 import AdminRoomsAdd from "@/pages/admin/AdminRoomsAdd";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import RoomDetails from "@/pages/RoomDetails";
+import RoomList from "@/pages/RoomList";
 import Services from "@/pages/Services";
+import Testing from "@/pages/testing/Testing";
 import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
-import { CustomerPaths } from "./customer.routes";
-import RoomDetails from "@/pages/RoomDetails";
 import { AdminPaths } from "./admin.routes";
-import AdminDasboardLayout from "@/components/layout/AdminDashboardLayout";
+import { CustomerPaths } from "./customer.routes";
 import { PartnerPaths } from "./partner.routes";
-import PartnerDashbordLayout from "@/components/layout/PartnerDashbordLayout";
-import Testing from "@/pages/testing/Testing";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ export const router = createBrowserRouter([
     element: (
       <CommonLayout>
         <AdminRoomsAdd />
+      </CommonLayout>
+    ),
+  },
+  {
+    path: "/rooms/",
+    element: (
+      <CommonLayout>
+        <RoomList />
       </CommonLayout>
     ),
   },

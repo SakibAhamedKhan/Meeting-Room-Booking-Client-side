@@ -7,12 +7,12 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button, Dropdown, MenuProps } from "antd";
+import { House, LayoutDashboard } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
-import { House, LayoutDashboard, LogOut } from "lucide-react";
 
 const navigation = [
-  { name: "Meeting Rooms", href: "#", current: false },
+  { name: "Meeting Rooms", href: "/rooms", current: false },
   { name: "Services", href: "/services", current: false },
   { name: "About us", href: "/about-us", current: false },
   { name: "Contact us", href: "/contact-us", current: false },
@@ -52,9 +52,7 @@ const Navbar = () => {
     },
     {
       key: "3",
-      label: (
-        <LogoutButton/>
-      ),
+      label: <LogoutButton />,
     },
   ];
 
@@ -105,7 +103,12 @@ const Navbar = () => {
                       "rounded-md px-3 py-2 text-sm lg:text-lg font-medium"
                     )}
                   >
-                    {item.name}
+                   
+                    <Link
+                      to={item.href}
+                    >
+                       {item.name}
+                    </Link>
                   </a>
                 ))}
                 {user ? (

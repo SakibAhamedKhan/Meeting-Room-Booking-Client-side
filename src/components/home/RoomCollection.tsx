@@ -6,10 +6,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { FaLocationDot } from "react-icons/fa6";
 import { useGetAllRoomsQuery } from "@/redux/features/customer/customerRoomApi.api";
-import { useNavigate } from "react-router-dom";
 import { Tooltip } from "antd";
+import { FaLocationDot } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
 
 const RoomCollection = () => {
   const { data: roomData } = useGetAllRoomsQuery(undefined,  {
@@ -25,7 +25,7 @@ const RoomCollection = () => {
         <h1 className="font-bold text-[22px] md:text-4xl">
           Meeting Rom Collection
         </h1>
-        <p className="text-[#002F76] text-sm md:text-lg cursor-pointer">More</p>
+        <Link to={'/rooms'} className="text-[#002F76] text-sm md:text-lg cursor-pointer">More</Link>
       </div>
       <div className="lg:max-w-7xl my-4">
         <Carousel
