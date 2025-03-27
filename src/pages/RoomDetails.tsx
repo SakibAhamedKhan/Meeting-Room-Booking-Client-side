@@ -4,6 +4,7 @@ import GoogleMapCard from "@/components/roomDetails/GoogleMapCard";
 import ReserveButton from "@/components/roomDetails/ReserveButton";
 import ReviewCard from "@/components/roomDetails/ReviewCard";
 import TitleImage from "@/components/roomDetails/TitleImage";
+import RoomDetailsPageSkeleton from "@/components/skeleton/RoomDetailsPageSkeleton";
 import {
   useGetSingleRoomQuery,
   useMakeRoomFavouriteMutation,
@@ -34,8 +35,10 @@ const RoomDetails = () => {
     refetch();
   }, [id, refetch]);
 
-  if (isFetching) {
-    return <p>Loading...</p>;
+  if(isFetching){
+    return (
+      <RoomDetailsPageSkeleton/>
+    )
   }
   const roomData = data?.data;
 
@@ -100,6 +103,8 @@ const RoomDetails = () => {
   };
 
   console.log(roomData);
+
+  
   return (
     <div>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 my-8 md:my-12 ">

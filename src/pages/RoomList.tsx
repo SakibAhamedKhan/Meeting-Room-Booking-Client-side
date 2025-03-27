@@ -1,3 +1,4 @@
+import RoomCardSkeleton from "@/components/skeleton/roomCardSkeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetAllRoomsQuery } from "@/redux/features/customer/customerRoomApi.api";
 import { TQueryParam } from "@/types";
@@ -12,7 +13,7 @@ const RoomList = () => {
   const [page, setPage] = useState(1);
   const [params] = useState<TQueryParam[]>([]);
 
-  const { data: roomData } = useGetAllRoomsQuery(
+  const { data: roomData, isFetching: roomDataFetching } = useGetAllRoomsQuery(
     [{ name: "limit", value: 3 }, { name: "page", value: page }, ...params],
     {
       refetchOnFocus: true,
@@ -28,7 +29,7 @@ const RoomList = () => {
     <div className="max-w-full my-8 md:my-12 mx-2 md:mx-10">
       <div className="grid grid-cols-12 gap-4 w-full p-2">
         {/* Filter Side */}
-        <div className="col-span-2">
+        <div className="col-span-1">
           <div className="flex items-center justify-center gap-4">
             <div className="bg-gray-200 rounded-full p-[10px]">
               <LiaFilterSolid className="text-xl" />
@@ -40,7 +41,7 @@ const RoomList = () => {
         <div className="col-span-1 bg-gray-300 w-[3px] mx-auto divider"></div>
 
         {/* List Side */}
-        <div className="col-span-9">
+        <div className="col-span-10">
           {/* Head section */}
           <div className="flex justify-between mb-6">
             <div>
@@ -88,6 +89,16 @@ const RoomList = () => {
           {!grid ? (
             // grid
             <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4">
+              {roomDataFetching ? (
+                <>
+                  {Array.from({ length: 6 }).map(() => (
+                    <RoomCardSkeleton />
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
+
               {roomData?.data.map((item: any, index: number) => (
                 <div
                   key={index}
@@ -132,7 +143,7 @@ const RoomList = () => {
                           </p>
                         </div>
                         <div className="px-4 pb-4 flex justify-end">
-                          <div className="flex justify-center items-center inline-flex gap-4">
+                          <div className="justify-center items-center inline-flex gap-4">
                             <p className="text-sm md:text-lg">Per Slot</p>
                             <h2 className="text-xl md:text-2xl font-bold text-[#002F76]">
                               ${item.pricePerSlot}
@@ -189,7 +200,7 @@ const RoomList = () => {
                           </p>
                         </div>
                         <div className="px-4 pb-4 flex justify-end">
-                          <div className="flex justify-center items-center inline-flex gap-4">
+                          <div className="justify-center items-center inline-flex gap-4">
                             <p className="text-sm md:text-lg">Per Slot</p>
                             <h2 className="text-xl md:text-2xl font-bold text-[#002F76]">
                               ${item.pricePerSlot}
