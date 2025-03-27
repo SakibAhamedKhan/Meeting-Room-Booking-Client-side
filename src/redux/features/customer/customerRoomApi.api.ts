@@ -4,10 +4,21 @@ import { TQueryParam } from "@/types";
 const roomApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllRooms: builder.query({
-      query: () => ({
-        url: "/rooms",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/rooms",
+          method: "GET",
+          params: params,
+        }
+      },
       providesTags: ["getAllRooms"],
     }),
     getSingleRoom: builder.query({

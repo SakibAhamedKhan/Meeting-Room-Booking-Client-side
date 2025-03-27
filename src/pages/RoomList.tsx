@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetAllRoomsQuery } from "@/redux/features/customer/customerRoomApi.api";
-import { Select, Tooltip } from "antd";
+import { TQueryParam } from "@/types";
+import { Pagination, Row, Select, Tooltip } from "antd";
 import { useState } from "react";
 import { AiOutlineMenu, AiOutlineProduct } from "react-icons/ai";
 import { FaLocationDot } from "react-icons/fa6";
@@ -8,11 +9,17 @@ import { LiaFilterSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 
 const RoomList = () => {
-  const { data: roomData } = useGetAllRoomsQuery(undefined, {
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-    refetchOnReconnect: true,
-  });
+  const [page, setPage] = useState(1);
+  const [params] = useState<TQueryParam[]>([]);
+
+  const { data: roomData } = useGetAllRoomsQuery(
+    [{ name: "limit", value: 3 }, { name: "page", value: page }, ...params],
+    {
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+      refetchOnReconnect: true,
+    }
+  );
   const [grid, setGrid] = useState(false);
 
   const navigate = useNavigate();
@@ -52,11 +59,25 @@ const RoomList = () => {
                 bordered={false}
               />
               <div className="flex gap-[2px]">
-                <div className={`border-2 border-[#002F76] rounded-sm p-1 ${grid ? 'bg-[#002F76]' :''} cursor-pointer`} onClick={() => setGrid(true)}>
-                  <AiOutlineMenu className={`text-xl ${grid? 'text-white':''}`} />
+                <div
+                  className={`border-2 border-[#002F76] rounded-sm p-1 ${
+                    grid ? "bg-[#002F76]" : ""
+                  } cursor-pointer`}
+                  onClick={() => setGrid(true)}
+                >
+                  <AiOutlineMenu
+                    className={`text-xl ${grid ? "text-white" : ""}`}
+                  />
                 </div>
-                <div className={`border-2 border-[#002F76] rounded-sm p-1 ${grid ? '' :'bg-[#002F76]'} cursor-pointer `} onClick={() => setGrid(false)}>
-                  <AiOutlineProduct className={`text-xl ${grid? '':'text-white'}`} />
+                <div
+                  className={`border-2 border-[#002F76] rounded-sm p-1 ${
+                    grid ? "" : "bg-[#002F76]"
+                  } cursor-pointer `}
+                  onClick={() => setGrid(false)}
+                >
+                  <AiOutlineProduct
+                    className={`text-xl ${grid ? "" : "text-white"}`}
+                  />
                 </div>
               </div>
             </div>
@@ -128,10 +149,7 @@ const RoomList = () => {
             // not grid
             <div className="flex flex-col gap-4">
               {roomData?.data.map((item: any, index: number) => (
-                <div
-                  key={index}
-                  className="md:basis-1/3 lg:basis-1/4"
-                >
+                <div key={index} className="md:basis-1/3 lg:basis-1/4">
                   <div className="p-1">
                     <Card className="rounded-lg">
                       <CardContent className="p-0 grid grid-cols-3 gap-4">
@@ -185,6 +203,14 @@ const RoomList = () => {
               ))}
             </div>
           )}
+
+          <Row justify="center" className="my-5">
+            <Pagination
+              pageSize={roomData?.meta?.limit}
+              total={roomData?.meta?.total}
+              onChange={(value) => setPage(value)}
+            />
+          </Row>
         </div>
       </div>
     </div>
