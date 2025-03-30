@@ -1,4 +1,5 @@
-import RoomCardSkeleton from "@/components/skeleton/roomCardSkeleton";
+import CapacityPriceFilter from "@/components/roomLists/capacity-price-filter";
+import RoomCardSkeleton from "@/components/skeleton/RoomCardSkeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetAllRoomsQuery } from "@/redux/features/customer/customerRoomApi.api";
 import { TQueryParam } from "@/types";
@@ -11,10 +12,20 @@ import { useNavigate } from "react-router-dom";
 
 const RoomList = () => {
   const [page, setPage] = useState(1);
+  const [sortvalue, setSortValue] = useState("0");
   const [params] = useState<TQueryParam[]>([]);
 
-  const { data: roomData, isFetching: roomDataFetching } = useGetAllRoomsQuery(
-    [{ name: "limit", value: 3 }, { name: "page", value: page }, ...params],
+  const {
+    data: roomData,
+    isFetching: roomDataFetching,
+    refetch: roomDataRefetching,
+  } = useGetAllRoomsQuery(
+    [
+      { name: "limit", value: 3 },
+      { name: "page", value: page },
+      { name: "sort", value: sortvalue },
+      ...params,
+    ],
     {
       refetchOnFocus: true,
       refetchOnMountOrArgChange: true,
@@ -25,23 +36,29 @@ const RoomList = () => {
 
   const navigate = useNavigate();
 
+  const handleSelectionForSort = (value: string) => {
+    setSortValue(value);
+    roomDataRefetching();
+  };
+
   return (
     <div className="max-w-full my-8 md:my-12 mx-2 md:mx-10">
       <div className="grid grid-cols-12 gap-4 w-full p-2">
         {/* Filter Side */}
-        <div className="col-span-1">
+        <div className="col-span-2">
           <div className="flex items-center justify-center gap-4">
             <div className="bg-gray-200 rounded-full p-[10px]">
               <LiaFilterSolid className="text-xl" />
             </div>
             <h3 className="font-bold text-[22px] md:text-3xl">Filter</h3>
           </div>
+          <CapacityPriceFilter/>
         </div>
 
         <div className="col-span-1 bg-gray-300 w-[3px] mx-auto divider"></div>
 
         {/* List Side */}
-        <div className="col-span-10">
+        <div className="col-span-9">
           {/* Head section */}
           <div className="flex justify-between mb-6">
             <div>
@@ -58,6 +75,7 @@ const RoomList = () => {
                   { label: "High to Low", value: "2" },
                 ]}
                 bordered={false}
+                onChange={handleSelectionForSort}
               />
               <div className="flex gap-[2px]">
                 <div
