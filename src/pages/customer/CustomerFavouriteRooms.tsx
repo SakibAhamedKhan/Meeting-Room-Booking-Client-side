@@ -1,5 +1,10 @@
 import { Card } from "@/components/ui/card";
+import {
+  useGetAllFavouriteQuery,
+  useMakeRoomUnFavouriteMutation,
+} from "@/redux/features/customer/customerRoomApi.api";
 import { TQueryParam } from "@/types";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 import {
   Button,
   Image,
@@ -11,14 +16,9 @@ import {
   TableColumnsType,
 } from "antd";
 import { useState } from "react";
-import {
-  useGetAllFavouriteQuery,
-  useMakeRoomUnFavouriteMutation,
-} from "@/redux/features/customer/customerRoomApi.api";
 import { LuRefreshCw } from "react-icons/lu";
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const { confirm } = Modal;
@@ -248,7 +248,7 @@ const CustomerFavouriteRooms = () => {
 
   let tableData = [];
   if (!customerGetAllFavouriteQueryFetching) {
-    tableData = [...customerGetAllFavouriteQuery?.data].reverse();
+    tableData = [...customerGetAllFavouriteQuery?.data || []].reverse();
   }
   const rowClassName = () => {
     return "table-custom-row";

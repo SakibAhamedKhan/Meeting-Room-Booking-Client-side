@@ -6,6 +6,7 @@ import { TQueryParam } from "@/types";
 import { Pagination, Row, Select, Tooltip } from "antd";
 import { useState } from "react";
 import { AiOutlineMenu, AiOutlineProduct } from "react-icons/ai";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { LiaFilterSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +14,11 @@ import { useNavigate } from "react-router-dom";
 const RoomList = () => {
   const [page, setPage] = useState(1);
   const [sortvalue, setSortValue] = useState("0");
+  const [capacity, setCapacity] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [showFilter, setShowFilter] = useState<boolean>(true);
   const [params] = useState<TQueryParam[]>([]);
-
+  console.log(capacity, price);
   const {
     data: roomData,
     isFetching: roomDataFetching,
@@ -24,6 +28,8 @@ const RoomList = () => {
       { name: "limit", value: 3 },
       { name: "page", value: page },
       { name: "sort", value: sortvalue },
+      { name: "capacity", value: capacity },
+      { name: "price", value: price },
       ...params,
     ],
     {
@@ -36,33 +42,53 @@ const RoomList = () => {
 
   const navigate = useNavigate();
 
+  const clearFilter = () => {
+    setPrice("");
+    setCapacity("");
+  };
+
   const handleSelectionForSort = (value: string) => {
     setSortValue(value);
     roomDataRefetching();
   };
 
   return (
-    <div className="max-w-full my-8 md:my-12 mx-2 md:mx-10">
-      <div className="grid grid-cols-12 gap-4 w-full p-2">
+    <div className="max-w-full">
+      <div className="grid grid-cols-12 gap-2 md-gap-4 w-full">
         {/* Filter Side */}
-        <div className="col-span-2">
-          <div className="flex items-center justify-center gap-4">
-            <div className="bg-gray-200 rounded-full p-[10px]">
-              <LiaFilterSolid className="text-xl" />
+        <div
+          className={`md:col-span-2 h-screen fixed md:relative !bg-gray-50 rounded-sm z-10 md:p-6 ${
+            showFilter ? "p-2 sm:left-0 top-[64px] md:top-0 h-screen" : "h-[55px] overflow-hidden p-2 sm:left-0 md:top-0 w-[160px] relative"
+          }`}
+        >
+          <div className="flex justify-between items-center mx-2">
+            <div className="flex items-center justify-start gap-4">
+              <div className="bg-gray-200 rounded-full p-[10px]">
+                <LiaFilterSolid className="text-md md:text-xl" />
+              </div>
+              <h3 className="font-bold text-[22px] text-lg md:text-3xl">Filter</h3>
             </div>
-            <h3 className="font-bold text-[22px] md:text-3xl">Filter</h3>
+            <div className="md:hidden inline">
+              <p onClick={() => setShowFilter(!showFilter)}>
+                {showFilter ? <FaChevronDown /> : <FaChevronUp />}
+              </p>
+            </div>
           </div>
-          <CapacityPriceFilter/>
+          <CapacityPriceFilter
+            capacity={capacity}
+            setCapacity={setCapacity}
+            price={price}
+            setPrice={setPrice}
+            clearFilter={clearFilter}
+          />
         </div>
 
-        <div className="col-span-1 bg-gray-300 w-[3px] mx-auto divider"></div>
-
         {/* List Side */}
-        <div className="col-span-9">
+        <div className="col-span-12 md:col-span-10 mx-4 md:mx-6 my-2 md:my-6">
           {/* Head section */}
-          <div className="flex justify-between mb-6">
+          <div className="flex justify-between mb-6 gap-2 md:gap-0">
             <div>
-              <h2 className="font-bold text-[22px] md:text-4xl m-0">
+              <h2 className="font-bold text-lg md:text-4xl m-0">
                 Our Meeting Rom Collection (53)
               </h2>
             </div>

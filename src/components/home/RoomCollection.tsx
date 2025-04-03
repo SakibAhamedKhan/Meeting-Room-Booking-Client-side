@@ -12,7 +12,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 
 const RoomCollection = () => {
-  const { data: roomData } = useGetAllRoomsQuery(undefined,  {
+  const { data: roomData } = useGetAllRoomsQuery([],  {
     refetchOnFocus:true,
     refetchOnMountOrArgChange:true,
     refetchOnReconnect:true,
